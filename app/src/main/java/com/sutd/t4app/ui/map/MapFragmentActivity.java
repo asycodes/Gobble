@@ -15,7 +15,7 @@ import com.sutd.t4app.R;
  * Use the {@link MapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MapFragment extends Fragment {
+public class MapFragmentActivity extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class MapFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public MapFragment() {
+    public MapFragmentActivity() {
         // Required empty public constructor
     }
 
@@ -39,8 +39,8 @@ public class MapFragment extends Fragment {
      * @return A new instance of fragment MapFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MapFragment newInstance(String param1, String param2) {
-        MapFragment fragment = new MapFragment();
+    public static MapFragmentActivity newInstance(String param1, String param2) {
+        MapFragmentActivity fragment = new MapFragmentActivity();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
