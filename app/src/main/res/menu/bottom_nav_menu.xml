@@ -10,15 +10,15 @@
         android:id="@+id/navigation_reviews"
         android:icon="@drawable/ic_reviews"
         android:title="@string/title_reviews" />
-
+    <item
+        android:id="@+id/navigation_map"
+        android:icon="@drawable/ic_map_24dp"
+        android:title="@string/title_map" />
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_profile"
         android:title="@string/title_profile" />
 
-    <item
-        android:id="@+id/navigation_map"
-        android:icon="@drawable/ic_profile"
-        android:title="@string/title_profile" />
+
 
 </menu>

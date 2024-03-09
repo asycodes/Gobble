@@ -1,16 +1,16 @@
-package com.sutd.t4app.ui.notifications;
+package com.sutd.t4app.ui.reviews;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class NotificationsViewModel extends ViewModel {
+public class ReviewsViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public NotificationsViewModel() {
+    public ReviewsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+        mText.setValue("This is reviews fragment");
     }
 
     public LiveData<String> getText() {
