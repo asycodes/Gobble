@@ -22,4 +22,11 @@
         android:name="com.sutd.t4app.ui.notifications.NotificationsFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_map"
+        android:name="com.sutd.t4app.ui.map.MapFragment"
+        android:label="@string/title_map"
+        tools:layout="@layout/fragment_map" />
+
 </navigation>
