@@ -15,7 +15,7 @@
         android:id="@+id/navigation_reviews"
         android:name="com.sutd.t4app.ui.reviews.ReviewsFragmentActivity"
         android:label="@string/title_reviews"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_reviews" />
 
     <fragment
         android:id="@+id/navigation_profile"

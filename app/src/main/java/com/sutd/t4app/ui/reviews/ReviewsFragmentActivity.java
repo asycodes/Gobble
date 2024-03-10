@@ -18,14 +18,12 @@ public class ReviewsFragmentActivity extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ReviewsViewModel reviewsViewModel =
-                new ViewModelProvider(this).get(ReviewsViewModel.class);
+
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textDashboard;
-        reviewsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
         return root;
     }
 
