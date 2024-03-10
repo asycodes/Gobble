@@ -183,18 +183,19 @@
 
     <ScrollView
         android:id="@+id/verticalScrollView"
-        android:layout_width="379dp"
-        android:layout_height="389dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginTop="48dp"
         android:fillViewport="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
             android:id="@+id/linearLayoutVertical"
-            android:layout_width="371dp"
-            android:layout_height="253dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -206,12 +207,11 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="240dp"
-                android:layout_marginHorizontal="16dp"
+                android:layout_marginHorizontal="8dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginRight="8dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                android:layout_marginLeft="8dp">
+                >
 
                 <LinearLayout
                     android:layout_width="362dp"
@@ -271,7 +271,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="247dp"
-                android:layout_marginHorizontal="16dp"
+                android:layout_marginHorizontal="8dp"
                 android:layout_marginTop="16dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp">
@@ -332,7 +332,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="245dp"
-                android:layout_marginHorizontal="16dp"
+                android:layout_marginHorizontal="8dp"
                 android:layout_marginTop="16dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp">
