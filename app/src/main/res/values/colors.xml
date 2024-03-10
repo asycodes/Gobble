@@ -10,6 +10,6 @@
     <color name="primary">#F0912C</color>
     <color name="primaryVariant">#F7A94B</color>
     <color name="grey">#F3E9DD</color>
-
+    <color name="darkGrey">#8E8E8E</color>
 
 </resources>
