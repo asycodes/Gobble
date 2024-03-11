@@ -1,5 +1,11 @@
 plugins {
     id("com.android.application")
+    id("realm-android")
+}
+
+realm{
+    isSyncEnabled = true
+
 }
 
 android {
@@ -28,7 +34,9 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
+
 }
 
 dependencies {
