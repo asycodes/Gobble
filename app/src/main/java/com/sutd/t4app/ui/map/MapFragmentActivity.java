@@ -1,13 +1,21 @@
 package com.sutd.t4app.ui.map;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+import com.sutd.t4app.MainActivity;
 import com.sutd.t4app.R;
 
 /**
@@ -59,8 +67,43 @@ public class MapFragmentActivity extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map, container, false);
+                            Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_map, container, false);
+
+        Button b = view.findViewById(R.id.showBottomSheet);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
+                View view1 = LayoutInflater.from(getActivity()).inflate(R.layout.bottom_sheet, null);
+                bottomSheetDialog.setContentView(view1);
+                bottomSheetDialog.show();
+
+                TextInputLayout textInputLayout1 = view1.findViewById(R.id.textFieldLayout);
+                TextInputEditText editText = view1.findViewById(R.id.editText);
+                Button dismissBtn = view1.findViewById(R.id.dismiss);
+
+                dismissBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(editText.getText().toString().isEmpty()) {
+                            textInputLayout1.setError("Please type something");
+                        } else {
+                            Toast.makeText(getActivity(), editText.getText().toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                bottomSheetDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss (DialogInterface dialogInterface) {
+                        Toast.makeText(getActivity(), "Bottom sheet dismissed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        return view;
     }
+
 }
