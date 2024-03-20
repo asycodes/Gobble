@@ -29,4 +29,18 @@
         android:label="@string/title_map"
         tools:layout="@layout/fragment_map" />
 
+    <fragment
+        android:id="@+id/navigation_restaurant"
+        android:name="com.sutd.t4app.ui.restaurant.RestaurantFragmentActivity"
+        android:label="ResturantProfile"
+        tools:layout="@layout/fragment_restuarant_profile"/>
+
+    <action
+        android:id="@+id/torestaurantfragment"
+        app:destination="@id/navigation_restaurant"/>
+
+    <action
+        android:id="@+id/rest_back_to_home"
+        app:destination="@id/navigation_home"/>
+
 </navigation>
