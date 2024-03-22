@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragmentActivity">
+    tools:context=".ui.home.HomeFragment">
 
     <SearchView
         android:id="@+id/mySearchView"
@@ -179,221 +179,21 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
 
-    <ScrollView
-        android:id="@+id/verticalScrollView"
-        android:layout_width="match_parent"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewRestaurants"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="48dp"
-        android:fillViewport="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <LinearLayout
-            android:id="@+id/linearLayoutVertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.4"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textExplore"
-            app:layout_constraintVertical_bias="0.043">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="240dp"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="12dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp"
-                >
-
-                <LinearLayout
-                    android:layout_width="362dp"
-                    android:layout_height="227dp"
-                    android:layout_marginTop="12dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-
-                        android:layout_width="match_parent"
-                        android:layout_height="142dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/food3t4app" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="4dp"
-                            android:text="P.S. Cafe"
-                            android:textColor="#282828"
-                            android:textSize="20sp" />
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="4dp"
-                            android:src="@drawable/location_on" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="4dp"
-                        android:text="Western Fusion Cafe at Raffles City"
-                        android:textColor="#777777"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="4dp"
-                        android:text="6 mins walk from City Hall MRT"
-                        android:textColor="#777777"
-                        android:textSize="14sp" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="247dp"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp">
-
-                <LinearLayout
-                    android:layout_width="362dp"
-                    android:layout_height="227dp"
-                    android:layout_marginTop="12dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="142dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/food3t4app" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="4dp"
-                            android:text="P.S. Cafe"
-                            android:textColor="#282828"
-                            android:textSize="20sp" />
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="4dp"
-                            android:src="@drawable/location_on" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="4dp"
-                        android:text="Western Fusion Cafe at Raffles City"
-                        android:textColor="#777777"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="4dp"
-                        android:text="6 mins walk from City Hall MRT"
-                        android:textColor="#777777"
-                        android:textSize="14sp" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="245dp"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp">
-
-                <LinearLayout
-                    android:layout_width="362dp"
-                    android:layout_height="227dp"
-                    android:layout_marginTop="12dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-
-                        android:layout_width="match_parent"
-                        android:layout_height="142dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/food3t4app" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="4dp"
-                            android:text="P.S. Cafe"
-                            android:textColor="#282828"
-                            android:textSize="20sp" />
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="4dp"
-                            android:src="@drawable/location_on" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="4dp"
-                        android:text="Western Fusion Cafe at Raffles City"
-                        android:textColor="#777777"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="4dp"
-                        android:text="6 mins walk from City Hall MRT"
-                        android:textColor="#777777"
-                        android:textSize="14sp" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toBottomOf="@id/textExplore" />
 
 
-        </LinearLayout>
 
-    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
