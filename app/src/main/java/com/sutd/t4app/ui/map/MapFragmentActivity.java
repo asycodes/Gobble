@@ -1,14 +1,21 @@
 package com.sutd.t4app.ui.map;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -20,7 +27,7 @@ import com.sutd.t4app.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MapFragment#newInstance} factory method to
+// * Use the {@link MapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class MapFragmentActivity extends Fragment {
@@ -103,7 +110,19 @@ public class MapFragmentActivity extends Fragment {
             }
         });
 
+        WebView customMap=view.findViewById(R.id.webView);
+        customMap.getSettings().setJavaScriptEnabled(true);
+        customMap.getSettings().setDomStorageEnabled(true);
+        customMap.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+        customMap.loadUrl("https://www.google.com/maps/d/edit?mid=14ulTPfYFZocGg-psSoU9M4Oy2xzxB3A&usp=sharing");
+
+        customMap.setWebViewClient(new WebViewClient());
+
+
         return view;
     }
+
+
+
 
 }

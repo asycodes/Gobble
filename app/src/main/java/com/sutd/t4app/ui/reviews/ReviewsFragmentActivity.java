@@ -1,19 +1,33 @@
 package com.sutd.t4app.ui.reviews;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.sutd.t4app.R;
 import com.sutd.t4app.databinding.FragmentDashboardBinding;
+
+import java.io.IOException;
 
 public class ReviewsFragmentActivity extends Fragment {
 
@@ -24,6 +38,11 @@ public class ReviewsFragmentActivity extends Fragment {
     private int currentFoodRating = 0;
     private int currentServiceRating = 0;
     private int currentAtmosphereRating = 0;
+    private Button uploadImageButton;
+    private Uri imageUri;
+    private ImageView selectedImage;
+    private EditText reviews;
+    private ActivityResultLauncher<String> imagePickerLauncher;
 
     public ReviewsFragmentActivity() {
         // Required empty public constructor
@@ -35,6 +54,14 @@ public class ReviewsFragmentActivity extends Fragment {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         viewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
+
+        uploadImageButton=root.findViewById(R.id.uploadimage);
+        uploadImageButton.setOnClickListener(v -> openImageChooser());
+        selectedImage=root.findViewById(R.id.selectedImage);
+        reviews=root.findViewById(R.id.user_review);
+        Button postreviewbutton= root.findViewById(R.id.post_review);
+        postreviewbutton.setOnClickListener(v -> submitReview());
+
 
 
         // Initialize food rating stars
@@ -82,6 +109,11 @@ public class ReviewsFragmentActivity extends Fragment {
         return root;
     }
 
+    private void openImageChooser() {
+        // Launch the image picker using the Activity Result API
+        imagePickerLauncher.launch("image/*");
+    }
+
     private void setRating(ImageView star, int rating, String category) {
         switch (category) {
             case "food":
@@ -121,4 +153,30 @@ public class ReviewsFragmentActivity extends Fragment {
 
         return currentRating;
     }
+
+    private void submitReview() {
+        // Calculate average rating
+        double averageRating = (currentFoodRating + currentServiceRating + currentAtmosphereRating) / 3.0;
+
+        // Get review text
+        String reviewText = reviews.getText().toString().trim();
+
+        // TODO: 23/3/24 store and process averagerating, imageURI and reviews to save to database 
+    }
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Initialize the ActivityResultLauncher for image picking
+        imagePickerLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(),
+                result -> {
+                    if (result != null) {
+                        imageUri = result;
+                        selectedImage.setImageURI(imageUri);
+                    }
+                });
+    }
+
+
+
 }

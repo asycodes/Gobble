@@ -6,11 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
@@ -26,14 +26,14 @@ public class HomeFragmentActivity extends Fragment {
     private FragmentHomeBinding binding;
     private SwitchCompat pageSwitch;
     private ImageView filterIcon;
-    private boolean isExplorePage= true; // initial is explore page
+    private boolean isExplorePage = true; // initial is explore page
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        TextView fuelPlus1Card= root.findViewById(R.id.FuelPlus1);
+        TextView fuelPlus1Card = root.findViewById(R.id.FuelPlus1);
 
         fuelPlus1Card.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,26 +50,22 @@ public class HomeFragmentActivity extends Fragment {
             }
         });
 
-        pageSwitch= root.findViewById(R.id.pageSwitch);
-//        pageSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if(isChecked){
-//                    showFeedPage();
-//                }else{
-//                    showExplorePage();
-//                }
-//            }
-//        });
-//
-//        // Initially show the explore page
-//        showExplorePage();
+        pageSwitch = root.findViewById(R.id.pageSwitch);
+        pageSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    showFeedPage();
+                } else {
+                    showExplorePage();
+                }
+            }
+        });
 
+        // Initially show the explore page
+        showExplorePage();
 
         return root;
-
-
-
     }
 
     @Override
@@ -77,27 +73,21 @@ public class HomeFragmentActivity extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-//    private void showFeedPage() {
-//        isExplorePage=false;
-//        // Inflate the feed page layout
-////        View feedPageView = LayoutInflater.from(requireContext()).inflate(R.layout.feed_page, null);
-//
-//        replaceContent(new FeedFragment());
-//    }
-//
-//    private void showExplorePage() {
-//        isExplorePage = true;
-//        // Inflate the explore page layout
-////        View explorePageView = LayoutInflater.from(requireContext()).inflate(R.layout.fragment_home, null);
-//
-//        // Replace the content in the FrameLayout with the explore page layout
-//        replaceContent(new HomeFragmentActivity());
-//    }
-//
-//    private void replaceContent(Fragment fragment) {
-//        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-//        transaction.replace(R.id.fragmentContainer, fragment);
-//        transaction.commit();}
 
+    private void showFeedPage() {
+        isExplorePage = false;
+
+        // Hide Explore layout and show Feed layout
+        binding.exploreLayout.setVisibility(View.GONE);
+        binding.feedLayout.setVisibility(View.VISIBLE);
+
+    }
+
+    private void showExplorePage() {
+        isExplorePage = true;
+
+        binding.feedLayout.setVisibility(View.GONE);
+        binding.exploreLayout.setVisibility(View.VISIBLE);
+    }
 
 }

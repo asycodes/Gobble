@@ -229,7 +229,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="322dp"
-            android:layout_height="120dp"
+            android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/lightOrange"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp"
@@ -258,8 +258,15 @@
                     android:layout_height="wrap_content"
                     android:text="JPEG, PNG, PDG and MP4 formats, up to 50MB"
                     android:textColor="@color/darkGrey"/>
+                <ImageView
+                    android:id="@+id/selectedImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/image_preview" />
 
                 <Button
+                    android:id="@+id/uploadimage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Upload" />
@@ -300,7 +307,7 @@
                 </LinearLayout>
 
                 <EditText
-                    android:id="@+id/editTextTextMultiLine"
+                    android:id="@+id/user_review"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:padding="20dp"
@@ -319,6 +326,7 @@
         </androidx.cardview.widget.CardView>
 
         <Button
+            android:id="@+id/post_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Post Review" />
