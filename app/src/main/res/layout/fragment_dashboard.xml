@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -32,21 +33,7 @@
             android:textColor="@color/black"
             android:textSize="25sp" />
 
-        <RatingBar
-            android:id="@+id/rating"
-            style="?android:attr/ratingBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:progressTint="@color/primary"
-            android:progressTintMode="src_in"
-            android:rating="3"
-            android:stepSize="0.1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -56,21 +43,61 @@
             android:textColor="@color/black"
             android:textSize="18sp" />
 
-        <RatingBar
-            android:id="@+id/ratingFood"
-            style="?android:attr/ratingBarStyle"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:progressTint="@color/primary"
-            android:progressTintMode="src_in"
-            android:rating="3"
-            android:stepSize="0.1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/foodStar1"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/star_empty"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onStarClicked"
+                android:tag="1" />
+
+            <ImageView
+                android:id="@+id/foodStar2"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/star_empty"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onStarClicked"
+                android:tag="2" />
+
+            <ImageView
+                android:id="@+id/foodStar3"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/star_empty"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onStarClicked"
+                android:tag="3" />
+
+            <ImageView
+                android:id="@+id/foodStar4"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/star_empty"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onStarClicked"
+                android:tag="4" />
+
+            <ImageView
+                android:id="@+id/foodStar5"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/star_empty"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onStarClicked"
+                android:tag="5" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -80,21 +107,61 @@
             android:textColor="@color/black"
             android:textSize="18sp" />
 
-        <RatingBar
-            android:id="@+id/ratingService"
-            style="?android:attr/ratingBarStyle"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:progressTint="@color/primary"
-            android:progressTintMode="src_in"
-            android:rating="3"
-            android:stepSize="0.1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/serviceStar1"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/star_empty"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onStarClicked"
+                android:tag="1" />
+
+            <ImageView
+                android:id="@+id/serviceStar2"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/star_empty"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onStarClicked"
+                android:tag="2" />
+
+            <ImageView
+                android:id="@+id/serviceStar3"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/star_empty"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onStarClicked"
+                android:tag="3" />
+
+            <ImageView
+                android:id="@+id/serviceStar4"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/star_empty"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onStarClicked"
+                android:tag="4" />
+
+            <ImageView
+                android:id="@+id/serviceStar5"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/star_empty"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onStarClicked"
+                android:tag="5" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -104,21 +171,61 @@
             android:textColor="@color/black"
             android:textSize="18sp" />
 
-        <RatingBar
-            android:id="@+id/ratingAtmosphere"
-            style="?android:attr/ratingBarStyle"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:progressTint="@color/primary"
-            android:progressTintMode="src_in"
-            android:rating="3"
-            android:stepSize="0.1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/atmosphereStar1"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/star_empty"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onStarClicked"
+                android:tag="1" />
+
+            <ImageView
+                android:id="@+id/atmosphereStar2"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/star_empty"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onStarClicked"
+                android:tag="2" />
+
+            <ImageView
+                android:id="@+id/atmosphereStar3"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/star_empty"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onStarClicked"
+                android:tag="3" />
+
+            <ImageView
+                android:id="@+id/atmosphereStar4"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/star_empty"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onStarClicked"
+                android:tag="4" />
+
+            <ImageView
+                android:id="@+id/atmosphereStar5"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/star_empty"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onStarClicked"
+                android:tag="5" />
+        </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="322dp"

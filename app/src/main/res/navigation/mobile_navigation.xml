@@ -35,6 +35,12 @@
         android:label="ResturantProfile"
         tools:layout="@layout/fragment_restuarant_profile"/>
 
+    <fragment
+        android:id="@+id/navigation_filter"
+        android:name="com.sutd.t4app.ui.filter.FilterFragment"
+        android:label="Filter"
+        tools:layout="@layout/filter_bottom_up"/>
+
     <action
         android:id="@+id/torestaurantfragment"
         app:destination="@id/navigation_restaurant"/>
@@ -42,5 +48,10 @@
     <action
         android:id="@+id/rest_back_to_home"
         app:destination="@id/navigation_home"/>
+
+    <action
+        android:id="@+id/tofilterfragment"
+        app:destination="@id/navigation_filter"/>
+
 
 </navigation>
