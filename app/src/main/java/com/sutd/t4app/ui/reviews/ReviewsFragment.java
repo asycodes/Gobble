@@ -26,10 +26,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.sutd.t4app.R;
 import com.sutd.t4app.databinding.FragmentDashboardBinding;
-
 import java.io.IOException;
 
-public class ReviewsFragmentActivity extends Fragment {
+public class ReviewsFragment extends Fragment {
 
     private ReviewViewModel viewModel;
     private ImageView foodStar1, foodStar2, foodStar3, foodStar4, foodStar5;
@@ -44,7 +43,7 @@ public class ReviewsFragmentActivity extends Fragment {
     private EditText reviews;
     private ActivityResultLauncher<String> imagePickerLauncher;
 
-    public ReviewsFragmentActivity() {
+    public ReviewsFragment() {
         // Required empty public constructor
     }
 
