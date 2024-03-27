@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.sutd.t4app.databinding.FragmentNotificationsBinding;
 
-public class ProfileFragmentActivity extends Fragment {
+public class ProfileFragment extends Fragment {
 
     private FragmentNotificationsBinding binding;
 
