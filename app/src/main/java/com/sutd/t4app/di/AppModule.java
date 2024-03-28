@@ -18,9 +18,6 @@ import javax.inject.Singleton;
 public class AppModule {
     String apiKey = BuildConfig.PLACES_API_KEY;
 
-
-
-
     @Provides
     @Singleton
     App provideRealmApp() {

@@ -13,30 +13,15 @@ import androidx.navigation.ui.NavigationUI;
 import com.sutd.t4app.databinding.ActivityMainBinding;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import io.realm.OrderedRealmCollectionChangeListener;
-import io.realm.OrderedCollectionChangeSet;
-import io.realm.Realm;
-import io.realm.RealmQuery;
-import io.realm.RealmCollection;
-import io.realm.RealmConfiguration;
-import io.realm.RealmResults;
-import io.realm.mongodb.App;
-import io.realm.mongodb.AppConfiguration;
-import io.realm.mongodb.Credentials;
-import io.realm.mongodb.User;
-import io.realm.mongodb.sync.*;
-import org.bson.types.ObjectId;
-import android.util.Log;
-import io.realm.RealmChangeListener;
-import io.realm.RealmResults;
-import io.realm.mongodb.sync.Subscription;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
-import com.sutd.t4app.data.model.Restaurant;
-import com.sutd.t4app.data.model.restaurantStatus;
+import io.realm.Realm;
+
+import io.realm.mongodb.App;
+
+import io.realm.mongodb.Credentials;
+
+import android.util.Log;
+
 
 import javax.inject.Inject;
 
@@ -50,23 +35,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
         super.onCreate(savedInstanceState);
-        Realm.init(this);
-        //RealmConfiguration config = new RealmConfiguration.Builder().name("myrestaurant.realm").schemaVersion(1).build();
-        //Realm.setDefaultConfiguration(config);
-        myApp.getAppComponent().inject(this);
-        Credentials credentials = Credentials.anonymous();
-
-        realmApp.loginAsync(credentials, result -> {
-            if (result.isSuccess()) {
-                Log.v("QUICKSTART", "Successfully authenticated anonymously.");
-
-
-            } else {
-                Log.e("QUICKSTART", "Failed to log in. Error: " + result.getError());
-            }
-        });
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

@@ -13,6 +13,7 @@ import io.realm.Realm;
 public class myApp extends Application {
     private static AppComponent appComponent;
 
+
     @Override
     public void onCreate() {
         super.onCreate();
