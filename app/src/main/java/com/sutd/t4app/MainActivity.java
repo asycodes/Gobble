@@ -52,21 +52,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         super.onCreate(savedInstanceState);
-        Realm.init(this);
-        //RealmConfiguration config = new RealmConfiguration.Builder().name("myrestaurant.realm").schemaVersion(1).build();
-        //Realm.setDefaultConfiguration(config);
-        myApp.getAppComponent().inject(this);
-        Credentials credentials = Credentials.anonymous();
-
-        realmApp.loginAsync(credentials, result -> {
-            if (result.isSuccess()) {
-                Log.v("QUICKSTART", "Successfully authenticated anonymously.");
-
-
-            } else {
-                Log.e("QUICKSTART", "Failed to log in. Error: " + result.getError());
-            }
-        });
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
