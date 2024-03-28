@@ -7,56 +7,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.sutd.t4app.R;
 import com.sutd.t4app.databinding.FragmentHomeBinding;
+import com.sutd.t4app.ui.feed.FeedFragment;
+import com.sutd.t4app.ui.filter.FilterFragment;
 
-import java.util.ArrayList;
+public class HomeFragmentActivity extends Fragment {
 
-import javax.inject.Inject;
-
-import dagger.hilt.android.AndroidEntryPoint;
-import io.realm.mongodb.App;
-
-@AndroidEntryPoint
-public class HomeFragment extends Fragment {
+    private FragmentHomeBinding binding;
     private SwitchCompat pageSwitch;
     private ImageView filterIcon;
     private boolean isExplorePage = true; // initial is explore page
-    private HomeFragmentViewModel viewModel;
-    private RestaurantExploreAdapter adapter;
-    private FragmentHomeBinding binding;
 
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        // Existing binding setup
+
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        Log.i("test","running FRAGMENT ACTIVITY");
-
-        // Initialize the RecyclerView and its adapter
-        adapter = new RestaurantExploreAdapter(new ArrayList<>());
-        binding.recyclerViewRestaurants.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.recyclerViewRestaurants.setAdapter(adapter);
-
-        // Initialize the ViewModel
-        viewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
-
-        // Observe the LiveData from the ViewModel
-        viewModel.getRestaurantsLiveData().observe(getViewLifecycleOwner(), restaurants -> {
-            // Update the adapter with the list of restaurants
-            adapter.updateData(restaurants); // See note below about adapter
-
-        });
         TextView fuelPlus1Card = root.findViewById(R.id.FuelPlus1);
 
         fuelPlus1Card.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +69,13 @@ public class HomeFragment extends Fragment {
 
         return root;
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void showFeedPage() {
         isExplorePage = false;
 
@@ -108,9 +92,4 @@ public class HomeFragment extends Fragment {
         binding.exploreLayout.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
 }
