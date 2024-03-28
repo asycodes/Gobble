@@ -1,4 +1,4 @@
-package com.sutd.t4app.ui.reviews;
+package com.sutd.t4app.ui.profile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,17 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.sutd.t4app.databinding.FragmentDashboardBinding;
+import com.sutd.t4app.databinding.FragmentNotificationsBinding;
 
-public class ReviewsFragmentActivity extends Fragment {
+public class ProfileFragment extends Fragment {
 
-    private FragmentDashboardBinding binding;
+    private FragmentNotificationsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
 

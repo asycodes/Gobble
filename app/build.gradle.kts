@@ -1,5 +1,28 @@
 plugins {
     id("com.android.application")
+    id("realm-android")
+    id("com.google.dagger.hilt.android")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+
+}
+
+realm{
+    isSyncEnabled = true
+
+}
+secrets {
+    // Optionally specify a different file name containing your secrets.
+    // The plugin defaults to "local.properties"
+    propertiesFileName = "secrets.properties"
+
+    // A properties file containing default secret values. This file can be
+    // checked in version control.
+    defaultPropertiesFileName = "local.defaults.properties"
+
+    // Configure which keys should be ignored by the plugin by providing regular expressions.
+    // "sdk.dir" is ignored by default.
+    ignoreList.add("keyToIgnore") // Ignore the key "keyToIgnore"
+    ignoreList.add("sdk.*")       // Ignore all keys matching the regexp "sdk.*"
 }
 
 android {
@@ -12,7 +35,6 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -28,7 +50,10 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        dataBinding = true
+        buildConfig = true
     }
+
 }
 
 dependencies {
@@ -40,7 +65,14 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.navigation:navigation-fragment:2.7.7")
     implementation("androidx.navigation:navigation-ui:2.7.7")
+    implementation("com.google.dagger:dagger:2.51")
+    implementation("com.google.dagger:hilt-android:2.44")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    annotationProcessor("com.google.dagger:dagger-compiler:2.51")
+    annotationProcessor("com.google.dagger:hilt-android-compiler:2.44")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+//    implementation("androidx.activity:activity-ktx:1.8.2")
+//    implementation("androidx.fragment:fragment-ktx:1.8.2")
 }
