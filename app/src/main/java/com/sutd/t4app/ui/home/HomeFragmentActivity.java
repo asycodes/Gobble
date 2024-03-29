@@ -1,6 +1,7 @@
 package com.sutd.t4app.ui.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ public class HomeFragmentActivity extends Fragment {
         fuelPlus1Card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("work?","yes working cliking");
                 Navigation.findNavController(v).navigate(R.id.torestaurantfragment);
             }
         });
