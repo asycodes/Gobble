@@ -33,6 +33,8 @@ public class HomeFragment extends Fragment {
     private boolean isExplorePage = true; // initial is explore page
     private HomeFragmentViewModel viewModel;
     private RestaurantExploreAdapter adapter;
+    private RestaurantExploreAdapter hotAdapter;
+
     private FragmentHomeBinding binding;
 
     @Override
@@ -44,9 +46,14 @@ public class HomeFragment extends Fragment {
         Log.i("test","running FRAGMENT ACTIVITY");
 
         // Initialize the RecyclerView and its adapter
-        adapter = new RestaurantExploreAdapter(new ArrayList<>());
+        adapter = new RestaurantExploreAdapter(new ArrayList<>(),R.layout.restaurant_item);
         binding.recyclerViewRestaurants.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerViewRestaurants.setAdapter(adapter);
+
+        hotAdapter = new RestaurantExploreAdapter(new ArrayList<>(),R.layout.restaurant_hot_item);
+        binding.recyclerViewHot.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true));
+        binding.recyclerViewHot.setAdapter(hotAdapter);
+
 
         // Initialize the ViewModel
         viewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
@@ -55,10 +62,12 @@ public class HomeFragment extends Fragment {
         viewModel.getRestaurantsLiveData().observe(getViewLifecycleOwner(), restaurants -> {
             // Update the adapter with the list of restaurants
             adapter.updateData(restaurants); // See note below about adapter
+            hotAdapter.updateData(restaurants);
 
         });
-        TextView fuelPlus1Card = root.findViewById(R.id.FuelPlus1);
+        //TextView fuelPlus1Card = root.findViewById(R.id.FuelPlus1);
 
+        /*
         fuelPlus1Card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +75,7 @@ public class HomeFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.torestaurantfragment);
             }
         });
+        */
 
         filterIcon = root.findViewById(R.id.filterIcon);
         filterIcon.setOnClickListener(new View.OnClickListener() {

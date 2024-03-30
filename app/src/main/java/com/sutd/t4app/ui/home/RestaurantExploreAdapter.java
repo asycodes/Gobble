@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,19 +15,22 @@ import com.sutd.t4app.R;
 import com.sutd.t4app.data.model.Restaurant;
 
 import java.util.List;
+import com.squareup.picasso.Picasso;
 
 public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExploreAdapter.ViewHolder>{
 
     private List<Restaurant> restaurantList;
-    public RestaurantExploreAdapter(List<Restaurant> restaurantList) {
+    private int layoutID;
+    public RestaurantExploreAdapter(List<Restaurant> restaurantList, int layoutID) {
         this.restaurantList = restaurantList;
+        this.layoutID = layoutID;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.restaurant_item, parent, false);
+                .inflate(this.layoutID, parent, false);
         Log.d("INflated or what","yes");
         return new ViewHolder(view);
     }
@@ -41,14 +45,23 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
 
             holder.textViewName.setText(restaurant.getName());
             Log.d("DEBUGGING"," res " + holder.textViewName.getText() );
-            holder.textViewClosetLandmark.setText(restaurant.getClosestLandmark());
-            Log.d("DEBUGGING"," res " + holder.textViewClosetLandmark.getText() );
 
+            if(holder.textViewClosetLandmark != null) {
+                holder.textViewClosetLandmark.setText(restaurant.getClosestLandmark());
+                Log.d("DEBUGGING"," res " + holder.textViewClosetLandmark.getText() );
+            }
+            if(holder.textViewRestaurantCuisine != null) {
+                holder.textViewRestaurantCuisine.setText(restaurant.getCuisine());
+                Log.d("DEBUGGING", " res " + holder.textViewRestaurantCuisine.getText());
+            }
             holder.textViewRestaurantLocation.setText(restaurant.getAddress());
             Log.d("DEBUGGING"," res " + holder.textViewRestaurantLocation.getText() );
 
-            holder.textViewRestaurantCuisine.setText(restaurant.getCuisine());
-            Log.d("DEBUGGING"," res " + holder.textViewRestaurantCuisine.getText() );
+
+            //add restImage update imageView
+            Picasso.get()
+                .load("https://images.pexels.com/photos/6277500/pexels-photo-6277500.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load") // Assuming `getImageUrl()` is a method in your `Restaurant` class
+                .into(holder.restImageHolder);
 
             // Bind other restaurant details as needed
         }
@@ -68,6 +81,7 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
         TextView textViewRestaurantCuisine;
         TextView textViewClosetLandmark;
         TextView textViewRestaurantLocation;
+        ImageView restImageHolder;
 
         ViewHolder(View view) {
             super(view);
@@ -75,7 +89,7 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
             textViewRestaurantCuisine = view.findViewById(R.id.textViewRestaurantCuisine);
             textViewClosetLandmark = view.findViewById(R.id.textViewRestaurantClosestLandmark);
             textViewRestaurantLocation = view.findViewById(R.id.textViewRestaurantLocation);
-
+            restImageHolder = view.findViewById(R.id.restImage);
         }
     }
 }
