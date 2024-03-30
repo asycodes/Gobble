@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
@@ -21,13 +20,10 @@ import com.sutd.t4app.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
 import dagger.hilt.android.AndroidEntryPoint;
-import io.realm.mongodb.App;
 
 @AndroidEntryPoint
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements Restaurant_RecyclerViewInterface{
     private SwitchCompat pageSwitch;
     private ImageView filterIcon;
     private boolean isExplorePage = true; // initial is explore page
@@ -46,11 +42,11 @@ public class HomeFragment extends Fragment {
         Log.i("test","running FRAGMENT ACTIVITY");
 
         // Initialize the RecyclerView and its adapter
-        adapter = new RestaurantExploreAdapter(new ArrayList<>(),R.layout.restaurant_item);
+        adapter = new RestaurantExploreAdapter(new ArrayList<>(), R.layout.restaurant_item, this);
         binding.recyclerViewRestaurants.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerViewRestaurants.setAdapter(adapter);
 
-        hotAdapter = new RestaurantExploreAdapter(new ArrayList<>(),R.layout.restaurant_hot_item);
+        hotAdapter = new RestaurantExploreAdapter(new ArrayList<>(), R.layout.restaurant_hot_item, this);
         binding.recyclerViewHot.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true));
         binding.recyclerViewHot.setAdapter(hotAdapter);
 
@@ -122,5 +118,14 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onRestaurantClick(int position) {
+        //find view (inside Fragment)
+
+        //Navigation.findNavController(view).navigate(R.id.torestaurantfragment);
+        //open Navigation action with id torestaurantfragment
+
     }
 }
