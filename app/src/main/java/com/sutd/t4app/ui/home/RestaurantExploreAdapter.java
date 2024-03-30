@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import com.sutd.t4app.R;
 import com.sutd.t4app.data.model.Restaurant;
 
 import java.util.List;
+import com.squareup.picasso.Picasso;
 
 public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExploreAdapter.ViewHolder>{
 
@@ -50,6 +52,11 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
             holder.textViewRestaurantCuisine.setText(restaurant.getCuisine());
             Log.d("DEBUGGING"," res " + holder.textViewRestaurantCuisine.getText() );
 
+            //add restImage update imageView
+            Picasso.get()
+                .load("https://images.pexels.com/photos/6277500/pexels-photo-6277500.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load") // Assuming `getImageUrl()` is a method in your `Restaurant` class
+                .into(holder.restImageHolder);
+
             // Bind other restaurant details as needed
         }
 
@@ -68,6 +75,7 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
         TextView textViewRestaurantCuisine;
         TextView textViewClosetLandmark;
         TextView textViewRestaurantLocation;
+        ImageView restImageHolder;
 
         ViewHolder(View view) {
             super(view);
@@ -75,7 +83,7 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
             textViewRestaurantCuisine = view.findViewById(R.id.textViewRestaurantCuisine);
             textViewClosetLandmark = view.findViewById(R.id.textViewRestaurantClosestLandmark);
             textViewRestaurantLocation = view.findViewById(R.id.textViewRestaurantLocation);
-
+            restImageHolder = view.findViewById(R.id.restImage);
         }
     }
 }
