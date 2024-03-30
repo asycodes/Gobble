@@ -18,14 +18,13 @@ import java.util.List;
 import com.squareup.picasso.Picasso;
 
 public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExploreAdapter.ViewHolder>{
-    private final Restaurant_RecyclerViewInterface restaurantRecyclerViewInterface;
 
     private List<Restaurant> restaurantList;
     private int layoutID;
-    public RestaurantExploreAdapter(List<Restaurant> restaurantList, int layoutID, Restaurant_RecyclerViewInterface restaurantRecyclerViewInterface) {
+    public RestaurantExploreAdapter(List<Restaurant> restaurantList, int layoutID) {
         this.restaurantList = restaurantList;
         this.layoutID = layoutID;
-        this.restaurantRecyclerViewInterface = restaurantRecyclerViewInterface;
+
     }
 
     @NonNull
@@ -34,7 +33,7 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(this.layoutID, parent, false);
         Log.d("INflated or what","yes");
-        return new ViewHolder(view, restaurantRecyclerViewInterface);
+        return new ViewHolder(view);
     }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -85,7 +84,7 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
         TextView textViewRestaurantLocation;
         ImageView restImageHolder;
 
-        ViewHolder(View view, Restaurant_RecyclerViewInterface restaurantRecyclerViewInterface) {
+        ViewHolder(View view) {
             super(view);
             textViewName = view.findViewById(R.id.textViewRestaurantName);
             textViewRestaurantCuisine = view.findViewById(R.id.textViewRestaurantCuisine);
@@ -97,13 +96,13 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(restaurantRecyclerViewInterface != null){
+
                         int pos = getBindingAdapterPosition();
                         if (pos != RecyclerView.NO_POSITION){
                             //restaurantRecyclerViewInterface.onRestaurantClick(pos);
                             Navigation.findNavController(v).navigate(R.id.torestaurantfragment);
                         }
-                    }
+
 
                 }
             });

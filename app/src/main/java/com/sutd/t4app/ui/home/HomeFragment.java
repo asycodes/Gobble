@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class HomeFragment extends Fragment implements Restaurant_RecyclerViewInterface{
+public class HomeFragment extends Fragment {
     private SwitchCompat pageSwitch;
     private ImageView filterIcon;
     private boolean isExplorePage = true; // initial is explore page
@@ -42,11 +42,11 @@ public class HomeFragment extends Fragment implements Restaurant_RecyclerViewInt
         Log.i("test","running FRAGMENT ACTIVITY");
 
         // Initialize the RecyclerView and its adapter
-        adapter = new RestaurantExploreAdapter(new ArrayList<>(), R.layout.restaurant_item, this);
+        adapter = new RestaurantExploreAdapter(new ArrayList<>(), R.layout.restaurant_item );
         binding.recyclerViewRestaurants.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerViewRestaurants.setAdapter(adapter);
 
-        hotAdapter = new RestaurantExploreAdapter(new ArrayList<>(), R.layout.restaurant_hot_item, this);
+        hotAdapter = new RestaurantExploreAdapter(new ArrayList<>(), R.layout.restaurant_hot_item);
         binding.recyclerViewHot.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true));
         binding.recyclerViewHot.setAdapter(hotAdapter);
 
@@ -120,12 +120,5 @@ public class HomeFragment extends Fragment implements Restaurant_RecyclerViewInt
         binding = null;
     }
 
-    @Override
-    public void onRestaurantClick(int position) {
-        //find view (inside Fragment)
 
-        //Navigation.findNavController(view).navigate(R.id.torestaurantfragment);
-        //open Navigation action with id torestaurantfragment
-
-    }
 }
