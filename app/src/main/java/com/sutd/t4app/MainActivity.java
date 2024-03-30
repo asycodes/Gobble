@@ -27,9 +27,7 @@ import javax.inject.Inject;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
-    @Inject
-    App realmApp;
-    Realm realminstance;
+
     private ActivityMainBinding binding;
 
     @Override
@@ -56,16 +54,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // the ui thread realm uses asynchronous transactions, so we can only safely close the realm
-        // when the activity ends and we can safely assume that those transactions have completed
-        realminstance.close();
-        realmApp.currentUser().logOutAsync(result -> {
-            if (result.isSuccess()) {
-                Log.v("QUICKSTART", "Successfully logged out.");
-            } else {
-                Log.e("QUICKSTART", "Failed to log out, error: " + result.getError());
-            }
-        });
     }
 
 

@@ -1,5 +1,6 @@
 package com.sutd.t4app.di;
 
+import com.sutd.t4app.LoginActivity;
 import com.sutd.t4app.MainActivity;
 import com.sutd.t4app.data.api.TripAdvisorApiModule;
 import com.sutd.t4app.data.api.YelpApiModule;
@@ -14,4 +15,6 @@ public interface AppComponent {
     // whatever here are the consumers of the dependency aka fragments,viewmodels, etc
     void inject(HomeFragmentViewModel viewModel);
     void inject(MainActivity activity);
+    void inject(LoginActivity activity);
+
 }

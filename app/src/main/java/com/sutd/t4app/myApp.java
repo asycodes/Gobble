@@ -18,11 +18,6 @@ public class myApp extends Application {
     public void onCreate() {
         super.onCreate();
         Realm.init(this);
-        appComponent = DaggerAppComponent.create();
-    }
-
-    public static AppComponent getAppComponent() {
-        return appComponent;
     }
 }
 
