@@ -1,5 +1,6 @@
 package com.sutd.t4app.ui.home;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +34,7 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(this.layoutID, parent, false);
         Log.d("INflated or what","yes");
-        return new ViewHolder(view);
+        return new ViewHolder(view, restaurantList);
     }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -84,7 +85,7 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
         TextView textViewRestaurantLocation;
         ImageView restImageHolder;
 
-        ViewHolder(View view) {
+        ViewHolder(View view, List<Restaurant> restaurantList) {
             super(view);
             textViewName = view.findViewById(R.id.textViewRestaurantName);
             textViewRestaurantCuisine = view.findViewById(R.id.textViewRestaurantCuisine);
@@ -96,12 +97,13 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                        int pos = getBindingAdapterPosition();
-                        if (pos != RecyclerView.NO_POSITION){
-                            //restaurantRecyclerViewInterface.onRestaurantClick(pos);
-                            Navigation.findNavController(v).navigate(R.id.torestaurantfragment);
-                        }
+                    Bundle bundle = new Bundle();
+                    int pos = getBindingAdapterPosition();
+                    Restaurant restaurant = restaurantList.get(pos);
+                    bundle.putParcelable("restaurant", restaurant); // replace "key" and "value" with your actual key and value
+                    if (pos != RecyclerView.NO_POSITION){
+                        Navigation.findNavController(v).navigate(R.id.torestaurantfragment, bundle);
+                    }
 
 
                 }
