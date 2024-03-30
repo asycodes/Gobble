@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.sutd.t4app.R;
 import com.sutd.t4app.data.model.Restaurant;
@@ -24,6 +24,7 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
     public RestaurantExploreAdapter(List<Restaurant> restaurantList, int layoutID) {
         this.restaurantList = restaurantList;
         this.layoutID = layoutID;
+
     }
 
     @NonNull
@@ -90,6 +91,21 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
             textViewClosetLandmark = view.findViewById(R.id.textViewRestaurantClosestLandmark);
             textViewRestaurantLocation = view.findViewById(R.id.textViewRestaurantLocation);
             restImageHolder = view.findViewById(R.id.restImage);
+
+            //attach onClickListener to restaurantItemView
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                        int pos = getBindingAdapterPosition();
+                        if (pos != RecyclerView.NO_POSITION){
+                            //restaurantRecyclerViewInterface.onRestaurantClick(pos);
+                            Navigation.findNavController(v).navigate(R.id.torestaurantfragment);
+                        }
+
+
+                }
+            });
         }
     }
 }
