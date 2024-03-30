@@ -13,15 +13,11 @@ import io.realm.Realm;
 public class myApp extends Application {
     private static AppComponent appComponent;
 
+
     @Override
     public void onCreate() {
         super.onCreate();
         Realm.init(this);
-        appComponent = DaggerAppComponent.create();
-    }
-
-    public static AppComponent getAppComponent() {
-        return appComponent;
     }
 }
 
