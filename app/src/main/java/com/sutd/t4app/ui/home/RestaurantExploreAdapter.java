@@ -20,15 +20,17 @@ import com.squareup.picasso.Picasso;
 public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExploreAdapter.ViewHolder>{
 
     private List<Restaurant> restaurantList;
-    public RestaurantExploreAdapter(List<Restaurant> restaurantList) {
+    private int layoutID;
+    public RestaurantExploreAdapter(List<Restaurant> restaurantList, int layoutID) {
         this.restaurantList = restaurantList;
+        this.layoutID = layoutID;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.restaurant_item, parent, false);
+                .inflate(this.layoutID, parent, false);
         Log.d("INflated or what","yes");
         return new ViewHolder(view);
     }
@@ -43,14 +45,18 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
 
             holder.textViewName.setText(restaurant.getName());
             Log.d("DEBUGGING"," res " + holder.textViewName.getText() );
-            holder.textViewClosetLandmark.setText(restaurant.getClosestLandmark());
-            Log.d("DEBUGGING"," res " + holder.textViewClosetLandmark.getText() );
 
+            if(holder.textViewClosetLandmark != null) {
+                holder.textViewClosetLandmark.setText(restaurant.getClosestLandmark());
+                Log.d("DEBUGGING"," res " + holder.textViewClosetLandmark.getText() );
+            }
+            if(holder.textViewRestaurantCuisine != null) {
+                holder.textViewRestaurantCuisine.setText(restaurant.getCuisine());
+                Log.d("DEBUGGING", " res " + holder.textViewRestaurantCuisine.getText());
+            }
             holder.textViewRestaurantLocation.setText(restaurant.getAddress());
             Log.d("DEBUGGING"," res " + holder.textViewRestaurantLocation.getText() );
 
-            holder.textViewRestaurantCuisine.setText(restaurant.getCuisine());
-            Log.d("DEBUGGING"," res " + holder.textViewRestaurantCuisine.getText() );
 
             //add restImage update imageView
             Picasso.get()
