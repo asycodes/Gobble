@@ -71,7 +71,6 @@ dependencies {
     implementation("com.google.dagger:dagger:2.51")
     implementation("com.google.dagger:hilt-android:2.44")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
-    implementation("com.squareup.picasso:picasso:2.71828")
     annotationProcessor("com.google.dagger:dagger-compiler:2.51")
     annotationProcessor("com.google.dagger:hilt-android-compiler:2.44")
 
@@ -86,6 +85,9 @@ dependencies {
     implementation("io.reactivex.rxjava2:rxjava:2.2.21")
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.3.0")
     implementation("com.jakewharton.rxbinding4:rxbinding-recyclerview:4.0.0")
+
+    // Picasso for CDN
+    implementation("com.squareup.picasso:picasso:2.8")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

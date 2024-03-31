@@ -58,12 +58,15 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
             }
             holder.textViewRestaurantLocation.setText(restaurant.getAddress());
             Log.d("DEBUGGING"," res " + holder.textViewRestaurantLocation.getText() );
-
+            Picasso.get().setLoggingEnabled(true);
 
             //add restImage update imageView
             Picasso.get()
-                .load("https://images.pexels.com/photos/6277500/pexels-photo-6277500.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load") // Assuming `getImageUrl()` is a method in your `Restaurant` class
+                .load(restaurant.getImgMainURL()) // Assuming `getImageUrl()` is a method in your `Restaurant` class
                 .into(holder.restImageHolder);
+
+
+            Log.d("DEBUGGING"," res " +restaurant.getImgMainURL());
 
             // Bind other restaurant details as needed
         }
