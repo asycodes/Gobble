@@ -204,6 +204,200 @@
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:checked="false" />
+            <!-- Cuisine Exploration -->
+            <TextView
+                android:id="@+id/cuisineExplorationTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cuisine Exploration: Are you adventurous with cuisines, or do you prefer sticking to familiar tastes?"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
+
+            <Spinner
+                android:id="@+id/cuisineExplorationSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/cuisine_adventurousness_options"
+                android:layout_marginTop="8dp"/>
+
+            <!-- Spicy Food Tolerance -->
+            <TextView
+                android:id="@+id/spicyToleranceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Spicy Food Tolerance: How well do you tolerate spicy food?"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
+
+            <Spinner
+                android:id="@+id/spicyToleranceSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/spicy_tolerance_options"
+                android:layout_marginTop="8dp"/>
+
+            <!-- Sweet Tooth -->
+            <TextView
+                android:id="@+id/sweetToothTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sweet Tooth: How important are desserts to you in a dining experience?"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
+
+            <Spinner
+                android:id="@+id/sweetToothSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/dessert_importance_options"
+                android:layout_marginTop="8dp"/>
+
+            <!-- Specialty Dishes -->
+            <TextView
+                android:id="@+id/specialtyDishesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Specialty Dishes: Are there any specific dishes or food items you particularly enjoy or seek out?"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
+
+            <EditText
+                android:id="@+id/specialtyDishesEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="List some of your favorite dishes"
+                android:inputType="text"
+                android:layout_marginTop="8dp"/>
+
+            <!-- Health and Wellness -->
+            <TextView
+                android:id="@+id/healthWellnessTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Health and Wellness: How important are health and wellness options to you in your dining choices?"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
+
+            <Spinner
+                android:id="@+id/healthWellnessSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/health_importance_options"
+                android:layout_marginTop="8dp"/>
+
+            <!-- Ambience Preference -->
+            <TextView
+                android:id="@+id/ambiencePreferenceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ambience Preference: What dining ambience do you prefer?"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
+
+            <!-- Add Checkboxes for Ambience Preferences -->
+            <CheckBox
+                android:id="@+id/checkboxCasual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Casual"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:checked="false" />
+
+            <CheckBox
+                android:id="@+id/checkboxCozy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cozy"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:checked="false" />
+
+            <CheckBox
+                android:id="@+id/checkboxRomantic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Romantic"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:checked="false" />
+
+            <CheckBox
+                android:id="@+id/checkboxFormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Formal"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:checked="false" />
+
+            <CheckBox
+                android:id="@+id/checkboxEnergetic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Energetic"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:checked="false" />
+
+            <!-- Meal Preference -->
+            <TextView
+                android:id="@+id/mealPreferenceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Meal Preference: Do you have a preferred meal time for dining out?"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
+
+            <Spinner
+                android:id="@+id/mealTimePreferenceSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/meal_time_preferences"
+                android:layout_marginTop="8dp"/>
+
+            <!-- Ingredient Preferences or Dislikes -->
+            <TextView
+                android:id="@+id/ingredientPreferencesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ingredient Preferences: Are there specific ingredients you particularly enjoy in your meals?"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
+
+            <EditText
+                android:id="@+id/ingredientPreferencesEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="e.g., Avocado, Quinoa, Salmon"
+                android:inputType="text"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/ingredientDislikesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ingredient Dislikes: Are there specific ingredients you dislike or avoid?"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
+
+            <EditText
+                android:id="@+id/ingredientDislikesEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="e.g., Nuts, Dairy, Gluten"
+                android:inputType="text"
+                android:layout_marginTop="8dp"/>
+
 
             <Button
                 android:id="@+id/finalizeProfileButton"
@@ -213,7 +407,8 @@
                 android:textSize="16sp"
                 android:textColor="@android:color/white"
                 android:background="#FF5722"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="30dp"/>
 
         </LinearLayout>
     </ScrollView>

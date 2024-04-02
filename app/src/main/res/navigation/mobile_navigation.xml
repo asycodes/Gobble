@@ -41,6 +41,12 @@
         android:label="Filter"
         tools:layout="@layout/filter_bottom_up"/>
 
+    <fragment
+        android:id="@+id/navigation_questions"
+        android:name="com.sutd.t4app.ui.ProfileQuestions.QuestionFragment"
+        android:label="Questions"
+        tools:layout="@layout/questions"/>
+
     <action
         android:id="@+id/torestaurantfragment"
         app:destination="@id/navigation_restaurant"/>
@@ -52,6 +58,10 @@
     <action
         android:id="@+id/tofilterfragment"
         app:destination="@id/navigation_filter"/>
+
+    <action
+        android:id="@+id/toQuestionspage"
+        app:destination="@id/navigation_questions"/>
 
 
 </navigation>

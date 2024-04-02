@@ -33,6 +33,8 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
 
+    private ImageView questionnaire;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -57,6 +59,7 @@ public class HomeFragment extends Fragment {
         // Observe the LiveData from the ViewModel
         viewModel.getRestaurantsLiveData().observe(getViewLifecycleOwner(), restaurants -> {
             // Update the adapter with the list of restaurants
+            Log.d("HomeFragment", "Number of restaurants received: " + restaurants.size());
             adapter.updateData(restaurants); // See note below about adapter
             hotAdapter.updateData(restaurants);
 
@@ -72,6 +75,14 @@ public class HomeFragment extends Fragment {
             }
         });
         */
+
+        questionnaire= root.findViewById(R.id.questionsicon);
+        questionnaire.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.toQuestionspage);
+            }
+        });
 
         filterIcon = root.findViewById(R.id.filterIcon);
         filterIcon.setOnClickListener(new View.OnClickListener() {

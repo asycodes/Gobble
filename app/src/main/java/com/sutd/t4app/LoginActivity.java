@@ -35,24 +35,25 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in);
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("608019695893-le4ojn1imiute9040pj9mulgnhe6gkjt.apps.googleusercontent.com").requestEmail()
-                .build();
-        googleSignInClient = GoogleSignIn.getClient(this, gso);
-        resultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    Log.d("LoginActivity", "ActivityResultLauncher triggered with result code: " + result.getResultCode());
-
-
-
-
-                        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
-
-                        handleSignInResult(task);
-                });
-
-        findViewById(R.id.sign_in_button).setOnClickListener(view -> signInWithGoogle());
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestIdToken("608019695893-le4ojn1imiute9040pj9mulgnhe6gkjt.apps.googleusercontent.com").requestEmail()
+//                .build();
+//        googleSignInClient = GoogleSignIn.getClient(this, gso);
+//        resultLauncher = registerForActivityResult(
+//                new ActivityResultContracts.StartActivityForResult(),
+//                result -> {
+//                    Log.d("LoginActivity", "ActivityResultLauncher triggered with result code: " + result.getResultCode());
+//
+//
+//
+//
+//                        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
+//
+//                        handleSignInResult(task);
+//                });
+//
+//        findViewById(R.id.sign_in_button).setOnClickListener(view -> signInWithGoogle());
+        onLoginSuccess();
     }
 
     private void signInWithGoogle() {
