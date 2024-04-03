@@ -1,6 +1,8 @@
 package com.sutd.t4app.ui.filter;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,11 +20,19 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.slider.Slider;
 import com.sutd.t4app.R;
+import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.databinding.FilterBottomUpBinding;
+import com.sutd.t4app.ui.home.HomeFragmentViewModel;
 import com.sutd.t4app.ui.reviews.ReviewViewModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 public class FilterFragment extends Fragment {
 
@@ -37,6 +48,7 @@ public class FilterFragment extends Fragment {
     private int overallStarRating = 0;
     private ReviewViewModel viewModel;
     private FilterBottomUpBinding binding;
+    private Realm realm;
 
     public FilterFragment() {
         // Required empty public constructor
@@ -47,8 +59,11 @@ public class FilterFragment extends Fragment {
                              Bundle savedInstanceState) {
         FilterBottomUpBinding binding= FilterBottomUpBinding.inflate(inflater,container,false);
         View root= binding.getRoot();
+        realm= Realm.getDefaultInstance();
 
-        // Inflate the layout for this fragment
+
+
+
 
         return root;
     }
@@ -105,13 +120,10 @@ public class FilterFragment extends Fragment {
         filterStar5.setOnClickListener(v -> setRating(filterStar5, 5, "filter"));
 
         // Set onClickListener for show results button
-        showResultsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.navigation_home);
-
-            }
-            // TODO: 22/3/24 LINK TO THE EXPLORE PAGE ALGORITHM
+        showResultsButton.setOnClickListener(v -> {
+            List<Restaurant> filteredRestaurants = applyFilters();
+            Toast.makeText(getContext(), "Filtered Restaurants: " + filteredRestaurants.size(), Toast.LENGTH_SHORT).show();
+            //add navigation back to home later
         });
     }
 
@@ -157,4 +169,85 @@ public class FilterFragment extends Fragment {
             
         }
     }
+
+    private List<Restaurant> applyFilters() {
+        RealmQuery<Restaurant> query = realm.where(Restaurant.class);
+        RealmResults<Restaurant> allRestaurants = query.findAll(); // Get all restaurants before applying filters
+
+        // Log the initial size of the restaurant list
+        Log.d("InitialData", "Initial number of restaurants: " + allRestaurants.size());
+        // TODO: Problem: it seems like it is not pulling any data  "Initial number of restaurants: 0"
+
+
+
+        // Cuisine filters: Checking if the 'Cuisine' string contains any of the selected cuisines
+        List<String> selectedCuisines = new ArrayList<>();
+        if (americanCheckbox.isChecked()) selectedCuisines.add("Western");
+        if (asianCheckbox.isChecked()) selectedCuisines.add("Asian");
+        if (asianFusionCheckbox.isChecked()) selectedCuisines.add("Asian Fusion");
+        if(breakfastCheckbox.isChecked()) selectedCuisines.add("BreakFast");
+        if(chineseCheckbox.isChecked()) selectedCuisines.add("Chinese");
+
+        // Adding query condition for cuisines
+        if (selectedCuisines.size() > 0) {
+            query.beginGroup();
+            for (int i = 0; i < selectedCuisines.size(); i++) {
+                if (i > 0) query.or(); // Only add 'or' condition if there's more than one cuisine selected
+                query.contains("Cuisine", selectedCuisines.get(i));
+            }
+            query.endGroup();
+        }
+
+        // Dietary options filters: Similar approach as for cuisines
+        List<String> selectedDietaryOptions = new ArrayList<>();
+        if (glutenFreeCheckbox.isChecked()) selectedDietaryOptions.add("Gluten Free");
+        if (halalCheckbox.isChecked()) selectedDietaryOptions.add("Halal");
+        if(veganFriendlyCheckbox.isChecked()) selectedDietaryOptions.add("Vegan");
+        if(vegetarianCheckbox.isChecked()) selectedDietaryOptions.add("Vegetarian");
+
+        // Adding query condition for dietary options
+        if (selectedDietaryOptions.size() > 0) {
+            query.beginGroup();
+            for (int i = 0; i < selectedDietaryOptions.size(); i++) {
+                if (i > 0) query.or(); // Only add 'or' condition if there's more than one dietary option selected
+                query.contains("DietaryOptions", selectedDietaryOptions.get(i));
+            }
+            query.endGroup();
+        }
+
+        // Overall star rating filter
+        if (overallStarRating > 0) {
+            query.greaterThanOrEqualTo("Ratings", (double) overallStarRating);
+        }
+
+        if (selectedPrice > 0) {
+            query.beginGroup();
+            for (int price = selectedPrice; price <= 300; price += 10) {
+                String priceString = "$" + price;
+                query.or().equalTo("PriceRange", priceString);
+            }
+            query.endGroup();
+        }
+
+
+
+
+        RealmResults<Restaurant> result = query.findAll();
+        Log.d("FilterDebug", "Filtered Query Result Size: " + result.size());
+
+        // Before returning the filtered list, log the size of the list to debug
+        List<Restaurant> filteredList = realm.copyFromRealm(result);
+        Log.d("FilterDebug", "Number of filtered restaurants: " + filteredList.size());
+
+
+
+
+        return filteredList; // Convert RealmResults to List
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        realm.close(); // Close Realm instance to avoid memory leaks
+    }
+
 }

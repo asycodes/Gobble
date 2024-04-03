@@ -10,7 +10,9 @@ import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
+import com.sutd.t4app.R;
 import com.sutd.t4app.databinding.QuestionsBinding;
 
 import java.util.ArrayList;
@@ -39,6 +41,8 @@ public class QuestionFragment extends Fragment {
             public void onClick(View v) {
                 UserProfile userProfile = createUserProfileFromForm();
                 saveUserProfile(userProfile);
+
+                Navigation.findNavController(v).navigate((R.id.navigation_home));
             }
         });
 

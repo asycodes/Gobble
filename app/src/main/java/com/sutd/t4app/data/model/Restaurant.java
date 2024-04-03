@@ -14,7 +14,7 @@ public class Restaurant extends RealmObject implements Parcelable {
     private String Address;
     private String Cuisine;
     private String Name;
-    private Double OverallRatings;
+    private Double Ratings;
     private String Type;
     private String ClosestLandmark;
     private String imgMainURL;
@@ -23,12 +23,12 @@ public class Restaurant extends RealmObject implements Parcelable {
     private String TopMenu2;
     private String TopMenu3;
     private String TopMenu4;
-    private RealmList<String> DietaryOptions;
+    private String DietaryOptions;
     private String PriceRange;
     private Double FoodRating;
     private Double ServiceRating;
     private Double AmbienceRating;
-    private RealmList<String> Ambience;
+//    private RealmList<String> Ambience;
     private String lat; // Stored as String for simplified data
     private String lng;
     private String UserId1;
@@ -50,9 +50,9 @@ public class Restaurant extends RealmObject implements Parcelable {
 
         Name = in.readString();
         if (in.readByte() == 0) {
-            OverallRatings = null;
+            Ratings = null;
         } else {
-            OverallRatings = in.readDouble();
+            Ratings = in.readDouble();
         }
         Description= in.readString();
         TotalReviews=in.readString();
@@ -60,14 +60,13 @@ public class Restaurant extends RealmObject implements Parcelable {
         TopMenu2=in.readString();
         TopMenu3=in.readString();
         TopMenu4=in.readString();
-        DietaryOptions = new RealmList<>();
-        DietaryOptions.addAll(in.createStringArrayList());
+        DietaryOptions = in.readString();
         PriceRange = in.readString();
         FoodRating = in.readDouble();
         ServiceRating = in.readDouble();
         AmbienceRating = in.readDouble();
-        Ambience = new RealmList<>();
-        Ambience.addAll(in.createStringArrayList());
+//        Ambience = new RealmList<>();
+//        Ambience.addAll(in.createStringArrayList());
         lat = in.readString();
         lng = in.readString();
         Type = in.readString();
@@ -107,8 +106,8 @@ public class Restaurant extends RealmObject implements Parcelable {
     public void setCuisine(String Cuisine) { this.Cuisine = Cuisine; }
     public String getName() { return this.Name; }
     public void setName(String Name) { this.Name = Name; }
-    public Double getOverallRatings() { return this.OverallRatings; }
-    public void setOverallRatings(Double Ratings) { this.OverallRatings = Ratings; }
+    public Double getRatings() { return this.Ratings; }
+    public void setRatings(Double Ratings) { this.Ratings = Ratings; }
 //    public String getStatus() { return this.Status; }
 //    public void setStatus(String Status) { this.Status = Status; }
     public String getType() { return this.Type; }
@@ -156,11 +155,11 @@ public class Restaurant extends RealmObject implements Parcelable {
         TopMenu4 = topMenu4;
     }
 
-    public RealmList<String> getDietaryOptions() {
+    public String getDietaryOptions() {
         return DietaryOptions;
     }
 
-    public void setDietaryOptions(RealmList<String> dietaryOptions) {
+    public void setDietaryOptions(String dietaryOptions) {
         DietaryOptions = dietaryOptions;
     }
 
@@ -196,13 +195,13 @@ public class Restaurant extends RealmObject implements Parcelable {
         AmbienceRating = ambienceRating;
     }
 
-    public RealmList<String> getAmbience() {
-        return Ambience;
-    }
-
-    public void setAmbience(RealmList<String> ambience) {
-        Ambience = ambience;
-    }
+//    public RealmList<String> getAmbience() {
+//        return Ambience;
+//    }
+//
+//    public void setAmbience(RealmList<String> ambience) {
+//        Ambience = ambience;
+//    }
 
     public String getLat() {
         return lat;
@@ -279,35 +278,34 @@ public class Restaurant extends RealmObject implements Parcelable {
         dest.writeString(Address);
         dest.writeString(Cuisine);
         dest.writeString(Name);
-        if (OverallRatings == null) {
+        if (Ratings == null) {
             dest.writeByte((byte) 0);
         } else {
             dest.writeByte((byte) 1);
-            dest.writeDouble(OverallRatings);
+            dest.writeDouble(Ratings);
         }
-        dest.writeString(Type);
-        dest.writeString(ClosestLandmark);
         dest.writeString(Description);
         dest.writeString(TotalReviews);
         dest.writeString(TopMenu1);
         dest.writeString(TopMenu2);
         dest.writeString(TopMenu3);
         dest.writeString(TopMenu4);
-        dest.writeStringList(DietaryOptions);
+        dest.writeString(DietaryOptions);
         dest.writeString(PriceRange);
         dest.writeDouble(FoodRating);
         dest.writeDouble(ServiceRating);
         dest.writeDouble(AmbienceRating);
-        dest.writeStringList(Ambience);
-        dest.writeString(Address);
+        // dest.writeStringList(Ambience);
         dest.writeString(lat);
         dest.writeString(lng);
+        dest.writeString(Type);
+        dest.writeString(ClosestLandmark);
+        dest.writeString(imgMainURL);
         dest.writeString(UserId1);
         dest.writeString(Review1);
         dest.writeDouble(ReviewRating1);
         dest.writeString(UserId2);
         dest.writeString(Review2);
         dest.writeDouble(ReviewRating2);
-        dest.writeString(imgMainURL);
     }
 }
