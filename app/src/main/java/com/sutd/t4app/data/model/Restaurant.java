@@ -17,6 +17,7 @@ public class Restaurant extends RealmObject implements Parcelable {
     private String Status;
     private String Type;
     private String ClosestLandmark;
+    private String imgMainURL;
     // Standard getters & setters
 
     public Restaurant(){}
@@ -46,7 +47,12 @@ public class Restaurant extends RealmObject implements Parcelable {
             return new Restaurant[size];
         }
     };
-
+    public String getImgMainURL(){
+        return this.imgMainURL;
+    }
+    public void setImgMainURL(String url){
+        this.imgMainURL = url;
+    }
     public ObjectId getId() { return this._id; }
     public void setId(ObjectId _id) { this._id = _id; }
     public String getAddress() { return this.Address; }
