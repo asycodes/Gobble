@@ -32,9 +32,15 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".SignUpActivity">
+            <!-- No intent-filter for MAIN and LAUNCHER here -->
+        </activity>
+
         <activity android:name=".MainActivity">
             <!-- No intent-filter for MAIN and LAUNCHER here -->
         </activity>
+
+
     </application>
 
 </manifest>
