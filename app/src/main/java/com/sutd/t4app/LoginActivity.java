@@ -46,10 +46,12 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-
+                    if(result.getResultCode() == -1){
                         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
 
                         handleSignInResult(task);
+                    }
+
                 });
 
         findViewById(R.id.sign_in_button).setOnClickListener(view -> signInWithGoogle());
