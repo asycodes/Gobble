@@ -95,4 +95,9 @@ public class LoginActivity extends AppCompatActivity {
         finish(); // Close the LoginActivity so the user can't go back to it
     }
 
+    private void proceedToSignUp() {
+        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+        startActivity(intent);
+    }
+
 }
