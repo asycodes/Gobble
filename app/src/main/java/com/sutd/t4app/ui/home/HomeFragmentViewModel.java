@@ -71,40 +71,47 @@ public class HomeFragmentViewModel extends ViewModel {
                 }, throwable -> {
                     // Handle error
                 });
-
-
         this.realmApp = realmApp;
-                Realm.getInstanceAsync(RealmUtility.getDefaultSyncConfig(realmApp), new Realm.Callback() {
+        initializeRealm();
+
+
+    }
+    private void initializeRealm() {
+        RealmUtility.getDefaultSyncConfig(realmApp, new RealmUtility.ConfigCallback() {
+            @Override
+            public void onConfigReady(SyncConfiguration configuration) {
+                // Asynchronously initialize the Realm instance with the configuration
+                Realm.getInstanceAsync(configuration, new Realm.Callback() {
                     @Override
                     public void onSuccess(Realm realm) {
                         HomeFragmentViewModel.this.realm = realm;
                         Log.d("HomeFragmentViewModel", "Realm instance has been initialized successfully.");
-
-                        // Perform your Realm query
-                        realmResults = realm.where(Restaurant.class).findAllAsync();
-                        Log.d("SyncCheck", "Data synced or updated: " + realmResults);
-
-
-                        // Attach a listener to update LiveData when Realm results change
-                        realmResults.addChangeListener(new RealmChangeListener<RealmResults<Restaurant>>() {
-                            @Override
-                            public void onChange(RealmResults<Restaurant> results) {
-                                // This is automatically called on the main thread when data changes
-                                Log.d("SyncCheck", "Data synced or updated: " + results.size());
-                                // Detach the results from Realm and update LiveData
-                                restaurantsLiveData.postValue(realm.copyFromRealm(results));
-                            }
-                        });
+                        observeRestaurants(); // Observes data and updates LiveData
                     }
                 });
-
-
-
+            }
+            @Override
+            public void onError(Exception e) {
+                // Handle any errors, such as login failure
+                Log.e("YourViewModel", "Error obtaining Realm configuration", e);
+            }
+        });
     }
-    public void getRestaurantsTrip() {
-        // Example call
 
-    }
+    private void observeRestaurants() {
+        if (realm != null) {
+            // Perform your Realm query
+            realmResults = realm.where(Restaurant.class).findAllAsync();
+            realmResults.addChangeListener(new RealmChangeListener<RealmResults<Restaurant>>() {
+                @Override
+                public void onChange(RealmResults<Restaurant> results) {
+                    // This is automatically called on the main thread when data changes
+                    Log.d("SyncCheck", "Data synced or updated: " + results.size());
+                    // Detach the results from Realm and update LiveData
+                    restaurantsLiveData.postValue(realm.copyFromRealm(results));
+                }
+            });
+        }}
 
     public LiveData<List<Restaurant>> getRestaurantsLiveData() {
         return restaurantsLiveData;

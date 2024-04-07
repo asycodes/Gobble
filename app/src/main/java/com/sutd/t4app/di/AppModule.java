@@ -29,9 +29,4 @@ public class AppModule {
         return new App(appConfiguration);
     }
 
-    @Provides
-    @Singleton
-    public SyncConfiguration provideDefaultSyncConfiguration(App realmApp) {
-        return RealmUtility.getDefaultSyncConfig(realmApp);
-    }
 }

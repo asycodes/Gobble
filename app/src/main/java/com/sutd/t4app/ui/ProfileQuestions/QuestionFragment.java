@@ -52,44 +52,51 @@ public class QuestionFragment extends Fragment {
         binding = QuestionsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         // realm = Realm.getDefaultInstance();
-        //initialise realm
+        initializeRealm();
         this.realmApp= realmApp;
-        Realm.getInstanceAsync(RealmUtility.getDefaultSyncConfig(realmApp), new Realm.Callback() {
+        setupFinalizeProfileButton();
+
+        return root;
+    }
+
+    private void initializeRealm() {
+        RealmUtility.getDefaultSyncConfig(realmApp, new RealmUtility.ConfigCallback() {
             @Override
-            public void onSuccess(Realm realm) {
-                QuestionFragment.this.realm = realm;
-                Log.d("HomeFragmentViewModel", "Realm instance has been initialized successfully.");
-
-                // Perform your Realm query
-                realmResults = realm.where(UserProfile.class).findAllAsync();
-                Log.d("SyncCheck", "Data synced or updated: " + realmResults);
-
-
-                // Attach a listener to update LiveData when Realm results change
-                realmResults.addChangeListener(new RealmChangeListener<RealmResults<UserProfile>>() {
+            public void onConfigReady(SyncConfiguration configuration) {
+                Realm.getInstanceAsync(configuration, new Realm.Callback() {
                     @Override
-                    public void onChange(RealmResults<UserProfile> results) {
-                        // This is automatically called on the main thread when data changes
-                        Log.d("SyncCheck", "Data synced or updated: " + results.size());
-
+                    public void onSuccess(Realm realm) {
+                        QuestionFragment.this.realm = realm;
+                        observeUserProfile();
                     }
                 });
             }
-        });
 
-        // Set up the finalize profile button click listener
-        Button finalizeProfileButton = binding.finalizeProfileButton;
-        finalizeProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                UserProfile userProfile = createUserProfileFromForm();
-                saveUserProfile(userProfile);
-
-                Navigation.findNavController(v).navigate((R.id.navigation_home));
+            public void onError(Exception e) {
+                Log.e("QuestionFragment", "Error obtaining Realm configuration", e);
             }
         });
+    }
+    private void observeUserProfile() {
+        // Perform your Realm query
+        realmResults = realm.where(UserProfile.class).findAllAsync();
+        realmResults.addChangeListener(new RealmChangeListener<RealmResults<UserProfile>>() {
+            @Override
+            public void onChange(RealmResults<UserProfile> results) {
+                // Handle changes
+                Log.d("QuestionFragment", "UserProfile data updated: " + results.size());
+            }
+        });
+    }
 
-        return root;
+    private void setupFinalizeProfileButton() {
+        Button finalizeProfileButton = binding.finalizeProfileButton;
+        finalizeProfileButton.setOnClickListener(v -> {
+            UserProfile userProfile = createUserProfileFromForm();
+            saveUserProfile(userProfile);
+            Navigation.findNavController(v).navigate(R.id.navigation_home);
+        });
     }
 
     private UserProfile createUserProfileFromForm() {
