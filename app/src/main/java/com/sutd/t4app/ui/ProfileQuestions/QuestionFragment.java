@@ -256,6 +256,24 @@ public class QuestionFragment extends Fragment {
             public void execute(Realm realm) {
 
                 UserProfile item = realm.createObject(UserProfile.class,new ObjectId());
+                item.setUserId(userProfile.getUserId());
+                item.setUsername(userProfile.getUsername());
+                item.setEmail(userProfile.getEmail());
+                item.setPassword(userProfile.getPassword());
+                item.setCuisinePreferences(userProfile.getCuisinePreferences());
+                item.setDietaryPreferences(userProfile.getDietaryPreferences());
+                item.setLocationPreference(userProfile.getLocationPreference());
+                item.setBudgetPreference(userProfile.getBudgetPreference());
+                item.setFoodPreferences(userProfile.getFoodPreferences());
+                item.setCuisineAdventurousness(userProfile.getCuisineAdventurousness());
+                item.setSpicyTolerance(userProfile.getSpicyTolerance());
+                item.setSweetTooth(userProfile.getSweetTooth());
+                item.setSpecialtyDishes(userProfile.getSpecialtyDishes());
+                item.setHealthWellnessImportance(userProfile.getHealthWellnessImportance());
+                item.setAmbiencePreferences(userProfile.getAmbiencePreferences());
+                item.setMealTimePreferences(userProfile.getMealTimePreferences());
+                item.setIngredientPreferences(userProfile.getIngredientPreferences());
+                item.setIngredientDislikes(userProfile.getIngredientDislikes());
 
             }
         }, new Realm.Transaction.OnSuccess() {
