@@ -24,6 +24,8 @@ import com.sutd.t4app.myApp;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
 import com.sutd.t4app.BuildConfig;
+import com.sutd.t4app.ui.ProfileQuestions.UserProfile;
+import com.sutd.t4app.utility.RealmUtility;
 
 import java.util.List;
 
@@ -72,40 +74,7 @@ public class HomeFragmentViewModel extends ViewModel {
 
 
         this.realmApp = realmApp;
-        Credentials credentials = Credentials.anonymous();
-
-        this.realmApp.loginAsync(credentials, result -> {
-            if (result.isSuccess()) {
-                User user = this.realmApp.currentUser();
-                Log.v("QUICKSTART", "Successfully authenticated anonymously.");
-                SyncConfiguration config2 = new SyncConfiguration.Builder(
-                        user).initialSubscriptions(new SyncConfiguration.InitialFlexibleSyncSubscriptions() {
-                            @Override
-                            public void configure(Realm realm, MutableSubscriptionSet subscriptions) {
-                                // add a subscription with a name
-                                boolean ressubscriptionExists = false;
-                                for (Subscription existingSubscription : subscriptions) {
-                                    if ("restaurantsSubscription".equals(existingSubscription.getName())) {
-                                        ressubscriptionExists = true;
-                                        break;
-                                    }
-                                }
-
-                                if(!ressubscriptionExists){
-                                    subscriptions.add(Subscription.create("restaurantsSubscription",
-                                            realm.where(Restaurant.class)));
-                                }
-
-                            }
-                        })
-                        .build();
-
-                // realmApp is the same app from myApp.
-                // now we create a new configuration
-
-
-                // Initialize the Realm instance asynchronously
-                Realm.getInstanceAsync(config2, new Realm.Callback() {
+                Realm.getInstanceAsync(RealmUtility.getDefaultSyncConfig(realmApp), new Realm.Callback() {
                     @Override
                     public void onSuccess(Realm realm) {
                         HomeFragmentViewModel.this.realm = realm;
@@ -130,10 +99,6 @@ public class HomeFragmentViewModel extends ViewModel {
                 });
 
 
-            } else {
-                Log.e("QUICKSTART", "Failed to log in. Error: " + result.getError());
-            }
-        });
 
     }
     public void getRestaurantsTrip() {
@@ -148,13 +113,9 @@ public class HomeFragmentViewModel extends ViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-        // Remove the change listener
-        if (realmResults != null) {
-            realmResults.removeAllChangeListeners();
-        }
-        // Close the Realm instance
-        if (realm != null && !realm.isClosed()) {
+        if(realm != null) {
             realm.close();
+            realm = null;
         }
     }
 }

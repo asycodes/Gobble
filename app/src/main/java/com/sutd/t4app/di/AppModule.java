@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.sutd.t4app.BuildConfig;
+import com.sutd.t4app.utility.RealmUtility;
 
 import dagger.Module;
 import dagger.Provides;
@@ -11,6 +12,8 @@ import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
+import io.realm.mongodb.sync.SyncConfiguration;
+
 import javax.inject.Singleton;
 
 @Module
@@ -24,5 +27,11 @@ public class AppModule {
         String appId = apiKey; // Replace with your actual App ID
         AppConfiguration appConfiguration = new AppConfiguration.Builder(appId).build();
         return new App(appConfiguration);
+    }
+
+    @Provides
+    @Singleton
+    public SyncConfiguration provideDefaultSyncConfiguration(App realmApp) {
+        return RealmUtility.getDefaultSyncConfig(realmApp);
     }
 }

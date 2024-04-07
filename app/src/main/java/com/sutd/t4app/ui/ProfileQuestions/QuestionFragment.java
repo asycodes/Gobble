@@ -13,26 +13,69 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.sutd.t4app.R;
+import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.databinding.QuestionsBinding;
+import com.sutd.t4app.ui.home.HomeFragmentViewModel;
+import com.sutd.t4app.utility.RealmUtility;
+
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.realm.Realm;
-import io.realm.RealmResults;
+import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
+import io.realm.mongodb.App;
+import io.realm.mongodb.Credentials;
+import io.realm.mongodb.User;
+import io.realm.mongodb.sync.MutableSubscriptionSet;
+import io.realm.mongodb.sync.Subscription;
+import io.realm.mongodb.sync.SyncConfiguration;
+
+
+@AndroidEntryPoint
 public class QuestionFragment extends Fragment {
     private QuestionsBinding binding;
+    @Inject
+     App realmApp;
     private Realm realm;
+    private RealmResults<UserProfile> realmResults;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         binding = QuestionsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
+        // realm = Realm.getDefaultInstance();
         //initialise realm
-        realm= Realm.getDefaultInstance();
+        this.realmApp= realmApp;
+        Realm.getInstanceAsync(RealmUtility.getDefaultSyncConfig(realmApp), new Realm.Callback() {
+            @Override
+            public void onSuccess(Realm realm) {
+                QuestionFragment.this.realm = realm;
+                Log.d("HomeFragmentViewModel", "Realm instance has been initialized successfully.");
+
+                // Perform your Realm query
+                realmResults = realm.where(UserProfile.class).findAllAsync();
+                Log.d("SyncCheck", "Data synced or updated: " + realmResults);
+
+
+                // Attach a listener to update LiveData when Realm results change
+                realmResults.addChangeListener(new RealmChangeListener<RealmResults<UserProfile>>() {
+                    @Override
+                    public void onChange(RealmResults<UserProfile> results) {
+                        // This is automatically called on the main thread when data changes
+                        Log.d("SyncCheck", "Data synced or updated: " + results.size());
+
+                    }
+                });
+            }
+        });
 
         // Set up the finalize profile button click listener
         Button finalizeProfileButton = binding.finalizeProfileButton;
@@ -201,18 +244,12 @@ public class QuestionFragment extends Fragment {
                 "\nDislikes: " + userProfile.getIngredientDislikes())
 
                 ;
-        realm.executeTransactionAsync(new Realm.Transaction() {
+            realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                RealmResults<UserProfile> results = realm.where(UserProfile.class).findAll();
-                for (UserProfile profile : results) {
-                    Log.v("UserProfile", "Retrieved UserProfile: " +
-                            "\nUsername: " + profile.getUsername() +
-                            "\nEmail: " + profile.getEmail() +
-                            // Log other properties as needed
-                            "\nCuisine Preferences: " + profile.getCuisinePreferences() +
-                            "\nDietary Preferences: " + profile.getDietaryPreferences());
-                }
+
+                UserProfile item = realm.createObject(UserProfile.class,new ObjectId());
+
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override
