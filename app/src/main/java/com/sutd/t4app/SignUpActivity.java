@@ -2,12 +2,15 @@ package com.sutd.t4app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.textfield.TextInputLayout;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -16,9 +19,16 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.sign_up);
 
         EditText firstName = findViewById(R.id.firstNameEditText);
+        TextInputLayout firstNameInputLayout = findViewById(R.id.firstNameTextInputLayout);
+
         EditText lastName = findViewById(R.id.lastNameEditText);
+        TextInputLayout lastNameTextInputLayout = findViewById(R.id.lastNameEditTextTextInputLayout);
+
         EditText email = findViewById(R.id.emailEditText);
+        TextInputLayout emailTextInputLayout = findViewById(R.id.emailTextInputLayout);
+
         EditText pass = findViewById(R.id.passwordEditText);
+        TextInputLayout passTextInputLayout = findViewById(R.id.passwordTextInputLayout);
 
         Button submit = findViewById(R.id.signUpButton);
 
@@ -31,18 +41,47 @@ public class SignUpActivity extends AppCompatActivity {
                 String lastNameValue = lastName.getText().toString();
                 String emailValue = email.getText().toString();
                 String passValue = pass.getText().toString();
+                boolean isValid = true; // default true
 
                 // OKOK now we will need to do validation!!!!
+
+
+                if (firstNameValue.isEmpty()) {
+                    firstName.setError("First name is required");
+                    isValid = false;
+                }else{
+                    firstName.setError(null);
+                }
+
+                if (lastNameValue.isEmpty()) {
+                    lastName.setError("Last name is required");
+                    isValid = false;
+                }else{
+                    lastName.setError(null);
+                }
                 if (android.util.Patterns.EMAIL_ADDRESS.matcher(emailValue).matches()) {
                     // The email address is in a valid format.
+                    emailTextInputLayout.setError(null);
                 } else {
-                    // The email address is in an invalid format.
+                    //
+                    emailTextInputLayout.setError("Invalid email format");
+                    isValid = false;
+
                 }
 
                 if (passValue.matches(passwordPattern)) {
                     // The password is considered strong.
+                    passTextInputLayout.setError(null);
                 } else {
                     // The password does not meet the criteria.
+                    passTextInputLayout.setError("Password is WEAK");
+                    isValid = false;
+
+                }
+
+                if (isValid) {
+                    // All inputs are valid, proceed with the sign-up process
+                    Log.d("signup check","all valid");
                 }
             }
         });

@@ -66,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
         findViewById(R.id.sign_in_button).setOnClickListener(view -> signInWithGoogle());
+        findViewById(R.id.sign_up_button).setOnClickListener(view -> proceedToSignUp());
     }
 
     private void signInWithGoogle() {
