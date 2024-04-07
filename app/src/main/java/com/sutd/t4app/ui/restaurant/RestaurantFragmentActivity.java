@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,19 @@ public class RestaurantFragmentActivity extends Fragment {
             TextView restaurantNameTextView = root.findViewById(R.id.restaurantName);
             restaurantNameTextView.setText(restaurant.getName());
         }
+
+        // button compare instantiation
+        Button btnCompare = root.findViewById(R.id.compareButton);
+        
+        btnCompare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: Add your code here to be executed when the button is clicked
+                Navigation.findNavController(v).navigate(R.id.compare_fragment);
+            }
+        });
+        //add onClickListener to btnCompare
+
 
         //update restaurantName textview values with value from restaurant.getName()
 

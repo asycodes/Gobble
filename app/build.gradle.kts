@@ -71,6 +71,7 @@ dependencies {
     implementation("com.google.dagger:dagger:2.51")
     implementation("com.google.dagger:hilt-android:2.44")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
     annotationProcessor("com.google.dagger:dagger-compiler:2.51")
     annotationProcessor("com.google.dagger:hilt-android-compiler:2.44")
 
