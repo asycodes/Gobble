@@ -1,34 +1,40 @@
 package com.sutd.t4app.ui.home;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.sutd.t4app.R;
 import com.sutd.t4app.data.model.Restaurant;
 
 import java.util.List;
+import com.squareup.picasso.Picasso;
 
 public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExploreAdapter.ViewHolder>{
 
     private List<Restaurant> restaurantList;
-    public RestaurantExploreAdapter(List<Restaurant> restaurantList) {
+    private int layoutID;
+    public RestaurantExploreAdapter(List<Restaurant> restaurantList, int layoutID) {
         this.restaurantList = restaurantList;
+        this.layoutID = layoutID;
+
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.restaurant_item, parent, false);
+                .inflate(this.layoutID, parent, false);
         Log.d("INflated or what","yes");
-        return new ViewHolder(view);
+        return new ViewHolder(view, restaurantList);
     }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -41,14 +47,26 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
 
             holder.textViewName.setText(restaurant.getName());
             Log.d("DEBUGGING"," res " + holder.textViewName.getText() );
-            holder.textViewClosetLandmark.setText(restaurant.getClosestLandmark());
-            Log.d("DEBUGGING"," res " + holder.textViewClosetLandmark.getText() );
 
+            if(holder.textViewClosetLandmark != null) {
+                holder.textViewClosetLandmark.setText(restaurant.getClosestLandmark());
+                Log.d("DEBUGGING"," res " + holder.textViewClosetLandmark.getText() );
+            }
+            if(holder.textViewRestaurantCuisine != null) {
+                holder.textViewRestaurantCuisine.setText(restaurant.getCuisine());
+                Log.d("DEBUGGING", " res " + holder.textViewRestaurantCuisine.getText());
+            }
             holder.textViewRestaurantLocation.setText(restaurant.getAddress());
             Log.d("DEBUGGING"," res " + holder.textViewRestaurantLocation.getText() );
+            Picasso.get().setLoggingEnabled(true);
 
-            holder.textViewRestaurantCuisine.setText(restaurant.getCuisine());
-            Log.d("DEBUGGING"," res " + holder.textViewRestaurantCuisine.getText() );
+            //add restImage update imageView
+            Picasso.get()
+                .load(restaurant.getImgMainURL()) // Assuming `getImageUrl()` is a method in your `Restaurant` class
+                .into(holder.restImageHolder);
+
+
+            Log.d("DEBUGGING"," res " +restaurant.getImgMainURL());
 
             // Bind other restaurant details as needed
         }
@@ -68,14 +86,31 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
         TextView textViewRestaurantCuisine;
         TextView textViewClosetLandmark;
         TextView textViewRestaurantLocation;
+        ImageView restImageHolder;
 
-        ViewHolder(View view) {
+        ViewHolder(View view, List<Restaurant> restaurantList) {
             super(view);
             textViewName = view.findViewById(R.id.textViewRestaurantName);
             textViewRestaurantCuisine = view.findViewById(R.id.textViewRestaurantCuisine);
             textViewClosetLandmark = view.findViewById(R.id.textViewRestaurantClosestLandmark);
             textViewRestaurantLocation = view.findViewById(R.id.textViewRestaurantLocation);
+            restImageHolder = view.findViewById(R.id.restImage);
 
+            //attach onClickListener to restaurantItemView
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    int pos = getBindingAdapterPosition();
+                    Restaurant restaurant = restaurantList.get(pos);
+                    bundle.putParcelable("restaurant", restaurant); // replace "key" and "value" with your actual key and value
+                    if (pos != RecyclerView.NO_POSITION){
+                        Navigation.findNavController(v).navigate(R.id.torestaurantfragment, bundle);
+                    }
+
+
+                }
+            });
         }
     }
 }

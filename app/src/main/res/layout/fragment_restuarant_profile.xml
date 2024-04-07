@@ -86,7 +86,8 @@
                     android:layout_marginTop="16dp"
                     android:text="P.S. Cafe"
                     android:textColor="#282828"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:id="@+id/restaurantName"/>
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

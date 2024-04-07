@@ -50,14 +50,18 @@ public class LoginActivity extends AppCompatActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     Log.d("LoginActivity", "ActivityResultLauncher triggered with result code: " + result.getResultCode());
+
+
                     if(result.getResultCode() == -1){
                         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
                         handleSignInResult(task);
                     }
+
                     else{
                         // TODO: what happens if its not -1
 
                     }
+
 
                 });
 
