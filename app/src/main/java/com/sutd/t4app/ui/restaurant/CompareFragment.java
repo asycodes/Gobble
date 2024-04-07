@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.sutd.t4app.R;
 
@@ -25,7 +26,28 @@ public class CompareFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_compare, container, false);
+
+        View root = inflater.inflate(R.layout.fragment_compare, container, false);
+        TextView llmText = root.findViewById(R.id.llmOutput);
+
+
+        //call openAI API - add prompt "How are you"
+
+
+        //update llmText with the response of openAI
+        llmText.setText("abc");
+
+
+        //set the value of llmOutput to "abc"
+        //TextView llmText = root.findViewById(R.id.restaurantName);
+        
+        //instantiate TextView llmText
+
+
+
+        return root;
+
+
     }
 
     @Override
