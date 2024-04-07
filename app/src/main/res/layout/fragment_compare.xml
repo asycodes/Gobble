@@ -203,7 +203,10 @@
             android:id="@+id/llmOutput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="LLM suggestion" />
+            android:text="Comparing the selected restaurants..."
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary"/>
 
     </LinearLayout>
 
