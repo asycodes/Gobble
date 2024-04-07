@@ -38,19 +38,30 @@ public class LoginActivity extends AppCompatActivity {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("608019695893-le4ojn1imiute9040pj9mulgnhe6gkjt.apps.googleusercontent.com").requestEmail()
                 .build();
+        GoogleSignInAccount googleSignInAcc = GoogleSignIn.getLastSignedInAccount(this);
+        // check if theres any existing account previously
+        if(googleSignInAcc != null){
+            Log.d("we go next", "not null");
+            onLoginSuccess();
+        }
         googleSignInClient = GoogleSignIn.getClient(this, gso);
+
         resultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     Log.d("LoginActivity", "ActivityResultLauncher triggered with result code: " + result.getResultCode());
 
 
-
                     if(result.getResultCode() == -1){
                         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
-
                         handleSignInResult(task);
                     }
+
+                    else{
+                        // TODO: what happens if its not -1
+
+                    }
+
 
                 });
 
@@ -64,13 +75,15 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
-
-            Log.d("TEST","DOES IT WORK");
             if (completedTask.isSuccessful()) {
                 GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+                final String getFullName = account.getDisplayName();
+                final String getEmail = account.getEmail();
+                Log.d("NAME", ""+getFullName);
+                Log.d("EMAIL", ""+getEmail);
+
                 String token = account.getIdToken();
                 Log.d("CEHCKING1","" +token);
-                Log.d("CEHCKING2","" +GoogleAuthType.ID_TOKEN);
                 Credentials creds = Credentials.jwt(token);
                 this.realmApp.loginAsync(creds, it -> {
                     if (it.isSuccess()) {
