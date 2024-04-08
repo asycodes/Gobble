@@ -1,5 +1,7 @@
 package com.sutd.t4app.ui.home;
 
+import android.util.Log;
+
 import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.ui.ProfileQuestions.UserProfile;
 
@@ -29,6 +31,7 @@ public class RestaurantRanking {
         return ranker;
     }
     private List<String> parseList(String listString) {
+        Log.d("DEBUG NULL OBJECT", "" + listString);
         // Assuming the listString is in the format "[item1,item2,...]"
         listString = listString.substring(1, listString.length() - 1); // Remove the brackets
         return Arrays.asList(listString.split(","));

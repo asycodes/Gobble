@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.utility.RealmUtility;
 
 import java.util.List;
@@ -53,11 +54,8 @@ public class UserProfileViewModel extends ViewModel {
     private void fetchUserProfiles() {
         String currentUserId="bshfbefnwoef212100001";
         if (realm != null && currentUserId != null) {
-            realm.executeTransactionAsync(realm -> {
-                // Adjust the query to filter by the current user's ID
-                UserProfile userProfile = realm.where(UserProfile.class)
-                        .equalTo("userId", currentUserId)
-                        .findFirst();
+            UserProfile userProfile = realm.where(UserProfile.class).equalTo("userId", currentUserId)
+                    .findFirst();
 
                 if (userProfile != null) {
                     UserProfile detachedUserProfile = realm.copyFromRealm(userProfile);
@@ -67,7 +65,6 @@ public class UserProfileViewModel extends ViewModel {
                     // Handle the case where the user profile is not found, e.g., post null or a default UserProfile object
                     userProfilesLiveData.postValue(null);
                 }
-            });
         }
     }
 

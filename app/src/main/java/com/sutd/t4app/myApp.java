@@ -24,8 +24,7 @@ public class myApp extends Application {
         super.onCreate();
         // Initialize Realm
         Realm.init(this);
-
-        RealmConfiguration config = new RealmConfiguration.Builder()
+/*        RealmConfiguration config = new RealmConfiguration.Builder()
                 .schemaVersion(3) // Set to a version higher than the current on-device version.
 
                 //as off 3/04 it its at version 2-ANGIE
@@ -80,8 +79,8 @@ public class myApp extends Application {
 
         // Set this configuration as the default for this application
         Realm.setDefaultConfiguration(config);
-    }
-}
+    }*/
+}}
 
 
 

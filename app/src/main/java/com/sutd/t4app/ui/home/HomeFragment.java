@@ -39,7 +39,6 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
 
     private ImageView questionnaire;
-    private UserProfileViewModel userProfileViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -61,7 +60,6 @@ public class HomeFragment extends Fragment {
 
         // Initialize the ViewModel
         viewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
-        userProfileViewModel = new ViewModelProvider(requireActivity()).get(UserProfileViewModel.class);
 
 
         // Observe the LiveData from the ViewModel
@@ -120,11 +118,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        userProfileViewModel = new ViewModelProvider(requireActivity()).get(UserProfileViewModel.class);
-        viewModel = new ViewModelProvider(requireActivity()).get(HomeFragmentViewModel.class);
-
-        userProfileViewModel.getUserProfilesLiveData().observe(getViewLifecycleOwner(), userProfile -> {
+        viewModel.getUserProfilesLiveData().observe(getViewLifecycleOwner(), userProfile -> {
             if (userProfile != null) {
                 // Use the user profile to rank restaurants, for example
                 viewModel.rankAndUpdateRestaurants(userProfile);

@@ -61,34 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         // Launch the intent using the registered launcher
         resultLauncher.launch(signInIntent);
     }
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        try {
 
-            Log.d("TEST","DOES IT WORK");
-            if (completedTask.isSuccessful()) {
-                GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-                String token = account.getIdToken();
-                Log.d("CEHCKING1","" +token);
-                Log.d("CEHCKING2","" +GoogleAuthType.ID_TOKEN);
-                Credentials creds = Credentials.jwt(token);
-                this.realmApp.loginAsync(creds, it -> {
-                    if (it.isSuccess()) {
-                        Log.v("AUTH",
-                                "Successfully logged in to MongoDB Realm using Google OAuth.");
-                        onLoginSuccess();
-                    } else {
-                        Log.e("AUTH",
-                                "Failed to log in to MongoDB Realm: ", it.getError());
-                    }
-                });
-            } else {
-                Log.e("AUTH", "Google Auth failed: "
-                        + completedTask.getException().toString());
-            }
-        } catch (ApiException e) {
-            Log.w("AUTH", "Failed to log in with Google OAuth: " + e.getMessage());
-        }
-    }
 
     private void onLoginSuccess() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);

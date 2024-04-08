@@ -20,12 +20,12 @@ public class RealmUtility {
         void onError(Exception e);
     }
 
-    public static void getDefaultSyncConfig(App realmApp, ConfigCallback callback) {
+    public static synchronized void getDefaultSyncConfig(App realmApp, ConfigCallback callback) {
         if (defaultSyncConfig != null) {
             callback.onConfigReady(defaultSyncConfig);
-            return;
         }
-        realmApp.loginAsync(Credentials.anonymous(), result -> {
+        Credentials emailPasswordCredentials = Credentials.emailPassword("user@example.com", "password");
+        realmApp.loginAsync(emailPasswordCredentials, result -> {
             if (result.isSuccess()) {
                 User user = realmApp.currentUser();
                 defaultSyncConfig = new SyncConfiguration.Builder(user)

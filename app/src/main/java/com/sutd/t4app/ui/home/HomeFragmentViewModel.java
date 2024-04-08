@@ -39,6 +39,7 @@ import io.realm.mongodb.sync.Subscription;
 import io.realm.mongodb.sync.SyncConfiguration;
 @HiltViewModel
 public class HomeFragmentViewModel extends ViewModel {
+    private MutableLiveData<UserProfile> userProfilesLiveData = new MutableLiveData<>();
     private TripAdvisorService tripAdvisorService;
     private YelpService yelpService;
     private List<YelpSearchResponse.Business> yelpresponse;
@@ -114,6 +115,26 @@ public class HomeFragmentViewModel extends ViewModel {
                 }
             });
         }}
+
+    private void fetchUserProfiles() {
+        String currentUserId="bshfbefnwoef212100001";
+        if (realm != null && currentUserId != null) {
+            UserProfile userProfile = realm.where(UserProfile.class).equalTo("userId", currentUserId)
+                    .findFirst();
+
+            if (userProfile != null) {
+                UserProfile detachedUserProfile = realm.copyFromRealm(userProfile);
+
+                userProfilesLiveData.postValue(detachedUserProfile);
+            } else {
+                // Handle the case where the user profile is not found, e.g., post null or a default UserProfile object
+                userProfilesLiveData.postValue(null);
+            }
+        }
+    }
+    public LiveData<UserProfile> getUserProfilesLiveData() {
+        return userProfilesLiveData;
+    }
 
     public LiveData<List<Restaurant>> getRestaurantsLiveData() {
         return restaurantsLiveData;
