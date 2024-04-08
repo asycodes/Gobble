@@ -15,5 +15,12 @@
         <item>German</item>
         <item>Japanese</item>
     </string-array>
+    <string-array name="restaurant_options_list">
+        <item>restaurant1</item>
+        <item>restaurant2</item>
+        <item>restaurant3</item>
+        <item>restaurant4</item>
+        <item>restaurant5</item>
+    </string-array>
 
 </resources>

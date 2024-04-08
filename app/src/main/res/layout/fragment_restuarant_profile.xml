@@ -434,6 +434,7 @@
                 android:text="Compare Restaurants"
                 android:layout_gravity="center"
                 android:id="@+id/compareButton"
+
                 />
             <LinearLayout
                 android:layout_width="match_parent"

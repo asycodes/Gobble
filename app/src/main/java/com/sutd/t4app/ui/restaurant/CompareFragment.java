@@ -13,7 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
+import com.google.android.material.textfield.TextInputLayout;
 import com.sutd.t4app.BuildConfig;
 import com.sutd.t4app.R;
 
@@ -42,8 +46,27 @@ public class CompareFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        Log.d("openai", "onCreateView");
         View root = inflater.inflate(R.layout.fragment_compare, container, false);
+
+        TextInputLayout textInputLayout = root.findViewById(R.id.compareInputLayout);
+        MaterialAutoCompleteTextView autoCompleteTextView = root.findViewById(R.id.inputTV);
+        MaterialButton btnStartComparing = root.findViewById(R.id.restaurantInputButton);
+
+        btnStartComparing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (autoCompleteTextView.getText().toString().isEmpty()){
+                    textInputLayout.setError("Please select a restaurant");
+                }else {
+
+                    Toast.makeText(getActivity()  , autoCompleteTextView.getText().toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+
+        Log.d("openai", "onCreateView");
         TextView llmText = root.findViewById(R.id.llmOutput);
 
 
