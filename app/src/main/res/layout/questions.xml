@@ -69,7 +69,49 @@
                     android:layout_height="wrap_content"
                     android:text="Asian" />
 
-                <!-- Add more cuisine options as needed -->
+                <CheckBox
+                    android:id="@+id/radioAsianFusion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Asian Fusion" />
+
+                <CheckBox
+                    android:id="@+id/radioWestern"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Western" />
+
+                <CheckBox
+                    android:id="@+id/radioBreakFast"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Breakfast" />
+
+                <CheckBox
+                    android:id="@+id/radioChinese"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chinese" />
+
+                <CheckBox
+                    android:id="@+id/radioThai"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thai" />
+
+                <CheckBox
+                    android:id="@+id/radioIndian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Indian" />
+
+                <CheckBox
+                    android:id="@+id/radioJapanese"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Japanese" />
+
+
             </RadioGroup>
 
             <!-- Question 2: Dietary Preferences -->
@@ -99,6 +141,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Gluten-free" />
+            <CheckBox
+                android:id="@+id/checkboxHalal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Halal" />
+
+            <CheckBox
+                android:id="@+id/checkboxSeafood"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Seafood" />
+
+            <CheckBox
+                android:id="@+id/checkboxHealthy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Healthy" />
 
             <!-- Add more dietary preference checkboxes as needed -->
 

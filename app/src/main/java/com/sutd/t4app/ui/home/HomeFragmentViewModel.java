@@ -24,6 +24,7 @@ import com.sutd.t4app.myApp;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
 import com.sutd.t4app.BuildConfig;
+import com.sutd.t4app.ui.ProfileQuestions.UserProfile;
 
 import java.util.List;
 
@@ -144,6 +145,28 @@ public class HomeFragmentViewModel extends ViewModel {
     public LiveData<List<Restaurant>> getRestaurantsLiveData() {
         return restaurantsLiveData;
     }
+
+//    public void rankAndUpdateRestaurants(UserProfile userProfile) {
+//
+//        RestaurantRanker ranker= new RestaurantRanker();
+//        List<Restaurant> unrankedRestaurants = fetchRestaurants(); // Implement this method
+//        List<Restaurant> rankedRestaurants = rankingService.rankRestaurants(unrankedRestaurants, userProfile);
+//        rankedRestaurantsLiveData.postValue(rankedRestaurants);
+//    }
+//
+//    public LiveData<List<Restaurant>> getRankedRestaurantsLiveData() {
+//        return rankedRestaurantsLiveData;
+//    }
+//    private List<Restaurant> fetchRestaurants() {
+//        Realm realm = Realm.getDefaultInstance();
+//        try {
+//            RealmResults<Restaurant> results = realm.where(Restaurant.class).findAll();
+//            // Since RealmResults are live, they automatically update. You might want to create a detached copy.
+//            return realm.copyFromRealm(results);
+//        } finally {
+//            realm.close();
+//        }
+//    }
 
     @Override
     protected void onCleared() {

@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
 //                });
 //
 //        findViewById(R.id.sign_in_button).setOnClickListener(view -> signInWithGoogle());
-        onLoginSuccess();
+        performAnonymousLogin();
     }
 
     private void signInWithGoogle() {
@@ -94,6 +94,18 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish(); // Close the LoginActivity so the user can't go back to it
+    }
+
+    private void performAnonymousLogin() {
+        // Use the injected Realm App instance to perform anonymous authentication
+        realmApp.loginAsync(Credentials.anonymous(), result -> {
+            if (result.isSuccess()) {
+                Log.v("AUTH", "Successfully logged in to MongoDB Realm using Anonymous authentication.");
+                onLoginSuccess();
+            } else {
+                Log.e("AUTH", "Failed to log in to MongoDB Realm: ", result.getError());
+            }
+        });
     }
 
 }

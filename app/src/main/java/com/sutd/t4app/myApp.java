@@ -26,7 +26,7 @@ public class myApp extends Application {
         Realm.init(this);
 
         RealmConfiguration config = new RealmConfiguration.Builder()
-                .schemaVersion(2) // Set to a version higher than the current on-device version.
+                .schemaVersion(3) // Set to a version higher than the current on-device version.
 
                 //as off 3/04 it its at version 2-ANGIE
                 .migration(new RealmMigration() {
@@ -35,7 +35,7 @@ public class myApp extends Application {
                         RealmSchema schema = realm.getSchema();
 
                         // Migration from version 1 to version 2
-                        if (oldVersion == 1) {
+                        if (oldVersion == 2) {
                             RealmObjectSchema restaurantSchema = schema.get("Restaurant");
                             // Migrate the schema as per the required changes
                             // Example: removing a field, adding new fields
@@ -43,6 +43,8 @@ public class myApp extends Application {
                                 // Remove 'Status' if it exists
                                 if (restaurantSchema.hasField("Status")) {
                                     restaurantSchema.removeField("Status");
+                                    restaurantSchema.removeField("DietaryOptions");
+
                                 }
                                 // Add new fields
                                 restaurantSchema
@@ -64,10 +66,13 @@ public class myApp extends Application {
 //                                        .addField("Review2", String.class)
 //                                        .addField("ReviewRating2", Double.class)
 //                                        .addField("Description", String.class)
-                                        .addField("DietaryOptions", String.class);;
+                                        .addField("DietaryOptions", String.class)
+                                        .addField("Ambience", String.class)
+                                        .addField("Area", String.class);
+                                oldVersion++;
+
 
                             }
-                            oldVersion++;
                         }
                         // Handle other migration steps if there are any further schema changes
                     }

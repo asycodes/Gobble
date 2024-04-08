@@ -102,6 +102,15 @@ public class QuestionFragment extends Fragment {
         if (binding.radioItalian.isChecked()) selectedCuisines.add("Italian");
         if (binding.radioMexican.isChecked()) selectedCuisines.add("Mexican");
         if (binding.radioAsian.isChecked()) selectedCuisines.add("Asian");
+        if (binding.radioWestern.isChecked()) selectedCuisines.add("Western");
+        if (binding.radioAsianFusion.isChecked()) selectedCuisines.add("Asian Fusion");
+        if (binding.radioBreakFast.isChecked()) selectedCuisines.add("BreakFast");
+        if (binding.radioChinese.isChecked()) selectedCuisines.add("Chinese");
+        if (binding.radioThai.isChecked()) selectedCuisines.add("Thai");
+        if (binding.radioIndian.isChecked()) selectedCuisines.add("Indian");
+        if (binding.radioJapanese.isChecked()) selectedCuisines.add("Japanese");
+
+
         return selectedCuisines.toString();
     }
 
@@ -110,6 +119,11 @@ public class QuestionFragment extends Fragment {
         if (binding.checkboxVegetarian.isChecked()) selecteddiet.add("Vegetarian");
         if (binding.checkboxVegan.isChecked()) selecteddiet.add("Vegan");
         if (binding.checkboxGlutenFree.isChecked()) selecteddiet.add("Gluten-Free");
+        if (binding.checkboxHalal.isChecked()) selecteddiet.add("Halal");
+        if (binding.checkboxSeafood.isChecked()) selecteddiet.add("SeaFood");
+        if (binding.checkboxHealthy.isChecked()) selecteddiet.add("Healthy");
+
+
         return selecteddiet.toString();
 
     }

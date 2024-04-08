@@ -54,47 +54,6 @@
                 android:textColor="@android:color/black"
                 android:layout_marginBottom="16dp" />
 
-            <!-- Sort Filter -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sort"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="@android:color/black"
-                android:layout_marginBottom="8dp" />
-
-            <!-- Checkboxes for Sorting -->
-            <!-- Implement your checkboxes here -->
-            <CheckBox
-                android:id="@+id/topRatedCheckbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Top-rated"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:checked="false"
-                android:layout_marginTop="1dp" />
-            <CheckBox
-                android:id="@+id/RecommendedCheckbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Recommended"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:checked="false"
-                android:layout_marginTop="1dp" />
-
-            <CheckBox
-                android:id="@+id/nearmeCheckbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Near-me"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:checked="false"
-                android:layout_marginTop="1dp" />
-
 
 
 
@@ -181,7 +140,37 @@
                 android:id="@+id/AmericanCheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="American"
+                android:text="Western"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:checked="false"
+                android:layout_marginTop="1dp" />
+
+            <CheckBox
+                android:id="@+id/MexicanCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mexican"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:checked="false"
+                android:layout_marginTop="1dp" />
+
+            <CheckBox
+                android:id="@+id/ItalianCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Italian"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:checked="false"
+                android:layout_marginTop="1dp" />
+
+            <CheckBox
+                android:id="@+id/ThaiCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thai"
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:checked="false"
@@ -192,6 +181,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Asian"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:checked="false"
+                android:layout_marginTop="1dp" />
+
+            <CheckBox
+                android:id="@+id/IndianCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Indian"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:checked="false"
+                android:layout_marginTop="1dp" />
+
+            <CheckBox
+                android:id="@+id/JapaneseCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Japanese"
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:checked="false"
@@ -237,12 +246,21 @@
                 android:textColor="@android:color/black"
                 android:layout_marginBottom="8dp" />
 
-            <!-- Checkboxes for Dietary -->
+            <!-- Checkboxes for DietaryOptions -->
             <CheckBox
                 android:id="@+id/GlutenFreeCheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Gluten Free"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:checked="false"
+                android:layout_marginTop="1dp" />
+            <CheckBox
+                android:id="@+id/SeafoodCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Seafood"
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:checked="false"
@@ -272,6 +290,75 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Vegetarian"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:checked="false"
+                android:layout_marginTop="1dp" />
+            <CheckBox
+                android:id="@+id/HealthyCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Healthy"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:checked="false"
+                android:layout_marginTop="1dp" />
+
+<!--            Location-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Checkboxes for Location -->
+            <CheckBox
+                android:id="@+id/CentralCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Central"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:checked="false"
+                android:layout_marginTop="1dp" />
+            <CheckBox
+                android:id="@+id/NorthCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="North"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:checked="false"
+                android:layout_marginTop="1dp" />
+
+            <CheckBox
+                android:id="@+id/NorthEastCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="North-East"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:checked="false"
+                android:layout_marginTop="1dp" />
+
+            <CheckBox
+                android:id="@+id/WestCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="West"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:checked="false"
+                android:layout_marginTop="1dp" />
+            <CheckBox
+                android:id="@+id/EastCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="East"
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:checked="false"

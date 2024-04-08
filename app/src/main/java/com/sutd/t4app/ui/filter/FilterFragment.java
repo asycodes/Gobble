@@ -36,9 +36,10 @@ import io.realm.RealmResults;
 
 public class FilterFragment extends Fragment {
 
-    private CheckBox topRatedCheckbox, recommendedCheckbox, nearMeCheckbox;
-    private CheckBox americanCheckbox, asianCheckbox, asianFusionCheckbox, breakfastCheckbox, chineseCheckbox;
-    private CheckBox glutenFreeCheckbox, halalCheckbox, veganFriendlyCheckbox, vegetarianCheckbox;
+//    private CheckBox topRatedCheckbox, recommendedCheckbox, nearMeCheckbox;
+    private CheckBox americanCheckbox, asianCheckbox, asianFusionCheckbox, breakfastCheckbox, chineseCheckbox, mexicanCheckbox, italianCheckbox, thaiCheckbox, indianCheckbox, japaneseCheckBox;
+    private CheckBox glutenFreeCheckbox, halalCheckbox, veganFriendlyCheckbox, vegetarianCheckbox, seafoodCheckBox, healthyCheckBox;
+    private CheckBox centralCheckbox, NorthCheckBox, NorthEastCheckBox, WestCheckBox, EastCheckBox;
     private Slider priceSlider;
     private ImageView filterStar1, filterStar2, filterStar3, filterStar4, filterStar5;
     private Button showResultsButton;
@@ -75,39 +76,71 @@ public class FilterFragment extends Fragment {
 
         // Initialize views
         viewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
-        topRatedCheckbox = view.findViewById(R.id.topRatedCheckbox);
-        recommendedCheckbox = view.findViewById(R.id.RecommendedCheckbox);
-        nearMeCheckbox = view.findViewById(R.id.nearmeCheckbox);
+//        topRatedCheckbox = view.findViewById(R.id.topRatedCheckbox);
+//        recommendedCheckbox = view.findViewById(R.id.RecommendedCheckbox);
+//        nearMeCheckbox = view.findViewById(R.id.nearmeCheckbox);
         americanCheckbox = view.findViewById(R.id.AmericanCheckbox);
         asianCheckbox = view.findViewById(R.id.AsianCheckbox);
         asianFusionCheckbox = view.findViewById(R.id.AsianFusionCheckbox);
         breakfastCheckbox = view.findViewById(R.id.BreakfastCheckbox);
         chineseCheckbox = view.findViewById(R.id.ChineseCheckbox);
+        italianCheckbox=view.findViewById(R.id.ItalianCheckbox);
+        mexicanCheckbox= view.findViewById(R.id.MexicanCheckbox);
+        thaiCheckbox=view.findViewById(R.id.ThaiCheckbox);
+        indianCheckbox=view.findViewById(R.id.IndianCheckbox);
+        japaneseCheckBox=view.findViewById(R.id.JapaneseCheckbox);
+
         glutenFreeCheckbox = view.findViewById(R.id.GlutenFreeCheckbox);
         halalCheckbox = view.findViewById(R.id.HalalCheckbox);
         veganFriendlyCheckbox = view.findViewById(R.id.VeganFriendlyCheckbox);
         vegetarianCheckbox = view.findViewById(R.id.VegetarianCheckbox);
+        seafoodCheckBox= view.findViewById(R.id.SeafoodCheckbox);
+        healthyCheckBox=view.findViewById((R.id.HealthyCheckbox));
+
+
         priceSlider = view.findViewById(R.id.priceSlider);
         filterStar1 = view.findViewById(R.id.filterStar1);
         filterStar2 = view.findViewById(R.id.filterStar2);
         filterStar3 = view.findViewById(R.id.filterStar3);
         filterStar4 = view.findViewById(R.id.filterStar4);
         filterStar5 = view.findViewById(R.id.filterStar5);
+
+        centralCheckbox=view.findViewById(R.id.CentralCheckbox);
+        NorthCheckBox=view.findViewById(R.id.NorthCheckbox);
+        NorthEastCheckBox=view.findViewById(R.id.NorthEastCheckbox);
+        WestCheckBox=view.findViewById(R.id.WestCheckbox);
+        EastCheckBox=view.findViewById(R.id.EastCheckbox);
+
         showResultsButton = view.findViewById(R.id.showResultsButton);
 
         // Set onClickListener for checkboxes
-        setupCheckbox(topRatedCheckbox, selectedFilter);
-        setupCheckbox(recommendedCheckbox, selectedFilter);
-        setupCheckbox(nearMeCheckbox, selectedFilter);
-        setupCheckbox(americanCheckbox, selectedFilter);
-        setupCheckbox(asianCheckbox, selectedFilter);
-        setupCheckbox(asianFusionCheckbox, selectedFilter);
-        setupCheckbox(breakfastCheckbox, selectedFilter);
-        setupCheckbox(chineseCheckbox, selectedFilter);
-        setupCheckbox(glutenFreeCheckbox, selectedFilter);
-        setupCheckbox(halalCheckbox, selectedFilter);
-        setupCheckbox(vegetarianCheckbox, selectedFilter);
-        setupCheckbox(veganFriendlyCheckbox, selectedFilter);
+//        setupCheckbox(topRatedCheckbox, selectedFilter);
+//        setupCheckbox(recommendedCheckbox, selectedFilter);
+//        setupCheckbox(nearMeCheckbox, selectedFilter);
+//        setupCheckbox(americanCheckbox, selectedFilter);
+//        setupCheckbox(asianCheckbox, selectedFilter);
+//        setupCheckbox(asianFusionCheckbox, selectedFilter);
+//        setupCheckbox(breakfastCheckbox, selectedFilter);
+//        setupCheckbox(chineseCheckbox, selectedFilter);
+//        setupCheckbox(italianCheckbox,selectedFilter);
+//        setupCheckbox(mexicanCheckbox,selectedFilter);
+//        setupCheckbox(thaiCheckbox,selectedFilter);
+//        setupCheckbox(indianCheckbox,selectedFilter);
+//        setupCheckbox(japaneseCheckBox,selectedFilter);
+//
+//        setupCheckbox(glutenFreeCheckbox, selectedFilter);
+//        setupCheckbox(halalCheckbox, selectedFilter);
+//        setupCheckbox(vegetarianCheckbox, selectedFilter);
+//        setupCheckbox(veganFriendlyCheckbox, selectedFilter);
+//        setupCheckbox(seafoodCheckBox,selectedFilter);
+//        setupCheckbox(healthyCheckBox,selectedFilter);
+//
+//        setupCheckbox(centralCheckbox,selectedFilter);
+//        setupCheckbox(NorthCheckBox,selectedFilter);
+//        setupCheckbox(NorthEastCheckBox,selectedFilter);
+//        setupCheckbox(WestCheckBox,selectedFilter);
+//        setupCheckbox(EastCheckBox,selectedFilter);
+
 
         // Set listener for price slider
         priceSlider.addOnChangeListener((slider, value, fromUser) -> selectedPrice = (int) value);
@@ -127,16 +160,16 @@ public class FilterFragment extends Fragment {
         });
     }
 
-    private void setupCheckbox(CheckBox checkBox, List<String> selectedFilter) {
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            // Handle checkbox state change
-            if (isChecked) {
-                selectedFilter.add(checkBox.getText().toString());
-            } else {
-                selectedFilter.remove(checkBox.getText().toString());
-            }
-        });
-    }
+//    private void setupCheckbox(CheckBox checkBox, List<String> selectedFilter) {
+//        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+//            // Handle checkbox state change
+//            if (isChecked) {
+//                selectedFilter.add(checkBox.getText().toString());
+//            } else {
+//                selectedFilter.remove(checkBox.getText().toString());
+//            }
+//        });
+//    }
 
     private int updateRating(int currentRating, int rating, ImageView clickedStar, ImageView... stars) {
         // Toggle the clicked star and update UI
@@ -187,6 +220,12 @@ public class FilterFragment extends Fragment {
         if (asianFusionCheckbox.isChecked()) selectedCuisines.add("Asian Fusion");
         if(breakfastCheckbox.isChecked()) selectedCuisines.add("BreakFast");
         if(chineseCheckbox.isChecked()) selectedCuisines.add("Chinese");
+        if(italianCheckbox.isChecked()) selectedCuisines.add("Italian");
+        if(indianCheckbox.isChecked()) selectedCuisines.add("Indian");
+        if(mexicanCheckbox.isChecked()) selectedCuisines.add("Mexican");
+        if(thaiCheckbox.isChecked()) selectedCuisines.add("Thai");
+        if(japaneseCheckBox.isChecked()) selectedCuisines.add("Japanese");
+
 
         // Adding query condition for cuisines
         if (selectedCuisines.size() > 0) {
@@ -198,12 +237,14 @@ public class FilterFragment extends Fragment {
             query.endGroup();
         }
 
-        // Dietary options filters: Similar approach as for cuisines
+        // Dietary options filters
         List<String> selectedDietaryOptions = new ArrayList<>();
         if (glutenFreeCheckbox.isChecked()) selectedDietaryOptions.add("Gluten Free");
         if (halalCheckbox.isChecked()) selectedDietaryOptions.add("Halal");
         if(veganFriendlyCheckbox.isChecked()) selectedDietaryOptions.add("Vegan");
         if(vegetarianCheckbox.isChecked()) selectedDietaryOptions.add("Vegetarian");
+        if(seafoodCheckBox.isChecked()) selectedDietaryOptions.add("Seafood");
+        if(healthyCheckBox.isChecked()) selectedDietaryOptions.add("Healthy");
 
         // Adding query condition for dietary options
         if (selectedDietaryOptions.size() > 0) {
@@ -214,6 +255,23 @@ public class FilterFragment extends Fragment {
             }
             query.endGroup();
         }
+
+        //Location Options filter
+        List<String> selectedLocations= new ArrayList<>();
+        if(centralCheckbox.isChecked()) selectedLocations.add("Central");
+        if(NorthCheckBox.isChecked()) selectedLocations.add("North");
+        if(NorthEastCheckBox.isChecked()) selectedLocations.add("North-East");
+        if(WestCheckBox.isChecked()) selectedLocations.add("West");
+        if(EastCheckBox.isChecked()) selectedLocations.add("East");
+
+        if(selectedLocations.size()>0){
+            query.beginGroup();
+            for(int i=0; i< selectedLocations.size();i++){
+                if(i>0) query.or();
+                query.contains("Area",selectedLocations.get(i));
+            }
+        }
+
 
         // Overall star rating filter
         if (overallStarRating > 0) {
