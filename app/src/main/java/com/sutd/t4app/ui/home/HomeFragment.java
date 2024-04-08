@@ -9,6 +9,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -16,9 +17,13 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.sutd.t4app.R;
+import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.databinding.FragmentHomeBinding;
+import com.sutd.t4app.ui.ProfileQuestions.UserProfile;
+import com.sutd.t4app.ui.ProfileQuestions.UserProfileViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -34,6 +39,7 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
 
     private ImageView questionnaire;
+    private UserProfileViewModel userProfileViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -55,6 +61,8 @@ public class HomeFragment extends Fragment {
 
         // Initialize the ViewModel
         viewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
+        userProfileViewModel = new ViewModelProvider(requireActivity()).get(UserProfileViewModel.class);
+
 
         // Observe the LiveData from the ViewModel
         viewModel.getRestaurantsLiveData().observe(getViewLifecycleOwner(), restaurants -> {
@@ -108,6 +116,20 @@ public class HomeFragment extends Fragment {
         showExplorePage();
 
         return root;
+    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        userProfileViewModel = new ViewModelProvider(requireActivity()).get(UserProfileViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(HomeFragmentViewModel.class);
+
+        userProfileViewModel.getUserProfilesLiveData().observe(getViewLifecycleOwner(), userProfile -> {
+            if (userProfile != null) {
+                // Use the user profile to rank restaurants, for example
+                viewModel.rankAndUpdateRestaurants(userProfile);
+            }
+        });
     }
     private void showFeedPage() {
         isExplorePage = false;

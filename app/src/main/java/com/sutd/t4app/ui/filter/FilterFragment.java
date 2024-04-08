@@ -29,16 +29,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import io.realm.mongodb.App;
+import io.realm.mongodb.sync.SyncConfiguration;
+
+import com.sutd.t4app.utility.RealmUtility;
+
+import javax.inject.Inject;
+
+@AndroidEntryPoint
 
 public class FilterFragment extends Fragment {
+    @Inject
+    App realmApp;
 
-    private CheckBox topRatedCheckbox, recommendedCheckbox, nearMeCheckbox;
-    private CheckBox americanCheckbox, asianCheckbox, asianFusionCheckbox, breakfastCheckbox, chineseCheckbox;
-    private CheckBox glutenFreeCheckbox, halalCheckbox, veganFriendlyCheckbox, vegetarianCheckbox;
+    private CheckBox americanCheckbox, asianCheckbox, asianFusionCheckbox, breakfastCheckbox, chineseCheckbox, mexicanCheckbox, italianCheckbox, thaiCheckbox, indianCheckbox, japaneseCheckBox;
+    private CheckBox glutenFreeCheckbox, halalCheckbox, veganFriendlyCheckbox, vegetarianCheckbox, seafoodCheckBox, healthyCheckBox;
+    private CheckBox centralCheckbox, NorthCheckBox, NorthEastCheckBox, WestCheckBox, EastCheckBox;
     private Slider priceSlider;
     private ImageView filterStar1, filterStar2, filterStar3, filterStar4, filterStar5;
     private Button showResultsButton;
@@ -55,18 +66,38 @@ public class FilterFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        FilterBottomUpBinding binding= FilterBottomUpBinding.inflate(inflater,container,false);
-        View root= binding.getRoot();
-        realm= Realm.getDefaultInstance();
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FilterBottomUpBinding.inflate(inflater, container, false);
+        initializeRealm();
+        return binding.getRoot();
 
-
-
-
-
-        return root;
     }
+    private void initializeRealm() {
+        RealmUtility.getDefaultSyncConfig(realmApp, new RealmUtility.ConfigCallback() {
+            @Override
+            public void onConfigReady(SyncConfiguration configuration) {
+                // Obtain the Realm instance asynchronously based on the provided configuration
+                Realm.getInstanceAsync(configuration, new Realm.Callback() {
+                    @Override
+                    public void onSuccess(@NonNull Realm realm) {
+                        FilterFragment.this.realm = realm;
+                        // Now that Realm is initialized, you can proceed with setting up UI components that rely on Realm
+                        List<Restaurant> filteredRestaurants = applyFilters();
+                        getActivity().runOnUiThread(() -> {
+                            // Update UI components here based on the filtered results
+                            Toast.makeText(getContext(), "Filtered Restaurants: " + filteredRestaurants.size(), Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                });
+            }
+
+            @Override
+            public void onError(@NonNull Exception e) {
+                // Handle error in obtaining Realm configuration
+            }
+        });
+    }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -75,39 +106,53 @@ public class FilterFragment extends Fragment {
 
         // Initialize views
         viewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
-        topRatedCheckbox = view.findViewById(R.id.topRatedCheckbox);
-        recommendedCheckbox = view.findViewById(R.id.RecommendedCheckbox);
-        nearMeCheckbox = view.findViewById(R.id.nearmeCheckbox);
         americanCheckbox = view.findViewById(R.id.AmericanCheckbox);
         asianCheckbox = view.findViewById(R.id.AsianCheckbox);
         asianFusionCheckbox = view.findViewById(R.id.AsianFusionCheckbox);
         breakfastCheckbox = view.findViewById(R.id.BreakfastCheckbox);
         chineseCheckbox = view.findViewById(R.id.ChineseCheckbox);
+        italianCheckbox=view.findViewById(R.id.ItalianCheckbox);
+        mexicanCheckbox= view.findViewById(R.id.MexicanCheckbox);
+        thaiCheckbox=view.findViewById(R.id.ThaiCheckbox);
+        indianCheckbox=view.findViewById(R.id.IndianCheckbox);
+        japaneseCheckBox=view.findViewById(R.id.JapaneseCheckbox);
+
         glutenFreeCheckbox = view.findViewById(R.id.GlutenFreeCheckbox);
         halalCheckbox = view.findViewById(R.id.HalalCheckbox);
         veganFriendlyCheckbox = view.findViewById(R.id.VeganFriendlyCheckbox);
         vegetarianCheckbox = view.findViewById(R.id.VegetarianCheckbox);
+        seafoodCheckBox= view.findViewById(R.id.SeafoodCheckbox);
+        healthyCheckBox=view.findViewById((R.id.HealthyCheckbox));
+
+
         priceSlider = view.findViewById(R.id.priceSlider);
         filterStar1 = view.findViewById(R.id.filterStar1);
         filterStar2 = view.findViewById(R.id.filterStar2);
         filterStar3 = view.findViewById(R.id.filterStar3);
         filterStar4 = view.findViewById(R.id.filterStar4);
         filterStar5 = view.findViewById(R.id.filterStar5);
+
+        centralCheckbox=view.findViewById(R.id.CentralCheckbox);
+        NorthCheckBox=view.findViewById(R.id.NorthCheckbox);
+        NorthEastCheckBox=view.findViewById(R.id.NorthEastCheckbox);
+        WestCheckBox=view.findViewById(R.id.WestCheckbox);
+        EastCheckBox=view.findViewById(R.id.EastCheckbox);
+
         showResultsButton = view.findViewById(R.id.showResultsButton);
 
         // Set onClickListener for checkboxes
-        setupCheckbox(topRatedCheckbox, selectedFilter);
-        setupCheckbox(recommendedCheckbox, selectedFilter);
-        setupCheckbox(nearMeCheckbox, selectedFilter);
-        setupCheckbox(americanCheckbox, selectedFilter);
-        setupCheckbox(asianCheckbox, selectedFilter);
-        setupCheckbox(asianFusionCheckbox, selectedFilter);
-        setupCheckbox(breakfastCheckbox, selectedFilter);
-        setupCheckbox(chineseCheckbox, selectedFilter);
-        setupCheckbox(glutenFreeCheckbox, selectedFilter);
-        setupCheckbox(halalCheckbox, selectedFilter);
-        setupCheckbox(vegetarianCheckbox, selectedFilter);
-        setupCheckbox(veganFriendlyCheckbox, selectedFilter);
+//        setupCheckbox(topRatedCheckbox, selectedFilter);
+//        setupCheckbox(recommendedCheckbox, selectedFilter);
+//        setupCheckbox(nearMeCheckbox, selectedFilter);
+//        setupCheckbox(americanCheckbox, selectedFilter);
+//        setupCheckbox(asianCheckbox, selectedFilter);
+//        setupCheckbox(asianFusionCheckbox, selectedFilter);
+//        setupCheckbox(breakfastCheckbox, selectedFilter);
+//        setupCheckbox(chineseCheckbox, selectedFilter);
+//        setupCheckbox(glutenFreeCheckbox, selectedFilter);
+//        setupCheckbox(halalCheckbox, selectedFilter);
+//        setupCheckbox(vegetarianCheckbox, selectedFilter);
+//        setupCheckbox(veganFriendlyCheckbox, selectedFilter);
 
         // Set listener for price slider
         priceSlider.addOnChangeListener((slider, value, fromUser) -> selectedPrice = (int) value);
@@ -127,16 +172,16 @@ public class FilterFragment extends Fragment {
         });
     }
 
-    private void setupCheckbox(CheckBox checkBox, List<String> selectedFilter) {
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            // Handle checkbox state change
-            if (isChecked) {
-                selectedFilter.add(checkBox.getText().toString());
-            } else {
-                selectedFilter.remove(checkBox.getText().toString());
-            }
-        });
-    }
+//    private void setupCheckbox(CheckBox checkBox, List<String> selectedFilter) {
+//        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+//            // Handle checkbox state change
+//            if (isChecked) {
+//                selectedFilter.add(checkBox.getText().toString());
+//            } else {
+//                selectedFilter.remove(checkBox.getText().toString());
+//            }
+//        });
+//    }
 
     private int updateRating(int currentRating, int rating, ImageView clickedStar, ImageView... stars) {
         // Toggle the clicked star and update UI
@@ -171,6 +216,10 @@ public class FilterFragment extends Fragment {
     }
 
     private List<Restaurant> applyFilters() {
+        if (realm == null) {
+            Log.e("FilterFragment", "Realm instance is not initialized yet.");
+            return new ArrayList<>();
+        }// Return an empty list or handle this case as needed
         RealmQuery<Restaurant> query = realm.where(Restaurant.class);
         RealmResults<Restaurant> allRestaurants = query.findAll(); // Get all restaurants before applying filters
 
@@ -187,6 +236,11 @@ public class FilterFragment extends Fragment {
         if (asianFusionCheckbox.isChecked()) selectedCuisines.add("Asian Fusion");
         if(breakfastCheckbox.isChecked()) selectedCuisines.add("BreakFast");
         if(chineseCheckbox.isChecked()) selectedCuisines.add("Chinese");
+        if(italianCheckbox.isChecked()) selectedCuisines.add("Italian");
+        if(indianCheckbox.isChecked()) selectedCuisines.add("Indian");
+        if(mexicanCheckbox.isChecked()) selectedCuisines.add("Mexican");
+        if(thaiCheckbox.isChecked()) selectedCuisines.add("Thai");
+        if(japaneseCheckBox.isChecked()) selectedCuisines.add("Japanese");
 
         // Adding query condition for cuisines
         if (selectedCuisines.size() > 0) {
@@ -204,6 +258,8 @@ public class FilterFragment extends Fragment {
         if (halalCheckbox.isChecked()) selectedDietaryOptions.add("Halal");
         if(veganFriendlyCheckbox.isChecked()) selectedDietaryOptions.add("Vegan");
         if(vegetarianCheckbox.isChecked()) selectedDietaryOptions.add("Vegetarian");
+        if(seafoodCheckBox.isChecked()) selectedDietaryOptions.add("Seafood");
+        if(healthyCheckBox.isChecked()) selectedDietaryOptions.add("Healthy");
 
         // Adding query condition for dietary options
         if (selectedDietaryOptions.size() > 0) {
@@ -213,6 +269,22 @@ public class FilterFragment extends Fragment {
                 query.contains("DietaryOptions", selectedDietaryOptions.get(i));
             }
             query.endGroup();
+        }
+
+        //Location Options filter
+        List<String> selectedLocations= new ArrayList<>();
+        if(centralCheckbox.isChecked()) selectedLocations.add("Central");
+        if(NorthCheckBox.isChecked()) selectedLocations.add("North");
+        if(NorthEastCheckBox.isChecked()) selectedLocations.add("North-East");
+        if(WestCheckBox.isChecked()) selectedLocations.add("West");
+        if(EastCheckBox.isChecked()) selectedLocations.add("East");
+
+        if(selectedLocations.size()>0){
+            query.beginGroup();
+            for(int i=0; i< selectedLocations.size();i++){
+                if(i>0) query.or();
+                query.contains("Area",selectedLocations.get(i));
+            }
         }
 
         // Overall star rating filter
@@ -245,9 +317,12 @@ public class FilterFragment extends Fragment {
         return filteredList; // Convert RealmResults to List
     }
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        realm.close(); // Close Realm instance to avoid memory leaks
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (realm != null) {
+            realm.close(); // Close Realm instance to avoid memory leaks
+        }
+        binding = null;
     }
 
 }

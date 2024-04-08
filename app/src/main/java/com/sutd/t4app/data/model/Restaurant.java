@@ -28,7 +28,7 @@ public class Restaurant extends RealmObject implements Parcelable {
     private Double FoodRating;
     private Double ServiceRating;
     private Double AmbienceRating;
-//    private RealmList<String> Ambience;
+    private String Ambience;
     private String lat; // Stored as String for simplified data
     private String lng;
     private String UserId1;
@@ -39,6 +39,7 @@ public class Restaurant extends RealmObject implements Parcelable {
     private Double ReviewRating2;
 
     private String Description;
+    private String Area;
 
     // Standard getters & setters
 
@@ -78,6 +79,8 @@ public class Restaurant extends RealmObject implements Parcelable {
         UserId2 = in.readString();
         Review2 = in.readString();
         ReviewRating2 = in.readDouble();
+        Ambience=in.readString();
+        Area=in.readString();
 
     }
 
@@ -195,13 +198,13 @@ public class Restaurant extends RealmObject implements Parcelable {
         AmbienceRating = ambienceRating;
     }
 
-//    public RealmList<String> getAmbience() {
-//        return Ambience;
-//    }
-//
-//    public void setAmbience(RealmList<String> ambience) {
-//        Ambience = ambience;
-//    }
+    public String getAmbience() {
+        return Ambience;
+    }
+
+    public void setAmbience(String ambience) {
+        Ambience = ambience;
+    }
 
     public String getLat() {
         return lat;
@@ -265,6 +268,8 @@ public class Restaurant extends RealmObject implements Parcelable {
     public void setReviewRating2(Double reviewRating2) {
         ReviewRating2 = reviewRating2;
     }
+    public String getArea(){return Area;}
+    public void setArea(String area){Area=area;}
 
 
 
@@ -307,5 +312,7 @@ public class Restaurant extends RealmObject implements Parcelable {
         dest.writeString(UserId2);
         dest.writeString(Review2);
         dest.writeDouble(ReviewRating2);
+        dest.writeString(Ambience);
+        dest.writeString(Area);
     }
 }

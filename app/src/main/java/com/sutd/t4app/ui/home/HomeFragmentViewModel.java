@@ -26,7 +26,8 @@ import io.realm.mongodb.AppConfiguration;
 import com.sutd.t4app.BuildConfig;
 import com.sutd.t4app.ui.ProfileQuestions.UserProfile;
 import com.sutd.t4app.utility.RealmUtility;
-
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -47,6 +48,7 @@ public class HomeFragmentViewModel extends ViewModel {
     private final MutableLiveData<List<Restaurant>> restaurantsLiveData = new MutableLiveData<>();
     private Realm realm;
     private RealmResults<Restaurant> realmResults;
+    private final MutableLiveData<List<Restaurant>> rankedRestaurantsLiveData = new MutableLiveData<>();
 
     @Inject
     public HomeFragmentViewModel(App realmApp, TripAdvisorService tripadvisorService, YelpService yelpservice) {
@@ -115,6 +117,24 @@ public class HomeFragmentViewModel extends ViewModel {
 
     public LiveData<List<Restaurant>> getRestaurantsLiveData() {
         return restaurantsLiveData;
+    }
+    public void rankAndUpdateRestaurants(UserProfile userProfile) {
+        // Use getRestaurantsLiveData().getValue() to get the current list of restaurants
+        List<Restaurant> unrankedRestaurants = getRestaurantsLiveData().getValue();
+        if (unrankedRestaurants == null) {
+            unrankedRestaurants = new ArrayList<>(); // Handle null case, possibly by re-fetching or showing an error
+        }
+
+        RestaurantRanking ranking = new RestaurantRanking();
+        List<RestaurantScore> scores= ranking.rankRestaurants(unrankedRestaurants,userProfile);
+        RestaurantRanker ranker = new RestaurantRanker();
+        for (RestaurantScore score : scores) {
+            ranker.addRestaurantScore(score);
+        }
+
+        // Get the sorted restaurants
+        List<Restaurant> rankedRestaurants = ranker.getRankedRestaurants();
+        rankedRestaurantsLiveData.postValue(rankedRestaurants);
     }
 
     @Override
