@@ -44,8 +44,6 @@ public class SignUpActivity extends AppCompatActivity {
                 boolean isValid = true; // default true
 
                 // OKOK now we will need to do validation!!!!
-
-
                 if (firstNameValue.isEmpty()) {
                     firstName.setError("First name is required");
                     isValid = false;
@@ -82,6 +80,13 @@ public class SignUpActivity extends AppCompatActivity {
                 if (isValid) {
                     // All inputs are valid, proceed with the sign-up process
                     Log.d("signup check","all valid");
+
+                    // do a check if theres existing user
+                    // maybe do an email verification? not a must but itll be good
+                    // captcha to prevent traffic abuse
+                    // once that is done we create a userProfile
+                    // go to profilequestion fragment
+                    //
                 }
             }
         });
