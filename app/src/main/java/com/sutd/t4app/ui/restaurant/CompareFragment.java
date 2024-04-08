@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,16 +44,30 @@ public class CompareFragment extends Fragment {
     public static CompareFragment newInstance() {
         return new CompareFragment();
     }
-
+    View root;
+    TextInputLayout textInputLayout;
+    MaterialAutoCompleteTextView autoCompleteTextView;
+    MaterialButton btnStartComparing;
+    String[] restaurant = {"Restaurant1", "Restaurant2", "Restaurant3", "Restaurant4", "Restaurant5"};
+    ArrayAdapter<String> adapterItems;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_compare, container, false);
+        root = inflater.inflate(R.layout.fragment_compare, container, false);
 
-        TextInputLayout textInputLayout = root.findViewById(R.id.compareInputLayout);
-        MaterialAutoCompleteTextView autoCompleteTextView = root.findViewById(R.id.inputTV);
-        MaterialButton btnStartComparing = root.findViewById(R.id.restaurantInputButton);
+        textInputLayout = root.findViewById(R.id.compareInputLayout);
+        autoCompleteTextView = root.findViewById(R.id.inputTV);
+        btnStartComparing = root.findViewById(R.id.restaurantInputButton);
+        adapterItems = new ArrayAdapter<String>(getActivity(), R.layout.restaurant_options, restaurant);
 
+        autoCompleteTextView.setAdapter(adapterItems);
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String restaurant = adapterView.getItemAtPosition(i).toString();
+                Toast.makeText(getActivity(), "restaurant:" + restaurant, Toast.LENGTH_SHORT).show();
+            }
+        });
         btnStartComparing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
