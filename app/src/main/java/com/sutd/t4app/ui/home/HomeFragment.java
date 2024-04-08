@@ -86,6 +86,7 @@ public class HomeFragment extends Fragment {
         questionnaire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                viewModel.cleanUp();
                 Navigation.findNavController(v).navigate(R.id.toQuestionspage);
             }
         });

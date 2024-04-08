@@ -45,15 +45,12 @@ public class QuestionFragment extends Fragment {
     private Realm realm;
     private RealmResults<UserProfile> realmResults;
 
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         binding = QuestionsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        // realm = Realm.getDefaultInstance();
         initializeRealm();
-        this.realmApp= realmApp;
         setupFinalizeProfileButton();
 
         return root;
@@ -66,6 +63,7 @@ public class QuestionFragment extends Fragment {
                 Realm.getInstanceAsync(configuration, new Realm.Callback() {
                     @Override
                     public void onSuccess(Realm realm) {
+                        Log.v("CHECK 1", "we have initialiase realm " + realm);
                         QuestionFragment.this.realm = realm;
                         observeUserProfile();
                     }
@@ -79,11 +77,17 @@ public class QuestionFragment extends Fragment {
         });
     }
     private void observeUserProfile() {
+        Log.v("CHECK 2", "we have called obsercerUserProfile ");
+
         // Perform your Realm query
         realmResults = realm.where(UserProfile.class).findAllAsync();
+        Log.v("CHECK 3", "we have received results realm " + realmResults);
+
         realmResults.addChangeListener(new RealmChangeListener<RealmResults<UserProfile>>() {
             @Override
             public void onChange(RealmResults<UserProfile> results) {
+                Log.v("CHECK 4", "we have received updated results realm " + results);
+
                 // Handle changes
                 Log.d("QuestionFragment", "UserProfile data updated: " + results.size());
             }
@@ -91,9 +95,12 @@ public class QuestionFragment extends Fragment {
     }
 
     private void setupFinalizeProfileButton() {
+
         Button finalizeProfileButton = binding.finalizeProfileButton;
         finalizeProfileButton.setOnClickListener(v -> {
             UserProfile userProfile = createUserProfileFromForm();
+            Log.d("CHECK 5", "userprofile" + userProfile);
+
             saveUserProfile(userProfile);
             Navigation.findNavController(v).navigate(R.id.navigation_home);
         });
@@ -251,7 +258,9 @@ public class QuestionFragment extends Fragment {
                 "\nDislikes: " + userProfile.getIngredientDislikes())
 
                 ;
-            realm.executeTransactionAsync(new Realm.Transaction() {
+
+
+        realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
 
@@ -276,18 +285,12 @@ public class QuestionFragment extends Fragment {
                 item.setIngredientDislikes(userProfile.getIngredientDislikes());
 
             }
-        }, new Realm.Transaction.OnSuccess() {
-            @Override
-            public void onSuccess() {
-                // Transaction was a success.
-                Log.v("UserProfile", "User profile saved successfully");
-            }
-        }, new Realm.Transaction.OnError() {
-            @Override
-            public void onError(Throwable error) {
-                // Transaction failed and was automatically canceled.
-                Log.e("UserProfile", "Error saving user profile", error);
-            }
+        }, () -> {
+            // Transaction was a success.
+            Log.v("UserProfile", "User profile saved successfully");
+        }, error -> {
+            // Transaction failed and was automatically canceled.
+            Log.e("UserProfile", "Error saving user profile", error);
         });
     }
 

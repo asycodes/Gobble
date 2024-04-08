@@ -14,6 +14,7 @@ import io.realm.mongodb.sync.SyncConfiguration;
 
 public class RealmUtility {
     private static SyncConfiguration defaultSyncConfig = null;
+    private static boolean firstime = true;
 
     public interface ConfigCallback {
         void onConfigReady(SyncConfiguration configuration);
@@ -21,12 +22,58 @@ public class RealmUtility {
     }
 
     public static synchronized void getDefaultSyncConfig(App realmApp, ConfigCallback callback) {
-        if (defaultSyncConfig != null) {
-            callback.onConfigReady(defaultSyncConfig);
+
+        if(firstime){
+            firstime = false;
+            Credentials emailPasswordCredentials = Credentials.emailPassword("user@example.com", "password");
+            User user = realmApp.currentUser();
+            realmApp.loginAsync(emailPasswordCredentials, result -> {
+                if (result.isSuccess()) {
+                    defaultSyncConfig = new SyncConfiguration.Builder(user)
+                            .initialSubscriptions(new SyncConfiguration.InitialFlexibleSyncSubscriptions() {
+                                @Override
+                                public void configure(Realm realm, MutableSubscriptionSet subscriptions) {
+                                    // add a subscription with a name
+                                    boolean ressubscriptionExists = false;
+                                    boolean usersubscriptionExists = false;
+                                    for (Subscription existingSubscription : subscriptions) {
+                                        if ("restaurantsSubscription".equals(existingSubscription.getName())) {
+                                            ressubscriptionExists = true;
+                                        }
+                                        if ("usersSubscription".equals(existingSubscription.getName())) {
+                                            usersubscriptionExists = true;
+                                        }
+                                    }
+
+                                    if(!ressubscriptionExists){
+                                        subscriptions.add(Subscription.create("restaurantsSubscription",
+                                                realm.where(Restaurant.class)));
+                                    }
+
+                                    if(!usersubscriptionExists){
+                                        subscriptions.add(Subscription.create("usersSubscription",
+                                                realm.where(UserProfile.class)));
+                                    }
+
+                                }
+
+                            })
+                            .build();
+
+
+                    callback.onConfigReady(defaultSyncConfig);
+                } else {
+                    callback.onError(new Exception("Login failed"));
+                }
+            });
+
+
         }
-        Credentials emailPasswordCredentials = Credentials.emailPassword("user@example.com", "password");
-        realmApp.loginAsync(emailPasswordCredentials, result -> {
-            if (result.isSuccess()) {
+        else{
+            if (defaultSyncConfig != null) {
+                callback.onConfigReady(defaultSyncConfig);
+
+            }else{
                 User user = realmApp.currentUser();
                 defaultSyncConfig = new SyncConfiguration.Builder(user)
                         .initialSubscriptions(new SyncConfiguration.InitialFlexibleSyncSubscriptions() {
@@ -59,11 +106,16 @@ public class RealmUtility {
                         })
                         .build();
 
-                callback.onConfigReady(defaultSyncConfig);
-            } else {
-                callback.onError(new Exception("Login failed"));
+
             }
-        });
+
+
+
+        }
+
+
+
+
     }
 }
 

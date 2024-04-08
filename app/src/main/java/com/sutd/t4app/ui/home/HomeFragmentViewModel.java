@@ -90,6 +90,7 @@ public class HomeFragmentViewModel extends ViewModel {
                         HomeFragmentViewModel.this.realm = realm;
                         Log.d("HomeFragmentViewModel", "Realm instance has been initialized successfully.");
                         observeRestaurants(); // Observes data and updates LiveData
+                        fetchUserProfiles();
                     }
                 });
             }
@@ -158,10 +159,9 @@ public class HomeFragmentViewModel extends ViewModel {
         rankedRestaurantsLiveData.postValue(rankedRestaurants);
     }
 
-    @Override
-    protected void onCleared() {
-        super.onCleared();
+    protected void cleanUp() {
         if(realm != null) {
+            Log.d("CLOSE REALM", "it is closed");
             realm.close();
             realm = null;
         }
