@@ -77,19 +77,18 @@
                 android:paddingEnd="10dp">
 
                 <TextView
-                    android:id="@+id/Restaurant2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
                     android:gravity="center_horizontal"
                     android:padding="10sp"
-                    android:text="About"
+                    android:text="Ratings"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/Restaurant1"
+                    android:id="@+id/Restaurant1Name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
@@ -101,6 +100,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/Restaurant2Name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
@@ -254,6 +254,42 @@
                     android:gravity="center_horizontal"
                     android:padding="10sp"
                     android:text="Ambience2"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="Overall Stars"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/Restaurant1Overall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="Overall1"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/Restaurant2Overall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="Overall2"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
             </TableRow>

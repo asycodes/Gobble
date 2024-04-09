@@ -73,6 +73,12 @@ public class CompareFragment extends Fragment {
     TextInputLayout textInputLayout;
     MaterialAutoCompleteTextView autoCompleteTextView;
     MaterialButton btnStartComparing;
+    TextView restaurant2Name;
+    TextView restaurant2Price;
+    TextView restaurant2Service;
+    TextView restaurant2Food;
+    TextView restaurant2Ambience;
+    TextView restaurant2Overall;
 
     Restaurant r1;
     Restaurant r2;
@@ -86,11 +92,24 @@ public class CompareFragment extends Fragment {
         textInputLayout = root.findViewById(R.id.compareInputLayout);
         autoCompleteTextView = root.findViewById(R.id.inputTV);
         btnStartComparing = root.findViewById(R.id.restaurantInputButton);
+        restaurant2Name = root.findViewById(R.id.Restaurant2Name);
+        restaurant2Price = root.findViewById(R.id.Restaurant2Price);
+        restaurant2Service = root.findViewById(R.id.Restaurant2Service);
+        restaurant2Food = root.findViewById(R.id.Restaurant2Food);
+        restaurant2Ambience = root.findViewById(R.id.Restaurant2Ambience);
+        restaurant2Overall = root.findViewById(R.id.Restaurant2Overall);
+
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Restaurant restaurant = (Restaurant) adapterView.getItemAtPosition(i);
                 r2 = restaurant;
+                restaurant2Name.setText(r2.getName());
+                restaurant2Price.setText(r2.getPriceRange());
+                restaurant2Service.setText(r2.getServiceRating().toString());
+                restaurant2Food.setText(r2.getFoodRating().toString());
+                restaurant2Ambience.setText(r2.getAmbienceRating().toString());
+                restaurant2Overall.setText(r2.getRatings().toString());
                 Toast.makeText(getActivity(), "restaurant:::" + restaurant.getName(), Toast.LENGTH_SHORT).show();
             }
         });
