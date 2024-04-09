@@ -40,6 +40,11 @@
         android:name="com.sutd.t4app.ui.filter.FilterFragment"
         android:label="Filter"
         tools:layout="@layout/filter_bottom_up"/>
+    <fragment
+        android:id="@+id/compare_fragment"
+        android:name="com.sutd.t4app.ui.restaurant.CompareFragment"
+        android:label="Compare Restaurant"
+        tools:layout="@layout/fragment_compare"/>
 
     <fragment
         android:id="@+id/navigation_questions"
@@ -58,6 +63,9 @@
     <action
         android:id="@+id/tofilterfragment"
         app:destination="@id/navigation_filter"/>
+    <action
+        android:id="@+id/to_compare_fragment"
+        app:destination="@id/compare_fragment" />
 
     <action
         android:id="@+id/toQuestionspage"

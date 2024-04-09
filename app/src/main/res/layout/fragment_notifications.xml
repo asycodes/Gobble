@@ -412,7 +412,7 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <LinearLayout
-            android:id="@+id/Logout"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -431,6 +431,7 @@
 
             <!-- Button with text and properties -->
             <Button
+                android:id="@+id/Logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="8dp"
