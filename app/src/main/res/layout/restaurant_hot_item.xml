@@ -25,7 +25,8 @@
                 android:id="@+id/restImage"
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
-                android:src="@drawable/food2t4app" />
+                android:src="@drawable/food2t4app"
+                android:scaleType="centerCrop"/>
 
             <TextView
                 android:id="@+id/textViewRestaurantName"

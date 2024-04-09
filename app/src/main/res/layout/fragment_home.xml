@@ -74,12 +74,9 @@
                 android:textSize="18sp" />
 
         </LinearLayout>
-
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
+            android:layout_height="match_parent">
             <LinearLayout
                 android:id="@+id/exploreLayout"
                 android:layout_width="match_parent"
@@ -142,7 +139,7 @@
                 </androidx.recyclerview.widget.RecyclerView>
 
             </LinearLayout>
-        </LinearLayout>
+        </ScrollView>
 
 
         <!--        EXPLORE PAGE-->
