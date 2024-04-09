@@ -86,7 +86,7 @@
 
             <!-- What's Hot Section -->
             <LinearLayout
-                android:id="@+id/whatsHotLayout"
+                android:id="@+id/exploreLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -109,15 +109,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false" />
-            </LinearLayout>
 
-            <!-- Explore Section -->
-            <LinearLayout
-                android:id="@+id/exploreLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="visible">
+
 
                 <TextView
                     android:id="@+id/textExplore"
