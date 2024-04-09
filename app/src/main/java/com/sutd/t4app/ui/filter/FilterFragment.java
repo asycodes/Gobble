@@ -281,10 +281,11 @@ public class FilterFragment extends Fragment {
 
         if(selectedLocations.size()>0){
             query.beginGroup();
-            for(int i=0; i< selectedLocations.size();i++){
-                if(i>0) query.or();
-                query.contains("Area",selectedLocations.get(i));
+            for(int i = 0; i < selectedLocations.size(); i++) {
+                if(i > 0) query.or();
+                query.equalTo("Area", selectedLocations.get(i));
             }
+            query.endGroup();
         }
 
         // Overall star rating filter

@@ -57,8 +57,11 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
                 holder.textViewRestaurantCuisine.setText(restaurant.getCuisine());
                 Log.d("DEBUGGING", " resCuisine " + holder.textViewRestaurantCuisine.getText());
             }
-            holder.textViewRestaurantLocation.setText(restaurant.getAddress());
-            Log.d("DEBUGGING"," resLocation " + holder.textViewRestaurantLocation.getText() );
+
+            if(holder.textViewRestaurantLocation != null){
+                holder.textViewRestaurantLocation.setText(restaurant.getAddress());
+                Log.d("DEBUGGING"," resLocation " + holder.textViewRestaurantLocation.getText() );
+            }
             Picasso.get().setLoggingEnabled(true);
 
 
