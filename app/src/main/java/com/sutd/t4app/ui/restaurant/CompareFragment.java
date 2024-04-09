@@ -33,6 +33,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -62,6 +64,8 @@ public class CompareFragment extends Fragment {
     private RealmResults<UserProfile> realmResults;
     private RealmResults<Restaurant> realmRestaurantResults;
 
+    private List<Restaurant> restaurantList = new ArrayList<>();
+
     public static CompareFragment newInstance() {
         return new CompareFragment();
     }
@@ -69,9 +73,9 @@ public class CompareFragment extends Fragment {
     TextInputLayout textInputLayout;
     MaterialAutoCompleteTextView autoCompleteTextView;
     MaterialButton btnStartComparing;
-    String[] restaurant = {"Restaurant1", "Restaurant2", "Restaurant3", "Restaurant4", "Restaurant5"};
-    ArrayAdapter<String> adapterItems;
 
+    Restaurant r1;
+    Restaurant r2;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -82,14 +86,12 @@ public class CompareFragment extends Fragment {
         textInputLayout = root.findViewById(R.id.compareInputLayout);
         autoCompleteTextView = root.findViewById(R.id.inputTV);
         btnStartComparing = root.findViewById(R.id.restaurantInputButton);
-        adapterItems = new ArrayAdapter<String>(getActivity(), R.layout.restaurant_options, restaurant);
-
-        autoCompleteTextView.setAdapter(adapterItems);
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String restaurant = adapterView.getItemAtPosition(i).toString();
-                Toast.makeText(getActivity(), "restaurant:" + restaurant, Toast.LENGTH_SHORT).show();
+                Restaurant restaurant = (Restaurant) adapterView.getItemAtPosition(i);
+                r2 = restaurant;
+                Toast.makeText(getActivity(), "restaurant:::" + restaurant.getName(), Toast.LENGTH_SHORT).show();
             }
         });
         btnStartComparing.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +101,7 @@ public class CompareFragment extends Fragment {
                     textInputLayout.setError("Please select a restaurant");
                 }else {
 
-                    Toast.makeText(getActivity()  , autoCompleteTextView.getText().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity()  , "autoCompleteTextView.getText().toString()", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -235,7 +237,37 @@ public class CompareFragment extends Fragment {
         realmRestaurantResults.addChangeListener(new RealmChangeListener<RealmResults<Restaurant>>() {
             @Override
             public void onChange(RealmResults<Restaurant> results) {
-                Log.v("Cf", "we have received updated restaurant results realm " + results);
+                Log.v("Cf", "we have received updated restaurant results realm ..." + results);
+
+                restaurantList.clear();
+                restaurantList.addAll(results);
+                if (autoCompleteTextView.getAdapter() != null) {
+                    Log.v("Cf", "getAdapter() != null...");
+                    ((ArrayAdapter) autoCompleteTextView.getAdapter()).notifyDataSetChanged();
+                } else {
+                    Log.v("Cf", "else");
+                    Log.v("Cf", restaurantList.toString());
+
+                    // Create and set the adapter if not already set
+                    ArrayAdapter<Restaurant> adapterItems = new ArrayAdapter<Restaurant>(getActivity(), R.layout.restaurant_options, restaurantList) {
+                        @NonNull
+                        @Override
+                        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                            Log.v("Cf", "getView ....");
+                            View view = super.getView(position, convertView, parent);
+                            Log.v("Cf", "position "+ getItem(position));
+                            Log.v("Cf", "getName()>> "+ getItem(position).getName());
+
+                            TextView text1 = (TextView) view.findViewById(R.id.name);
+                            text1.setText(getItem(position).getName()); // Assuming `Restaurant` has a `getName()` method
+                            return view;
+                        }
+                    };
+
+                    //update this.restaurantList with data from result
+                    autoCompleteTextView.setAdapter(adapterItems);
+                }
+
 
                 // Handle changes
                 Log.d("QuestionFragment", "Restaurant data updated: " + results.size());

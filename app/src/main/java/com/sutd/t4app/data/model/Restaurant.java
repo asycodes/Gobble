@@ -138,6 +138,11 @@ public class Restaurant extends RealmObject implements Parcelable {
         return TopMenu2;
     }
 
+    @Override
+    public String toString() {
+        return Name;
+    }
+
     public void setTopMenu2(String topMenu2) {
         TopMenu2 = topMenu2;
     }
