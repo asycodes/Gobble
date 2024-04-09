@@ -1,10 +1,12 @@
 package com.sutd.t4app.ui.restaurant;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.squareup.picasso.Picasso;
 import com.sutd.t4app.R;
 import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.databinding.FragmentDashboardBinding;
@@ -37,6 +40,8 @@ public class RestaurantFragmentActivity extends Fragment {
     private TextView User2;
     private TextView User2Review;
     private RatingBar User2Ratings;
+    private Restaurant restaurant;
+    private ImageView restaurantProfileImage;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -48,8 +53,10 @@ public class RestaurantFragmentActivity extends Fragment {
         Bundle arguments = getArguments();
         String value = null;
         if (arguments != null) {
-            Restaurant restaurant = arguments.getParcelable("restaurant");
+            restaurant = arguments.getParcelable("restaurant");
             TextView restaurantNameTextView = root.findViewById(R.id.textViewRestaurantName);
+            //TextView restaurantNameTextView = root.findViewById(R.id.restaurantName);
+
             restaurantNameTextView.setText(restaurant.getName());
             Log.d("RestaurantData", "Restaurant name: " + restaurant.getName());
             Ratings=root.findViewById(R.id.ratingRest);
@@ -84,10 +91,24 @@ public class RestaurantFragmentActivity extends Fragment {
             User2Review.setText(restaurant.getReview2());
             User2Ratings.setRating((float) restaurant.getReviewRating2().doubleValue());
 
+            restaurantProfileImage = root.findViewById(R.id.restaurantProfileImage);
+            Picasso.get()
+                    .load(restaurant.getImgMainURL()) // Assuming `getImageUrl()` is a method in your `Restaurant` class
+                    .into(restaurantProfileImage);
 
 
         }
+        Button btnCompare = root.findViewById(R.id.compareButton);
 
+        btnCompare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("restaurant", restaurant);
+                // TODO: Add your code here to be executed when the button is clicked
+                Navigation.findNavController(v).navigate(R.id.compare_fragment, bundle);
+            }
+        });
         //update restaurantName textview values with value from restaurant.getName()
 
 //        CardView fuelPlus1Card= root.findViewById(R.id.FuelPlus1);
