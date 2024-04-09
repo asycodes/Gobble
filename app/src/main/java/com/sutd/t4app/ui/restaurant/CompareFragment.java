@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,6 +90,7 @@ public class CompareFragment extends Fragment {
 
     OkHttpClient client;
     Request request;
+    String prompt;
 
     Restaurant r1;
     Restaurant r2;
@@ -142,7 +145,7 @@ public class CompareFragment extends Fragment {
                 restaurant2Food.setText(r2.getFoodRating().toString());
                 restaurant2Ambience.setText(r2.getAmbienceRating().toString());
                 restaurant2Overall.setText(r2.getRatings().toString());
-                Toast.makeText(getActivity(), "restaurant:::" + restaurant.getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Please wait >.<", Toast.LENGTH_SHORT).show();
             }
         });
         btnStartComparing.setOnClickListener(new View.OnClickListener() {
@@ -152,6 +155,38 @@ public class CompareFragment extends Fragment {
                     textInputLayout.setError("Please select a restaurant");
                 }else {
                     // Make the request
+                    // Create request
+                    String apikey = "Bearer " + BuildConfig.OPENAI_API;
+                    Log.d("openai", apikey);
+
+                    Log.d("openai", "b4 prompt");
+                    prompt = "Output your response in HTML format for the following question." + "Evaluate the user's dining preferences:" + " and profiles of the two restaurants:" + getRestSummary(r1) + " and" + getRestSummary(r2) +
+                            "Your task is to recommend only one of the restaurant that the user should visit for their next dining experience, considering their preferences and the restaurant profiles." +
+                            "Provide a percentage match for each restaurant and suggest a menu item from the chosen restaurant that aligns with the user's preferences, explaining why it is recommended." +
+                            "Format your recommendation as follows: (one sentence for each of them)" +
+                            "<b>Recommended Restaurant</b>: Name" + "<br/><br/><b>Match Percentage</b>: %" + "<br/><br/><b>Suggested Menu Item</b>: Name - <font size=smaller>Description</font><br/><br/><i>Reason for recommendation</i>";
+
+                    Log.d("openai", "after prompt");
+
+
+                    // Create JSON body
+                    String jsonBody = "{"
+                            + "\"model\":\"gpt-3.5-turbo\","
+                            + "\"messages\":[{\"role\":\"user\",\"content\":\"" + prompt  + "\"}],"
+                            + "\"temperature\":1,"
+                            + "\"max_tokens\":256,"
+                            + "\"top_p\":1,"
+                            + "\"frequency_penalty\":0,"
+                            + "\"presence_penalty\":0"
+                            + "}";
+                    Log.d("openai", "b4 req");
+                    request = new Request.Builder()
+                            .url("https://api.openai.com/v1/chat/completions")
+                            .addHeader("Content-Type", "application/json")
+                            .addHeader("Authorization", apikey)
+                            .post(RequestBody.create(jsonBody, MediaType.parse("application/json; charset=utf-8")))
+                            .build();
+                    Log.d("openai", "after req");
                     client.newCall(request).enqueue(new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
@@ -185,7 +220,14 @@ public class CompareFragment extends Fragment {
                                         public void run() {
                                             Log.d("openai", "update llm text");
                                             TextView llmText = getView().findViewById(R.id.llmOutput);
-                                            llmText.setText(content);
+                                            Spanned spanned;
+                                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                                                spanned = Html.fromHtml(content, Html.FROM_HTML_MODE_COMPACT);
+                                            } else {
+                                                spanned = Html.fromHtml(content);
+                                            }
+                                            llmText.setText(spanned);
+                                            //llmText.setText(content);
                                         }
                                     });
                                 } catch (JSONException e) {
@@ -210,27 +252,6 @@ public class CompareFragment extends Fragment {
         // Create OkHttpClient
         client = new OkHttpClient();
         Log.d("openai", "request builder");
-
-// Create request
-        String apikey = "Bearer " + BuildConfig.OPENAI_API;
-        Log.d("openai", apikey);
-        // Create JSON body
-        String jsonBody = "{"
-        + "\"model\":\"gpt-3.5-turbo\","
-        + "\"messages\":[{\"role\":\"user\",\"content\":\"how are you\"}],"
-        + "\"temperature\":1,"
-        + "\"max_tokens\":256,"
-        + "\"top_p\":1,"
-        + "\"frequency_penalty\":0,"
-        + "\"presence_penalty\":0"
-        + "}";
-        
-        request = new Request.Builder()
-            .url("https://api.openai.com/v1/chat/completions")
-            .addHeader("Content-Type", "application/json")
-            .addHeader("Authorization", apikey)
-            .post(RequestBody.create(jsonBody, MediaType.parse("application/json; charset=utf-8")))
-            .build();
 
         return root;
 
@@ -330,6 +351,12 @@ public class CompareFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(CompareViewModel.class);
         // TODO: Use the ViewModel
+    }
+
+    private String getRestSummary(Restaurant r) {
+        return r.getName() + " " + r.getCuisine() + " " + r.getPriceRange() + " " + r.getDietaryOptions() +
+                " " + r.getFoodRating() + " " + r.getServiceRating() + " " + r.getAmbience() + " " + r.getAmbienceRating()
+                + " " + r.getTopMenu1() + " " + r.getTopMenu2() + " " + r.getTopMenu3() + " " + r.getTopMenu4() + " " + r.getRatings();
     }
 
 }
