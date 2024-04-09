@@ -23,4 +23,47 @@
         <item>restaurant5</item>
     </string-array>
 
+    <string-array name="cuisine_adventurousness_options">
+        <item>Not Adventurous</item>
+        <item>Slightly Adventurous</item>
+        <item>Moderately Adventurous</item>
+        <item>Adventurous</item>
+        <item>Highly Adventurous</item>
+    </string-array>
+
+    <string-array name="spicy_tolerance_options">
+        <item>Not at all</item>
+        <item>Mildly</item>
+        <item>Moderately</item>
+        <item>Very well</item>
+        <item>Love it</item>
+    </string-array>
+
+    <string-array name="dessert_importance_options">
+        <item>Essential</item>
+        <item>Nice to have</item>
+        <item>Indifferent</item>
+        <item>Rarely indulge</item>
+    </string-array>
+
+    <string-array name="health_importance_options">
+        <item>Very important</item>
+        <item>Somewhat important</item>
+        <item>Neutral - I enjoy healthy options but dont specifically seek them out</item>
+        <item>Not important</item>
+    </string-array>
+
+    <string-array name="meal_time_preferences">
+        <item>Breakfast</item>
+        <item>Brunch</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+        <item>Late Night</item>
+    </string-array>
+
+
+
+
+
+
 </resources>

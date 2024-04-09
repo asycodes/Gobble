@@ -87,7 +87,7 @@
                     android:text="P.S. Cafe"
                     android:textColor="#282828"
                     android:textSize="20sp"
-                    android:id="@+id/restaurantName"/>
+                    android:id="@+id/textViewRestaurantName"/>
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <RatingBar
-                    android:id="@+id/rating"
+                    android:id="@+id/ratingRest"
                     style="?android:attr/ratingBarStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -185,6 +185,7 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
                     <TextView
+                        android:id="@+id/Menu1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Chilli Crab and Doughnut"
@@ -219,6 +220,7 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
                     <TextView
+                        android:id="@+id/Menu2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Chilli Crab and Doughnut"
@@ -253,6 +255,7 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
                     <TextView
+                        android:id="@+id/Menu3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Chilli Crab and Doughnut"
@@ -287,6 +290,7 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
                     <TextView
+                        android:id="@+id/Menu4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Chilli Crab and Doughnut"
@@ -706,6 +710,7 @@
                         android:layout_marginEnd="16dp" />
 
                     <TextView
+                        android:id="@+id/User1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Adelaine"
@@ -713,6 +718,7 @@
                         android:textColor="#000000"
                         android:textStyle="bold" />
                     <RatingBar
+                        android:id="@+id/User1_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:numStars="5"
@@ -721,7 +727,8 @@
                         android:isIndicator="true"
                         android:scaleX="0.4"
                         android:scaleY="0.4"
-                        android:progressTint="#FFD700" />
+                        android:progressTint="#FFD700"
+                        />
 
                 </LinearLayout>
 
@@ -729,6 +736,7 @@
 
                 <!-- Review Description -->
                 <TextView
+                    android:id="@+id/User1_review"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer gravida turpis ac euismod fermentum. Quisque eu mi nec lorem sodales fermentum."
@@ -766,6 +774,7 @@
                         android:layout_marginEnd="16dp" />
 
                     <TextView
+                        android:id="@+id/User2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Adelaine"
@@ -773,6 +782,7 @@
                         android:textColor="#000000"
                         android:textStyle="bold" />
                     <RatingBar
+                        android:id="@+id/user2_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:numStars="5"
@@ -789,6 +799,7 @@
 
                 <!-- Review Description -->
                 <TextView
+                    android:id="@+id/User2_review"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer gravida turpis ac euismod fermentum. Quisque eu mi nec lorem sodales fermentum."

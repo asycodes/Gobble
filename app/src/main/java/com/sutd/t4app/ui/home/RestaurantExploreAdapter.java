@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -60,6 +61,9 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
             Log.d("DEBUGGING"," res " + holder.textViewRestaurantLocation.getText() );
             Picasso.get().setLoggingEnabled(true);
 
+
+
+
             //add restImage update imageView
             Picasso.get()
                 .load(restaurant.getImgMainURL()) // Assuming `getImageUrl()` is a method in your `Restaurant` class
@@ -87,6 +91,22 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
         TextView textViewClosetLandmark;
         TextView textViewRestaurantLocation;
         ImageView restImageHolder;
+        RatingBar Ratings;//Overall
+        TextView Menu1;
+        TextView Menu2;
+        TextView Menu3;
+        TextView Menu4;
+        RatingBar foodRating;
+        RatingBar serviceRating;
+        RatingBar atmosphereRating;
+        TextView User1;
+        TextView User1Review;
+        RatingBar User1Ratings;
+        TextView User2;
+        TextView User2Review;
+        RatingBar User2Ratings;
+
+
 
         ViewHolder(View view, List<Restaurant> restaurantList) {
             super(view);
@@ -95,6 +115,9 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
             textViewClosetLandmark = view.findViewById(R.id.textViewRestaurantClosestLandmark);
             textViewRestaurantLocation = view.findViewById(R.id.textViewRestaurantLocation);
             restImageHolder = view.findViewById(R.id.restImage);
+
+
+
 
             //attach onClickListener to restaurantItemView
             view.setOnClickListener(new View.OnClickListener() {

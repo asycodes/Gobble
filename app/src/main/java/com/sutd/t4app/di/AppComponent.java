@@ -4,6 +4,7 @@ import com.sutd.t4app.LoginActivity;
 import com.sutd.t4app.MainActivity;
 import com.sutd.t4app.data.api.TripAdvisorApiModule;
 import com.sutd.t4app.data.api.YelpApiModule;
+import com.sutd.t4app.ui.ProfileQuestions.QuestionFragment;
 import com.sutd.t4app.ui.home.HomeFragmentViewModel;
 
 import dagger.Component;
@@ -16,5 +17,7 @@ public interface AppComponent {
     void inject(HomeFragmentViewModel viewModel);
     void inject(MainActivity activity);
     void inject(LoginActivity activity);
+    void inject(QuestionFragment fragment);
+
 
 }

@@ -46,6 +46,12 @@
         android:label="Compare Restaurant"
         tools:layout="@layout/fragment_compare"/>
 
+    <fragment
+        android:id="@+id/navigation_questions"
+        android:name="com.sutd.t4app.ui.ProfileQuestions.QuestionFragment"
+        android:label="Questions"
+        tools:layout="@layout/questions"/>
+
     <action
         android:id="@+id/torestaurantfragment"
         app:destination="@id/navigation_restaurant"/>
@@ -60,6 +66,10 @@
     <action
         android:id="@+id/to_compare_fragment"
         app:destination="@id/compare_fragment" />
+
+    <action
+        android:id="@+id/toQuestionspage"
+        app:destination="@id/navigation_questions"/>
 
 
 </navigation>
