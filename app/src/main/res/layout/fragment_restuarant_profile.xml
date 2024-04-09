@@ -94,6 +94,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:src="@drawable/save_place" />
+
+
             </LinearLayout>
 
             <LinearLayout
@@ -141,6 +143,15 @@
                     android:src="@drawable/map_pic"/>
 
             </androidx.cardview.widget.CardView>
+            <!--comparison-->
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Compare Restaurants"
+                android:layout_gravity="center"
+                android:id="@+id/compareButton"
+                android:layout_margin="8dp"/>
+
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -427,223 +438,6 @@
                     android:isIndicator="true"/>
             </LinearLayout>
 
-<!--comparison-->
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Compare Restaurants"
-                android:layout_gravity="center"
-                android:id="@+id/compareButton"
-
-                />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <!-- Empty view for spacing -->
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/Restaurant1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Restaurant 1"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:layout_marginEnd="8dp" />
-
-                <TextView
-                    android:id="@+id/Restaurant2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Restaurant 2"
-                    android:textStyle="bold"
-                    android:textSize="16sp" />
-
-                <!-- Empty view for spacing -->
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-            </LinearLayout>
-
-            <!-- Table Rows -->
-            <!-- Price Comparison -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Price"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="15dp"/>
-
-                <TextView
-                    android:id="@+id/Restaurant1Price"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="$" />
-
-                <TextView
-                    android:id="@+id/Restaurant2Price"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="$$$" />
-            </LinearLayout>
-
-            <!-- Service Comparison -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Service"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="15dp"/>
-
-                <TextView
-                    android:id="@+id/Resturant1Service"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="3.0" />
-
-                <TextView
-                    android:id="@+id/Restaurant2Service"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="4.0" />
-            </LinearLayout>
-
-            <!-- Food rating Comparison -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Food"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="15dp"/>
-
-                <TextView
-                    android:id="@+id/Restaurant1Food"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="4.0" />
-
-                <TextView
-                    android:id="@+id/Restaurant2Food"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="3.9" />
-            </LinearLayout>
-
-            <!-- Atmosphere Comparison -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Atmosphere"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="15dp"/>
-
-                <TextView
-                    android:id="@+id/Restaurant1Atm"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="3.0" />
-
-                <TextView
-
-                    android:id="@+id/Restaurant2Atm"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="3.5" />
-            </LinearLayout>
-
-            <!-- Top Menu -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Top Menu"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="15dp"/>
-
-                <TextView
-                    android:id="@+id/restaurant1Menu"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="x,y,z" />
-
-                <TextView
-                    android:id="@+id/Restaurant2Menu"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="a,b,c" />
-            </LinearLayout>
-            <androidx.cardview.widget.CardView
-                android:id="@+id/RecommendBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:background="#fbb862"
-                app:cardCornerRadius="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Based on your profile and choices we recommend Restaurant1"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:padding="16dp"
-                    android:gravity="center"/>
-
-            </androidx.cardview.widget.CardView>
 
             <LinearLayout
                 android:layout_width="match_parent"

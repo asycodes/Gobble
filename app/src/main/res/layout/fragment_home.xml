@@ -12,25 +12,38 @@
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
 
-        <SearchView
-            android:id="@+id/mySearchView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
             android:background="@color/grey"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_margin="10dp">
+
+            <SearchView
+                android:id="@+id/mySearchView"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight=".80"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"></SearchView>
+
+            <ImageView
+                android:id="@+id/filterIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_vertical_margin"
+                android:src="@drawable/filter" />
+
+        </LinearLayout>
 
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:padding="16dp">
+            android:padding="1dp">
 
             <!-- Explore Label -->
             <TextView
@@ -61,14 +74,6 @@
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
-            <ImageView
-                android:id="@+id/filterIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/activity_vertical_margin"
-                android:layout_marginEnd="2dp"
-                android:src="@drawable/filter" />
-
         </LinearLayout>
 
         <!--        EXPLORE PAGE-->
@@ -85,11 +90,16 @@
                 android:id="@+id/textWhatsHot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="20dp"
+                android:layout_gravity="left"
+                android:layout_marginStart="10dp"
                 android:text="What's Hot"
+                android:layout_marginBottom="10dp"
+                android:textSize="24sp"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:shadowColor="@color/darkGrey"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mySearchView" />
 
@@ -102,11 +112,17 @@
                 android:id="@+id/textExplore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
+                android:layout_gravity="left"
+                android:layout_marginStart="10dp"
                 android:text="Explore"
+                android:layout_marginTop="20dp"
+
+                android:textSize="24sp"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:shadowColor="@color/darkGrey"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
@@ -114,12 +130,12 @@
                 android:id="@+id/recyclerViewRestaurants"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
                 android:fillViewport="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textExplore"
-                app:layout_constraintBottom_toBottomOf="parent" >
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="10dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 

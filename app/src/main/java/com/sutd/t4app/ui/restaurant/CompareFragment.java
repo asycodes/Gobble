@@ -22,6 +22,7 @@ import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.sutd.t4app.BuildConfig;
 import com.sutd.t4app.R;
+import com.sutd.t4app.ui.home.HomeFragmentViewModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +30,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -37,9 +39,11 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+
 public class CompareFragment extends Fragment {
 
     private CompareViewModel mViewModel;
+    private HomeFragmentViewModel hViewModel;
 
     public static CompareFragment newInstance() {
         return new CompareFragment();
@@ -50,6 +54,8 @@ public class CompareFragment extends Fragment {
     MaterialButton btnStartComparing;
     String[] restaurant = {"Restaurant1", "Restaurant2", "Restaurant3", "Restaurant4", "Restaurant5"};
     ArrayAdapter<String> adapterItems;
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -159,7 +165,28 @@ public class CompareFragment extends Fragment {
 
 
     }
+/*
+    private void initializeRealm() {
+        RealmUtility.getDefaultSyncConfig(realmApp, new RealmUtility.ConfigCallback() {
+            @Override
+            public void onConfigReady(SyncConfiguration configuration) {
+                Realm.getInstanceAsync(configuration, new Realm.Callback() {
+                    @Override
+                    public void onSuccess(Realm realm) {
+                        Log.v("CHECK 1", "we have initialiase realm " + realm);
+                        QuestionFragment.this.realm = realm;
+                        observeUserProfile();
+                    }
+                });
+            }
 
+            @Override
+            public void onError(Exception e) {
+                Log.e("QuestionFragment", "Error obtaining Realm configuration", e);
+            }
+        });
+    }
+*/
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
