@@ -79,6 +79,12 @@ public class CompareFragment extends Fragment {
     TextView restaurant2Food;
     TextView restaurant2Ambience;
     TextView restaurant2Overall;
+    TextView restaurant1Name;
+    TextView restaurant1Price;
+    TextView restaurant1Service;
+    TextView restaurant1Food;
+    TextView restaurant1Ambience;
+    TextView restaurant1Overall;
 
     Restaurant r1;
     Restaurant r2;
@@ -88,6 +94,29 @@ public class CompareFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_compare, container, false);
         initializeRealm();
+        Bundle arguments = getArguments();
+        String value = null;
+        Log.d("Cf", "before before passing r1");
+        if (arguments != null) {
+            Log.d("Cf", "before passing r1");
+            r1 = arguments.getParcelable("restaurant");
+            Log.d("Cf", "after passing r1");
+
+            restaurant1Name = root.findViewById(R.id.Restaurant1Name);
+            restaurant1Price = root.findViewById(R.id.Restaurant1Price);
+            restaurant1Service = root.findViewById(R.id.Restaurant1Service);
+            restaurant1Food = root.findViewById(R.id.Restaurant1Food);
+            restaurant1Ambience = root.findViewById(R.id.Restaurant1Ambience);
+            restaurant1Overall = root.findViewById(R.id.Restaurant1Overall);
+
+            restaurant1Name.setText(r1.getName());
+            restaurant1Price.setText(r1.getPriceRange());
+            restaurant1Service.setText(r1.getServiceRating().toString());
+            restaurant1Food.setText(r1.getFoodRating().toString());
+            restaurant1Ambience.setText(r1.getAmbienceRating().toString());
+            restaurant1Overall.setText(r1.getRatings().toString());
+            Log.d("Cf", "after passing all r1");
+        }
 
         textInputLayout = root.findViewById(R.id.compareInputLayout);
         autoCompleteTextView = root.findViewById(R.id.inputTV);
