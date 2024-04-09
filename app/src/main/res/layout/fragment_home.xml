@@ -15,17 +15,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
+            android:layout_margin="10dp"
             android:background="@color/grey"
-            android:layout_margin="10dp">
+            android:orientation="horizontal">
 
             <SearchView
                 android:id="@+id/mySearchView"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
-                android:layout_weight=".80"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"></SearchView>
+                android:layout_marginTop="8dp"
+                android:layout_weight=".80"></SearchView>
 
             <ImageView
                 android:id="@+id/filterIcon"
@@ -35,7 +35,6 @@
                 android:src="@drawable/filter" />
 
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,70 +75,77 @@
 
         </LinearLayout>
 
-        <!--        EXPLORE PAGE-->
-
         <LinearLayout
-            android:id="@+id/exploreLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-
-            <TextView
-                android:id="@+id/textWhatsHot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginStart="10dp"
-                android:text="What's Hot"
-                android:layout_marginBottom="10dp"
-                android:textSize="24sp"
-                android:textColor="@color/black"
-                android:shadowColor="@color/darkGrey"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mySearchView" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewHot"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <TextView
-                android:id="@+id/textExplore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginStart="10dp"
-                android:text="Explore"
-                android:layout_marginTop="20dp"
-
-                android:textSize="24sp"
-                android:textColor="@color/black"
-                android:shadowColor="@color/darkGrey"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewRestaurants"
+            <LinearLayout
+                android:id="@+id/exploreLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fillViewport="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textExplore"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginTop="10dp">
+                android:orientation="vertical"
+                android:visibility="visible">
 
-            </androidx.recyclerview.widget.RecyclerView>
 
+                <TextView
+                    android:id="@+id/textWhatsHot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:shadowColor="@color/darkGrey"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="2"
+                    android:text="What's Hot"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/mySearchView" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewHot"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/textExplore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:shadowColor="@color/darkGrey"
+
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="2"
+                    android:text="Explore"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewRestaurants"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fillViewport="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textExplore">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
         </LinearLayout>
+
+
+        <!--        EXPLORE PAGE-->
 
         <!-- Layout for Feed Page -->
         <LinearLayout
