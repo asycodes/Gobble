@@ -77,39 +77,6 @@ public class MapFragment extends Fragment {
                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
-        Button b = view.findViewById(R.id.showBottomSheet);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
-                View view1 = LayoutInflater.from(getActivity()).inflate(R.layout.bottom_sheet, null);
-                bottomSheetDialog.setContentView(view1);
-                bottomSheetDialog.show();
-
-                TextInputLayout textInputLayout1 = view1.findViewById(R.id.textFieldLayout);
-                TextInputEditText editText = view1.findViewById(R.id.editText);
-                Button dismissBtn = view1.findViewById(R.id.dismiss);
-
-                dismissBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if(editText.getText().toString().isEmpty()) {
-                            textInputLayout1.setError("Please type something");
-                        } else {
-                            Toast.makeText(getActivity(), editText.getText().toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-                bottomSheetDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss (DialogInterface dialogInterface) {
-                        Toast.makeText(getActivity(), "Bottom sheet dismissed", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-
         WebView customMap=view.findViewById(R.id.webView);
         customMap.getSettings().setJavaScriptEnabled(true);
         customMap.getSettings().setDomStorageEnabled(true);

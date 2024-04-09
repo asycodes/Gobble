@@ -23,7 +23,8 @@
             android:layout_marginTop="16dp"
             android:text="How was your experience with"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/restaurantName"
@@ -31,7 +32,8 @@
             android:layout_height="wrap_content"
             android:text="Fuel Plus ?"
             android:textColor="@color/black"
-            android:textSize="25sp" />
+            android:textSize="25sp"
+            android:textStyle="bold"/>
 
 
 
