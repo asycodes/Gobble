@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -50,6 +51,8 @@ public class RestaurantFragmentActivity extends Fragment {
         if (arguments != null) {
             Restaurant restaurant = arguments.getParcelable("restaurant");
             TextView restaurantNameTextView = root.findViewById(R.id.textViewRestaurantName);
+            //TextView restaurantNameTextView = root.findViewById(R.id.restaurantName);
+
             restaurantNameTextView.setText(restaurant.getName());
             Log.d("RestaurantData", "Restaurant name: " + restaurant.getName());
             Ratings=root.findViewById(R.id.ratingRest);
@@ -87,7 +90,15 @@ public class RestaurantFragmentActivity extends Fragment {
 
 
         }
+        Button btnCompare = root.findViewById(R.id.compareButton);
 
+        btnCompare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: Add your code here to be executed when the button is clicked
+                Navigation.findNavController(v).navigate(R.id.compare_fragment);
+            }
+        });
         //update restaurantName textview values with value from restaurant.getName()
 
 //        CardView fuelPlus1Card= root.findViewById(R.id.FuelPlus1);
