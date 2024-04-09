@@ -274,9 +274,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Comparing the restaurants..."
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/primaryVariant"
+            android:textSize="16sp"
+            android:textColor="@color/darkGrey"
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="2"
@@ -326,9 +325,8 @@
                     android:shadowDy="2"
                     android:shadowRadius="2"
                     android:text="We recommend you to visit..."
-                    android:textColor="@color/primaryVariant"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/darkGrey"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/RecommendedRestaurant"
@@ -341,7 +339,7 @@
                     android:shadowRadius="2"
                     android:text="Restaurant Name"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_gravity="center_horizontal"/>
 
