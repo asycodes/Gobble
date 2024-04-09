@@ -69,9 +69,9 @@ public class CompareFragment extends Fragment {
     TextInputLayout textInputLayout;
     MaterialAutoCompleteTextView autoCompleteTextView;
     MaterialButton btnStartComparing;
-    String[] restaurant = {"Restaurant1", "Restaurant2", "Restaurant3", "Restaurant4", "Restaurant5"};
-    ArrayAdapter<String> adapterItems;
 
+    Restaurant r1;
+    Restaurant r2;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -82,9 +82,6 @@ public class CompareFragment extends Fragment {
         textInputLayout = root.findViewById(R.id.compareInputLayout);
         autoCompleteTextView = root.findViewById(R.id.inputTV);
         btnStartComparing = root.findViewById(R.id.restaurantInputButton);
-        adapterItems = new ArrayAdapter<String>(getActivity(), R.layout.restaurant_options, restaurant);
-
-        autoCompleteTextView.setAdapter(adapterItems);
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -236,6 +233,23 @@ public class CompareFragment extends Fragment {
             @Override
             public void onChange(RealmResults<Restaurant> results) {
                 Log.v("Cf", "we have received updated restaurant results realm " + results);
+
+                // Update this.restaurantList with the names of the restaurants from results
+                String[] restaurantList = new String[results.size()];
+
+                        // Fill the array with the names of the Restaurants from results
+                for (int i = 0; i < results.size(); i++) {
+                    restaurantList[i] = results.get(i).getName();
+                }
+
+                ArrayAdapter<String> adapterItems = new ArrayAdapter<String>(getActivity(), R.layout.restaurant_options, restaurantList);
+
+                //override restaurantList with data from results
+                
+
+                //update this.restaurantList with data from result
+                autoCompleteTextView.setAdapter(adapterItems);
+
 
                 // Handle changes
                 Log.d("QuestionFragment", "Restaurant data updated: " + results.size());
