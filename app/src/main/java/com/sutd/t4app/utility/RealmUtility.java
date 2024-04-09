@@ -1,5 +1,7 @@
 package com.sutd.t4app.utility;
 
+import android.util.Log;
+
 import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.ui.ProfileQuestions.UserProfile;
 
@@ -28,6 +30,7 @@ public class RealmUtility {
 
             }else{
                 User user = realmApp.currentUser();
+                Log.d("user",""+user);
                 defaultSyncConfig = new SyncConfiguration.Builder(user)
                         .initialSubscriptions(new SyncConfiguration.InitialFlexibleSyncSubscriptions() {
                             @Override
@@ -58,6 +61,7 @@ public class RealmUtility {
 
                         })
                         .build();
+                callback.onConfigReady(defaultSyncConfig);
 
 
 

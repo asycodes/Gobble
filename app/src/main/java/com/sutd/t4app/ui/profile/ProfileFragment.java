@@ -76,8 +76,9 @@ public class ProfileFragment extends Fragment {
                 .addOnCompleteListener(getActivity(), task -> {
                     // Sign-out was successful, redirect to LoginActivity
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent);
                     getActivity().finish();  // Call finish() to close the current activity
+                    startActivity(intent);
+
                 });
 
     }

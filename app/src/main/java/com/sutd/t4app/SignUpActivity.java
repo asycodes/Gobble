@@ -9,8 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.sutd.t4app.data.model.Restaurant;
@@ -64,7 +63,6 @@ public class SignUpActivity extends AppCompatActivity {
         Button submit = findViewById(R.id.signUpButton);
 
         String passwordPattern = "^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$";
-        initializeRealm();
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,12 +126,29 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                     // now we have made sure current user is null, we gonna sign up this dood
                     Log.d("signup check","all valid and user is NULL");
-                    Credentials emailPasswordCredentials = Credentials.emailPassword(emailValue,passValue);
-                    realmApp.loginAsync(emailPasswordCredentials, result -> {
+                    Log.d("email and pass ","email: " + emailValue +
+                            "\n pass: " + passValue
+                            );
+
+                    realmApp.getEmailPassword().registerUserAsync(emailValue, passValue, result -> {
                         if (result.isSuccess()) {
-                            initializeRealm();
+                            // Step 2: Log in the user
+                            Credentials credentials = Credentials.emailPassword(emailValue, passValue);
+                            realmApp.loginAsync(credentials, loginResult -> {
+                                if (loginResult.isSuccess()) {
+                                    // The user is successfully logged in
+                                    Log.d("SUCCESS","SUCCESS");
+                                    initializeRealm();
+                                } else {
+                                    Log.d("FAILED","FAILED" +  result.getError().getErrorMessage());
+                                }
+                            });
+                        } else {
+                            Log.d("FAILED","FAILED" +  result.getError().getErrorMessage());
+
                         }
                     });
+
 
 
 
@@ -154,12 +169,15 @@ public class SignUpActivity extends AppCompatActivity {
         RealmUtility.getDefaultSyncConfig(realmApp, new RealmUtility.ConfigCallback() {
             @Override
             public void onConfigReady(SyncConfiguration configuration) {
+                Log.d("get instance","checking");
+
                 // Asynchronously initialize the Realm instance with the configuration
                 Realm.getInstanceAsync(configuration, new Realm.Callback() {
+
                     @Override
                     public void onSuccess(Realm realm) {
                         SignUpActivity.this.realm = realm;
-                        Log.d("HomeFragmentViewModel", "Realm instance has been initialized successfully.");
+                        Log.d("YourViewModel", "Realm instance has been initialized successfully.");
                         checkusers(); // check if the fella alr exist or not
                     }
                 });
@@ -206,8 +224,8 @@ public class SignUpActivity extends AppCompatActivity {
                     // Transaction was a success.
                     Log.v("UserProfile", "User profile saved successfully,");
                     // PROCEED TO BE QUESTIONED
-                    NavController navController = Navigation.findNavController(SignUpActivity.this, R.id.nav_host_fragment);
-                    navController.navigate(R.id.navigation_questions);
+                    Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                    startActivity(intent);
 
                 }, error -> {
                     // Transaction failed and was automatically canceled.
@@ -225,9 +243,9 @@ public class SignUpActivity extends AppCompatActivity {
         userProfile.setEmail(email.getText().toString());
         EditText firstname = findViewById(R.id.firstNameEditText);
         EditText lastname = findViewById(R.id.lastNameEditText);
-        userProfile.setUsername(firstname.getText().toString() + lastname.getText().toString());
+        userProfile.setUsername(firstname.getText().toString() + " "+ lastname.getText().toString());
         EditText pass = findViewById(R.id.passwordEditText);
-        userProfile.setUsername(pass.getText().toString());
+        userProfile.setPassword(pass.getText().toString());
 
         return userProfile;
     }

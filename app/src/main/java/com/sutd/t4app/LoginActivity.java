@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 });
 
-        findViewById(R.id.sign_in_button).setOnClickListener(view -> signInWithGoogle());
+        findViewById(R.id.sign_in_buttonGoogle).setOnClickListener(view -> signInWithGoogle());
         findViewById(R.id.sign_up_button).setOnClickListener(view -> proceedToSignUp());
     }
 
@@ -116,6 +116,7 @@ public class LoginActivity extends AppCompatActivity {
     private void proceedToSignUp() {
         Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
         startActivity(intent);
+        finish();
     }
 
 }
