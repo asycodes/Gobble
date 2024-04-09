@@ -22,7 +22,11 @@ import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.sutd.t4app.BuildConfig;
 import com.sutd.t4app.R;
+import com.sutd.t4app.data.model.Restaurant;
+import com.sutd.t4app.ui.ProfileQuestions.QuestionFragment;
+import com.sutd.t4app.ui.ProfileQuestions.UserProfile;
 import com.sutd.t4app.ui.home.HomeFragmentViewModel;
+import com.sutd.t4app.utility.RealmUtility;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +34,15 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
+
 import dagger.hilt.android.AndroidEntryPoint;
+import io.realm.Realm;
+import io.realm.RealmResults;
+import io.realm.mongodb.App;
+//import io.realm.mongodb.UserProfile;
+import io.realm.mongodb.sync.SyncConfiguration;
+import io.realm.RealmChangeListener;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -39,11 +51,16 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-
 public class CompareFragment extends Fragment {
 
     private CompareViewModel mViewModel;
     private HomeFragmentViewModel hViewModel;
+
+    @Inject
+    App realmApp;
+    private Realm realm;
+    private RealmResults<UserProfile> realmResults;
+    private RealmResults<Restaurant> realmRestaurantResults;
 
     public static CompareFragment newInstance() {
         return new CompareFragment();
@@ -60,6 +77,7 @@ public class CompareFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_compare, container, false);
+        initializeRealm();
 
         textInputLayout = root.findViewById(R.id.compareInputLayout);
         autoCompleteTextView = root.findViewById(R.id.inputTV);
@@ -165,7 +183,8 @@ public class CompareFragment extends Fragment {
 
 
     }
-/*
+    
+    
     private void initializeRealm() {
         RealmUtility.getDefaultSyncConfig(realmApp, new RealmUtility.ConfigCallback() {
             @Override
@@ -173,9 +192,10 @@ public class CompareFragment extends Fragment {
                 Realm.getInstanceAsync(configuration, new Realm.Callback() {
                     @Override
                     public void onSuccess(Realm realm) {
-                        Log.v("CHECK 1", "we have initialiase realm " + realm);
-                        QuestionFragment.this.realm = realm;
+                        Log.v("Cf", "we have initialiase realm " + realm);
+                        CompareFragment.this.realm = realm;
                         observeUserProfile();
+                        observeRestaurant();
                     }
                 });
             }
@@ -186,7 +206,42 @@ public class CompareFragment extends Fragment {
             }
         });
     }
-*/
+
+    private void observeUserProfile() {
+        Log.v("Cf", "we have called observerUserProfile ");
+
+        // Perform your Realm query
+        realmResults = realm.where(UserProfile.class).findAllAsync();
+        Log.v("Cf", "we have received results realm " + realmResults);
+
+        realmResults.addChangeListener(new RealmChangeListener<RealmResults<UserProfile>>() {
+            @Override
+            public void onChange(RealmResults<UserProfile> results) {
+                Log.v("Cf", "we have received updated results realm " + results);
+
+                // Handle changes
+                Log.d("QuestionFragment", "UserProfile data updated: " + results.size());
+            }
+        });
+    }
+
+    private void observeRestaurant() {
+        Log.v("Cf", "we have called observeRestaurant");
+
+        // Perform your Realm query
+        realmRestaurantResults = realm.where(Restaurant.class).findAllAsync();
+        Log.v("Cf", "we have received results realm " + realmResults);
+
+        realmRestaurantResults.addChangeListener(new RealmChangeListener<RealmResults<Restaurant>>() {
+            @Override
+            public void onChange(RealmResults<Restaurant> results) {
+                Log.v("Cf", "we have received updated restaurant results realm " + results);
+
+                // Handle changes
+                Log.d("QuestionFragment", "Restaurant data updated: " + results.size());
+            }
+        });
+    }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
