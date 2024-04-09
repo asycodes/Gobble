@@ -44,21 +44,21 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
         if(restaurantList.size() > 0){
 
             Restaurant restaurant = restaurantList.get(position);
-            Log.d("CHeck",restaurant.getName() + "  ADDED");
+            Log.d("AdapterDebug", "Binding restaurant at position " + position + ": " + restaurant.getName());
 
             holder.textViewName.setText(restaurant.getName());
-            Log.d("DEBUGGING"," res " + holder.textViewName.getText() );
+            Log.d("DEBUGGING"," resName " + holder.textViewName.getText() );
 
             if(holder.textViewClosetLandmark != null) {
                 holder.textViewClosetLandmark.setText(restaurant.getClosestLandmark());
-                Log.d("DEBUGGING"," res " + holder.textViewClosetLandmark.getText() );
+                Log.d("DEBUGGING"," resLandmark " + holder.textViewClosetLandmark.getText() );
             }
             if(holder.textViewRestaurantCuisine != null) {
                 holder.textViewRestaurantCuisine.setText(restaurant.getCuisine());
-                Log.d("DEBUGGING", " res " + holder.textViewRestaurantCuisine.getText());
+                Log.d("DEBUGGING", " resCuisine " + holder.textViewRestaurantCuisine.getText());
             }
             holder.textViewRestaurantLocation.setText(restaurant.getAddress());
-            Log.d("DEBUGGING"," res " + holder.textViewRestaurantLocation.getText() );
+            Log.d("DEBUGGING"," resLocation " + holder.textViewRestaurantLocation.getText() );
             Picasso.get().setLoggingEnabled(true);
 
 
@@ -70,7 +70,7 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
                 .into(holder.restImageHolder);
 
 
-            Log.d("DEBUGGING"," res " +restaurant.getImgMainURL());
+            Log.d("DEBUGGING"," resImage " +restaurant.getImgMainURL());
 
             // Bind other restaurant details as needed
         }
@@ -82,6 +82,7 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
     }
 
     public void updateData(List<Restaurant> newRestaurantList) {
+        Log.d("AdapterUpdate", "Updating data with " + newRestaurantList.size() + " restaurants.");
         this.restaurantList = newRestaurantList;
         notifyDataSetChanged();
     }

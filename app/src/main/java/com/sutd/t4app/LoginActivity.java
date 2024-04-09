@@ -33,39 +33,40 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sign_in);
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("608019695893-le4ojn1imiute9040pj9mulgnhe6gkjt.apps.googleusercontent.com").requestEmail()
-                .build();
-        GoogleSignInAccount googleSignInAcc = GoogleSignIn.getLastSignedInAccount(this);
-        // check if theres any existing account previously
-        if(googleSignInAcc != null){
-            Log.d("we go next", "not null");
-            onLoginSuccess();
-        }
-        googleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        resultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    Log.d("LoginActivity", "ActivityResultLauncher triggered with result code: " + result.getResultCode());
-
-
-                    if(result.getResultCode() == -1){
-                        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
-                        handleSignInResult(task);
-                    }
-
-                    else{
-                        // TODO: what happens if its not -1
-
-                    }
-
-
-                });
-
-        findViewById(R.id.sign_in_button).setOnClickListener(view -> signInWithGoogle());
+//        setContentView(R.layout.sign_in);
+//
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestIdToken("608019695893-le4ojn1imiute9040pj9mulgnhe6gkjt.apps.googleusercontent.com").requestEmail()
+//                .build();
+//        GoogleSignInAccount googleSignInAcc = GoogleSignIn.getLastSignedInAccount(this);
+//        // check if theres any existing account previously
+//        if(googleSignInAcc != null){
+//            Log.d("we go next", "not null");
+//            onLoginSuccess();
+//        }
+//        googleSignInClient = GoogleSignIn.getClient(this, gso);
+//
+//        resultLauncher = registerForActivityResult(
+//                new ActivityResultContracts.StartActivityForResult(),
+//                result -> {
+//                    Log.d("LoginActivity", "ActivityResultLauncher triggered with result code: " + result.getResultCode());
+//
+//
+//                    if(result.getResultCode() == -1){
+//                        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
+//                        handleSignInResult(task);
+//                    }
+//
+//                    else{
+//                        // TODO: what happens if its not -1
+//
+//                    }
+//
+//
+//                });
+//
+//        findViewById(R.id.sign_in_button).setOnClickListener(view -> signInWithGoogle());
+        onLoginSuccess();
     }
 
     private void signInWithGoogle() {
