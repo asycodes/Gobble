@@ -86,6 +86,9 @@ public class CompareFragment extends Fragment {
     TextView restaurant1Ambience;
     TextView restaurant1Overall;
 
+    OkHttpClient client;
+    Request request;
+
     Restaurant r1;
     Restaurant r2;
 
@@ -148,9 +151,52 @@ public class CompareFragment extends Fragment {
                 if (autoCompleteTextView.getText().toString().isEmpty()){
                     textInputLayout.setError("Please select a restaurant");
                 }else {
+                    // Make the request
+                    client.newCall(request).enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            Log.d("openai", "onFailure");
+                            e.printStackTrace();
+                        }
 
-                    Toast.makeText(getActivity()  , "autoCompleteTextView.getText().toString()", Toast.LENGTH_SHORT).show();
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            Log.d("openai", "onResponse");
+                            if (!response.isSuccessful()) {
+                                Log.d("openai", "response fail");
+                                Log.d("openai", response.toString());
+                                throw new IOException("Unexpected code " + response);
+
+                            } else {
+                                // Get the response
+                                String responseData = response.body().string();
+                                Log.d("openai", responseData);
+                                // Parse the response and get the text
+                                try {
+                                    JSONObject jsonObject = new JSONObject(responseData);
+                                    JSONArray choicesArray = jsonObject.getJSONArray("choices");
+                                    JSONObject firstChoiceObject = choicesArray.getJSONObject(0);
+                                    JSONObject messageObject = firstChoiceObject.getJSONObject("message");
+                                    String content = messageObject.getString("content");
+
+                                    // Update the TextView on the main thread
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Log.d("openai", "update llm text");
+                                            TextView llmText = getView().findViewById(R.id.llmOutput);
+                                            llmText.setText(content);
+                                        }
+                                    });
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
                 }
+
+
             }
         });
 
@@ -162,7 +208,7 @@ public class CompareFragment extends Fragment {
 
         //call openAI API - add prompt "How are you"
         // Create OkHttpClient
-        OkHttpClient client = new OkHttpClient();
+        client = new OkHttpClient();
         Log.d("openai", "request builder");
 
 // Create request
@@ -179,56 +225,13 @@ public class CompareFragment extends Fragment {
         + "\"presence_penalty\":0"
         + "}";
         
-        Request request = new Request.Builder()
+        request = new Request.Builder()
             .url("https://api.openai.com/v1/chat/completions")
             .addHeader("Content-Type", "application/json")
             .addHeader("Authorization", apikey)
             .post(RequestBody.create(jsonBody, MediaType.parse("application/json; charset=utf-8")))
             .build();
 
-// Make the request
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.d("openai", "onFailure");
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Log.d("openai", "onResponse");
-                if (!response.isSuccessful()) {
-                    Log.d("openai", "response fail");
-                    Log.d("openai", response.toString());
-                    throw new IOException("Unexpected code " + response);
-
-                } else {
-                    // Get the response
-                    String responseData = response.body().string();
-                    Log.d("openai", responseData);
-                    // Parse the response and get the text
-                    try {
-                        JSONObject jsonObject = new JSONObject(responseData);
-                        JSONArray choicesArray = jsonObject.getJSONArray("choices");
-                        JSONObject firstChoiceObject = choicesArray.getJSONObject(0);
-                        JSONObject messageObject = firstChoiceObject.getJSONObject("message");
-                        String content = messageObject.getString("content");
-
-                        // Update the TextView on the main thread
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Log.d("openai", "update llm text");
-                                TextView llmText = getView().findViewById(R.id.llmOutput);
-                                llmText.setText(content);
-                            }
-                        });
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
         return root;
 
 

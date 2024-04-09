@@ -46,7 +46,7 @@
             android:layout_marginEnd="25sp"
             android:layout_marginTop="20sp"
             android:id="@+id/compareInputLayout"
-            android:hint="Select 1st restaurant"
+            android:hint="Select a restaurant to compare with"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
             app:boxCornerRadiusBottomEnd="10sp"
             app:boxCornerRadiusBottomStart="10sp"
@@ -106,7 +106,7 @@
                     android:layout_weight="4"
                     android:gravity="center_horizontal"
                     android:padding="10sp"
-                    android:text="Restaurant2"
+                    android:text="-"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -145,7 +145,7 @@
                     android:layout_weight="4"
                     android:gravity="center_horizontal"
                     android:padding="10sp"
-                    android:text="Price2"
+                    android:text="-"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
             </TableRow>
@@ -181,7 +181,7 @@
                     android:layout_weight="4"
                     android:gravity="center_horizontal"
                     android:padding="10sp"
-                    android:text="Service2"
+                    android:text="-"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
             </TableRow>
@@ -217,7 +217,7 @@
                     android:layout_weight="4"
                     android:gravity="center_horizontal"
                     android:padding="10sp"
-                    android:text="Food2"
+                    android:text="-"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
             </TableRow>
@@ -253,7 +253,7 @@
                     android:layout_weight="4"
                     android:gravity="center_horizontal"
                     android:padding="10sp"
-                    android:text="Ambience2"
+                    android:text="-"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
             </TableRow>
@@ -289,7 +289,7 @@
                     android:layout_weight="4"
                     android:gravity="center_horizontal"
                     android:padding="10sp"
-                    android:text="Overall2"
+                    android:text="-"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
             </TableRow>
@@ -323,7 +323,6 @@
             android:id="@+id/llmOutput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="LLM output"
             android:textSize="16sp"
             android:textColor="@color/black"
             android:shadowDx="2"
