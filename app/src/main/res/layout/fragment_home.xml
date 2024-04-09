@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
+    <ScrollView
+        android:id="@+id/verticalScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="2dp"
+        android:fillViewport="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,6 +83,23 @@
                 android:text="Feed"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/filterIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_vertical_margin"
+                android:layout_marginEnd="2dp"
+                android:src="@drawable/filter" />
+
+            <ImageView
+                android:id="@+id/questionsicon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_vertical_margin"
+                android:layout_marginEnd="2dp"
+                android:src="@drawable/profile_qna" />
+
 
         </LinearLayout>
         <ScrollView
@@ -459,4 +487,5 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
