@@ -1,5 +1,6 @@
 package com.sutd.t4app.ui.restaurant;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.squareup.picasso.Picasso;
 import com.sutd.t4app.R;
 import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.databinding.FragmentDashboardBinding;
@@ -39,6 +41,7 @@ public class RestaurantFragmentActivity extends Fragment {
     private TextView User2Review;
     private RatingBar User2Ratings;
     private Restaurant restaurant;
+    private ImageView restaurantProfileImage;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -70,7 +73,6 @@ public class RestaurantFragmentActivity extends Fragment {
             User2=root.findViewById(R.id.User2);
             User2Review=root.findViewById(R.id.User2_review);
             User2Ratings=root.findViewById(R.id.user2_rating);
-
             Menu1.setText(restaurant.getTopMenu1());
             Log.d("RestaurantData", "Top Menu1: " + restaurant.getTopMenu1());
             Menu2.setText(restaurant.getTopMenu2());
@@ -88,6 +90,10 @@ public class RestaurantFragmentActivity extends Fragment {
             User2Review.setText(restaurant.getReview2());
             User2Ratings.setRating((float) restaurant.getReviewRating2().doubleValue());
 
+            restaurantProfileImage = root.findViewById(R.id.restaurantProfileImage);
+            Picasso.get()
+                    .load(restaurant.getImgMainURL()) // Assuming `getImageUrl()` is a method in your `Restaurant` class
+                    .into(restaurantProfileImage);
 
 
         }

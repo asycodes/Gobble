@@ -150,7 +150,6 @@ public class CompareFragment extends Fragment {
                 restaurant2Food.setText(r2.getFoodRating().toString());
                 restaurant2Ambience.setText(r2.getAmbienceRating().toString());
                 restaurant2Overall.setText(r2.getRatings().toString());
-                Toast.makeText(getActivity(), "Please wait >.<", Toast.LENGTH_SHORT).show();
             }
         });
         btnStartComparing.setOnClickListener(new View.OnClickListener() {
@@ -159,6 +158,7 @@ public class CompareFragment extends Fragment {
                 if (autoCompleteTextView.getText().toString().isEmpty()){
                     textInputLayout.setError("Please select a restaurant");
                 }else {
+                    Toast.makeText(getActivity(), "Please wait >.<", Toast.LENGTH_SHORT).show();
                     // Make the request
                     // Create request
                     String apikey = "Bearer " + BuildConfig.OPENAI_API;
@@ -384,13 +384,15 @@ public class CompareFragment extends Fragment {
     }
 
     private String getRestSummary(Restaurant r) {
-        return r.getName() + " " + r.getCuisine() + " " + r.getPriceRange() + " " + r.getDietaryOptions() +
-                " " + r.getFoodRating() + " " + r.getServiceRating() + " " + r.getAmbience() + " " + r.getAmbienceRating()
-                + " " + r.getTopMenu1() + " " + r.getTopMenu2() + " " + r.getTopMenu3() + " " + r.getTopMenu4() + " " + r.getRatings();
+        return "Name of restaurant: " + r.getName() + ";Type of Cuisine: " + r.getCuisine() + ";Price Range " + r.getPriceRange() + ";Dietary Options Available: " + r.getDietaryOptions() +
+                ";Food Rating:(out of 5) " + r.getFoodRating() + ";Service Rating:(out of 5) " + r.getServiceRating() + ";Ambience Description: " + r.getAmbience() + ";Ambience Rating:(out of 5) " + r.getAmbienceRating()
+                + ";Top dish on menu: " + r.getTopMenu1() + ", " + r.getTopMenu2() + ", " + r.getTopMenu3() + ", " + r.getTopMenu4() + ";Overall number of stars(rating out of 5): " + r.getRatings();
     }
 
     private String getUserSummary(UserProfile u) {
-        return u.getAmbiencePreferences() + u.getBudgetPreference() + u.getCuisineAdventurousness() + u.getCuisinePreferences() + u.getDietaryPreferences() + u.getFoodPreferences() + u.getHealthWellnessImportance() + u.getIngredientDislikes() + u.getIngredientPreferences() + u.getSpecialtyDishes() + u.getSpicyTolerance() + u.getSweetTooth();
+        return "Ambience Preferences: " + u.getAmbiencePreferences() + ";Budget Preferences: " + u.getBudgetPreference() + ";Cuisine Adventurousness: " + u.getCuisineAdventurousness() + ";Cuisines Preferences: " + u.getCuisinePreferences() +
+                ";Dietary Preferences: " + u.getDietaryPreferences() + ";Food Preferences: " + u.getFoodPreferences() + ";Health Wellness Importance: " + u.getHealthWellnessImportance() + ";Ingredients Disliked: " + u.getIngredientDislikes() +
+                ";Ingredient Preferences: " + u.getIngredientPreferences() + ";Specialty Dishes: " + u.getSpecialtyDishes() + ";Spice Tolerance:" + u.getSpicyTolerance() + ";Level of Sweet Tooth: " + u.getSweetTooth();
     }
 
 
