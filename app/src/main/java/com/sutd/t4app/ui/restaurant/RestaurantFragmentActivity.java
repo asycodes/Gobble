@@ -38,6 +38,7 @@ public class RestaurantFragmentActivity extends Fragment {
     private TextView User2;
     private TextView User2Review;
     private RatingBar User2Ratings;
+    private Restaurant restaurant;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -49,7 +50,7 @@ public class RestaurantFragmentActivity extends Fragment {
         Bundle arguments = getArguments();
         String value = null;
         if (arguments != null) {
-            Restaurant restaurant = arguments.getParcelable("restaurant");
+            restaurant = arguments.getParcelable("restaurant");
             TextView restaurantNameTextView = root.findViewById(R.id.textViewRestaurantName);
             //TextView restaurantNameTextView = root.findViewById(R.id.restaurantName);
 
@@ -95,8 +96,10 @@ public class RestaurantFragmentActivity extends Fragment {
         btnCompare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("restaurant", restaurant);
                 // TODO: Add your code here to be executed when the button is clicked
-                Navigation.findNavController(v).navigate(R.id.compare_fragment);
+                Navigation.findNavController(v).navigate(R.id.compare_fragment, bundle);
             }
         });
         //update restaurantName textview values with value from restaurant.getName()
