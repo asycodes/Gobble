@@ -1,5 +1,6 @@
 package com.sutd.t4app.ui.restaurant;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -88,12 +89,16 @@ public class CompareFragment extends Fragment {
     TextView restaurant1Ambience;
     TextView restaurant1Overall;
 
+    UserProfile currentUser;
+
     OkHttpClient client;
     Request request;
     String prompt;
 
     Restaurant r1;
     Restaurant r2;
+
+    private MutableLiveData<UserProfile> userProfilesLiveData = new MutableLiveData<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -145,7 +150,6 @@ public class CompareFragment extends Fragment {
                 restaurant2Food.setText(r2.getFoodRating().toString());
                 restaurant2Ambience.setText(r2.getAmbienceRating().toString());
                 restaurant2Overall.setText(r2.getRatings().toString());
-                Toast.makeText(getActivity(), "Please wait >.<", Toast.LENGTH_SHORT).show();
             }
         });
         btnStartComparing.setOnClickListener(new View.OnClickListener() {
@@ -154,13 +158,14 @@ public class CompareFragment extends Fragment {
                 if (autoCompleteTextView.getText().toString().isEmpty()){
                     textInputLayout.setError("Please select a restaurant");
                 }else {
+                    Toast.makeText(getActivity(), "Please wait >.<", Toast.LENGTH_SHORT).show();
                     // Make the request
                     // Create request
                     String apikey = "Bearer " + BuildConfig.OPENAI_API;
                     Log.d("openai", apikey);
 
                     Log.d("openai", "b4 prompt");
-                    prompt = "Output your response in HTML format for the following question." + "Evaluate the user's dining preferences:" + " and profiles of the two restaurants:" + getRestSummary(r1) + " and" + getRestSummary(r2) +
+                    prompt = "Output your response in HTML format for the following question." + "Evaluate the user's dining preferences:" + getUserSummary(currentUser) +  " and profiles of the two restaurants:" + getRestSummary(r1) + " and" + getRestSummary(r2) +
                             "Your task is to recommend only one of the restaurant that the user should visit for their next dining experience, considering their preferences and the restaurant profiles." +
                             "Provide a percentage match for each restaurant and suggest a menu item from the chosen restaurant that aligns with the user's preferences, explaining why it is recommended." +
                             "Format your recommendation as follows: (one sentence for each of them)" +
@@ -268,8 +273,12 @@ public class CompareFragment extends Fragment {
                     public void onSuccess(Realm realm) {
                         Log.v("Cf", "we have initialiase realm " + realm);
                         CompareFragment.this.realm = realm;
-                        observeUserProfile();
+                        //observeUserProfile();
                         observeRestaurant();
+                        currentUser = fetchUserProfiles("bshfbefnwoef212100001");
+                        Log.d("Cf", currentUser.toString());
+                        Log.d("Cf", "currentUser");
+
                     }
                 });
             }
@@ -279,6 +288,27 @@ public class CompareFragment extends Fragment {
                 Log.e("QuestionFragment", "Error obtaining Realm configuration", e);
             }
         });
+    }
+
+
+    private UserProfile fetchUserProfiles(String currentUserId) {
+        Log.d("Cf", "fetchUserProfiles");
+        UserProfile u = new UserProfile();
+        if (realm != null && currentUserId != null) {
+            u = realm.where(UserProfile.class).equalTo("userId", currentUserId)
+                    .findFirst();
+
+            if (u != null) {
+                    UserProfile detachedUserProfile = realm.copyFromRealm(u);
+
+                    userProfilesLiveData.postValue(detachedUserProfile);
+                } else {
+                    // Handle the case where the user profile is not found, e.g., post null or a default UserProfile object
+                    userProfilesLiveData.postValue(null);
+                }
+        }
+        return u;
+
     }
 
     private void observeUserProfile() {
@@ -354,9 +384,16 @@ public class CompareFragment extends Fragment {
     }
 
     private String getRestSummary(Restaurant r) {
-        return r.getName() + " " + r.getCuisine() + " " + r.getPriceRange() + " " + r.getDietaryOptions() +
-                " " + r.getFoodRating() + " " + r.getServiceRating() + " " + r.getAmbience() + " " + r.getAmbienceRating()
-                + " " + r.getTopMenu1() + " " + r.getTopMenu2() + " " + r.getTopMenu3() + " " + r.getTopMenu4() + " " + r.getRatings();
+        return "Name of restaurant: " + r.getName() + ";Type of Cuisine: " + r.getCuisine() + ";Price Range " + r.getPriceRange() + ";Dietary Options Available: " + r.getDietaryOptions() +
+                ";Food Rating:(out of 5) " + r.getFoodRating() + ";Service Rating:(out of 5) " + r.getServiceRating() + ";Ambience Description: " + r.getAmbience() + ";Ambience Rating:(out of 5) " + r.getAmbienceRating()
+                + ";Top dish on menu: " + r.getTopMenu1() + ", " + r.getTopMenu2() + ", " + r.getTopMenu3() + ", " + r.getTopMenu4() + ";Overall number of stars(rating out of 5): " + r.getRatings();
     }
+
+    private String getUserSummary(UserProfile u) {
+        return "Ambience Preferences: " + u.getAmbiencePreferences() + ";Budget Preferences: " + u.getBudgetPreference() + ";Cuisine Adventurousness: " + u.getCuisineAdventurousness() + ";Cuisines Preferences: " + u.getCuisinePreferences() +
+                ";Dietary Preferences: " + u.getDietaryPreferences() + ";Food Preferences: " + u.getFoodPreferences() + ";Health Wellness Importance: " + u.getHealthWellnessImportance() + ";Ingredients Disliked: " + u.getIngredientDislikes() +
+                ";Ingredient Preferences: " + u.getIngredientPreferences() + ";Specialty Dishes: " + u.getSpecialtyDishes() + ";Spice Tolerance:" + u.getSpicyTolerance() + ";Level of Sweet Tooth: " + u.getSweetTooth();
+    }
+
 
 }
