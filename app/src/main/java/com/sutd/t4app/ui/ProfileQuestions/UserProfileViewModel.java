@@ -1,5 +1,8 @@
 package com.sutd.t4app.ui.ProfileQuestions;
-
+/**
+ * The UserProfileViewModel class manages the user profile data using Realm database and provides
+ * LiveData for observing changes in the user profile.
+ */
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

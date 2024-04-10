@@ -1,3 +1,7 @@
+/**
+ * The ReviewLocationResponse class represents a response object containing details of a review for a
+ * location, including user information and subratings.
+ */
 package com.sutd.t4app.data.model.apiresponses;
 import java.util.List;
 import java.util.Map;

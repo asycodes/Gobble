@@ -1,3 +1,7 @@
+/**
+ * The `Restaurant` class in Java represents a model for restaurant data with various attributes and
+ * implements the `Parcelable` interface for object serialization.
+ */
 package com.sutd.t4app.data.model;
 
 import android.os.Parcel;

@@ -38,6 +38,10 @@ import io.realm.mongodb.sync.MutableSubscriptionSet;
 import io.realm.mongodb.sync.Subscription;
 import io.realm.mongodb.sync.SyncConfiguration;
 @HiltViewModel
+/*
+ * The `HomeFragmentViewModel` class in the Android app handles data retrieval from APIs, Realm
+ * database initialization, and restaurant ranking based on user profiles.
+ */
 public class HomeFragmentViewModel extends ViewModel {
     private MutableLiveData<UserProfile> userProfilesLiveData = new MutableLiveData<>();
     private TripAdvisorService tripAdvisorService;

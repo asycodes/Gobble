@@ -12,7 +12,10 @@ import io.realm.mongodb.User;
 import io.realm.mongodb.sync.MutableSubscriptionSet;
 import io.realm.mongodb.sync.Subscription;
 import io.realm.mongodb.sync.SyncConfiguration;
-
+/**
+ * The `RealmUtility` class in Java provides methods for obtaining a default SyncConfiguration for
+ * Realm database synchronization with subscriptions for Restaurant and UserProfile models.
+ */
 
 public class RealmUtility {
     private static SyncConfiguration defaultSyncConfig = null;

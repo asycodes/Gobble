@@ -1,4 +1,8 @@
 package com.sutd.t4app.ui.home;
+/**
+ * The `RestaurantRanking` class in Java ranks restaurants based on user preferences such as cuisine,
+ * dietary options, ambience, price range, and location.
+ */
 
 import android.util.Log;
 

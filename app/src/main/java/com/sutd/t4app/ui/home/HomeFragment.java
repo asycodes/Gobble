@@ -1,5 +1,8 @@
 package com.sutd.t4app.ui.home;
-
+/*
+ * The HomeFragment class in an Android app displays a list of restaurants and allows users to switch
+ * between explore and feed pages.
+ */
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;

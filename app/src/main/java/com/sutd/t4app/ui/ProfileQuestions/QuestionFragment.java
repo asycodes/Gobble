@@ -1,5 +1,8 @@
 package com.sutd.t4app.ui.ProfileQuestions;
-
+/**
+ * The `QuestionFragment` class in the Android app handles user profile creation and storage using
+ * Realm database.
+ */
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;

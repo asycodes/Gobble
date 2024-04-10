@@ -24,6 +24,10 @@ import io.realm.Realm;
 import io.realm.mongodb.App;
 import io.realm.mongodb.Credentials;
 import io.realm.mongodb.auth.GoogleAuthType;
+/**
+ * The `LoginActivity` class in the Android app handles Google sign-in authentication and redirects
+ * users to the main activity upon successful login.
+ */
 @AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
 

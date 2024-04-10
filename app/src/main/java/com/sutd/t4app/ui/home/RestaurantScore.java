@@ -1,5 +1,7 @@
 package com.sutd.t4app.ui.home;
-
+/**
+ * The `RestaurantScore` class represents a pairing of a `Restaurant` object with an integer score.
+ */
 
 import com.sutd.t4app.data.model.Restaurant;
 

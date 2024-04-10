@@ -1,5 +1,7 @@
 package com.sutd.t4app.ui.home;
-
+/**
+ * The `RestaurantRanker` class implements a ranking system for restaurants based on their score from ResturantRanking.
+ */
 import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.ui.ProfileQuestions.UserProfile;
 

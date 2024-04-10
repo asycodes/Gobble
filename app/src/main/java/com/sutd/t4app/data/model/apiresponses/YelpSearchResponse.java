@@ -1,3 +1,7 @@
+/**
+ * The `YelpSearchResponse` class represents the response structure for Yelp search API, containing
+ * information about businesses, total count, and region details.
+ */
 package com.sutd.t4app.data.model.apiresponses;
 
 import java.util.List;

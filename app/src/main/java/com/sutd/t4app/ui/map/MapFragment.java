@@ -1,5 +1,7 @@
 package com.sutd.t4app.ui.map;
-
+/**
+ * The MapFragment class in an Android app displays a WebView to show a custom map using Google Maps.
+ */
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;

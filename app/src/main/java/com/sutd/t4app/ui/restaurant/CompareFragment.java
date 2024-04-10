@@ -55,7 +55,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
+/**
+ * The `CompareFragment` class in the restaurant package of a T4app Android application handles
+ * comparing restaurant profiles and user preferences using OpenAI API for recommendation.
+ */
 public class CompareFragment extends Fragment {
 
     private CompareViewModel mViewModel;

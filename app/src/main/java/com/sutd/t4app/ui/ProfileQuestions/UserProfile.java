@@ -1,5 +1,8 @@
 package com.sutd.t4app.ui.ProfileQuestions;
-
+/**
+ * The UserProfile class represents a user profile with various attributes and corresponding getters
+ * and setters.
+ */
 import org.bson.types.ObjectId;
 
 import java.util.List;

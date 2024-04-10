@@ -1,5 +1,8 @@
 package com.sutd.t4app.ui.profile;
-
+/**
+ * The ProfileFragment class in an Android app handles user profile information and includes
+ * functionality for logging out using Google Sign-In.
+ */
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;

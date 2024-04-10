@@ -24,6 +24,10 @@ import android.util.Log;
 
 
 import javax.inject.Inject;
+/**
+ * The MainActivity class in this Android app sets up navigation using BottomNavigationView and
+ * NavController.
+ */
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {

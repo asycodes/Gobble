@@ -1,5 +1,6 @@
 package com.sutd.t4app.ui.reviews;
 
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -27,7 +28,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.sutd.t4app.R;
 import com.sutd.t4app.databinding.FragmentDashboardBinding;
 import java.io.IOException;
-
+/**
+ * The ReviewsFragment class in an Android app allows users to submit reviews with ratings and images.
+ */
 public class ReviewsFragment extends Fragment {
 
     private ReviewViewModel viewModel;

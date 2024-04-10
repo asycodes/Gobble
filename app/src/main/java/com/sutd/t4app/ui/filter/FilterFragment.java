@@ -42,7 +42,10 @@ import com.sutd.t4app.utility.RealmUtility;
 import javax.inject.Inject;
 
 @AndroidEntryPoint
-
+/*
+ * The `FilterFragment` class in an Android app allows users to apply various filters to search for
+ * restaurants based on cuisine, dietary options, location, price range, and star ratings.
+ */
 public class FilterFragment extends Fragment {
     @Inject
     App realmApp;
@@ -72,6 +75,10 @@ public class FilterFragment extends Fragment {
         return binding.getRoot();
 
     }
+    /**
+     * The `initializeRealm` method initializes a Realm instance asynchronously and updates UI
+     * components based on filtered results.
+     */
     private void initializeRealm() {
         RealmUtility.getDefaultSyncConfig(realmApp, new RealmUtility.ConfigCallback() {
             @Override
@@ -214,6 +221,9 @@ public class FilterFragment extends Fragment {
             
         }
     }
+
+    // The below Java code is a method named `applyFilters` that is responsible for applying filters to
+    // a list of restaurants.
 
     private List<Restaurant> applyFilters() {
         if (realm == null) {

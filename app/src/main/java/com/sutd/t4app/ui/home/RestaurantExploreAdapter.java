@@ -1,5 +1,8 @@
 package com.sutd.t4app.ui.home;
-
+/*
+ * The `RestaurantExploreAdapter` class is a RecyclerView adapter used to display a list of restaurants
+ * with their details and images in an Android app.
+ */
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;

@@ -21,7 +21,10 @@ import com.sutd.t4app.R;
 import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.databinding.FragmentDashboardBinding;
 import com.sutd.t4app.databinding.FragmentRestuarantProfileBinding;
-
+/**
+ * The `RestaurantFragmentActivity` class is responsible for displaying restaurant details and allowing
+ * users to compare restaurants in an Android app.
+ */
 public class RestaurantFragmentActivity extends Fragment {
     private FragmentRestuarantProfileBinding binding;
     private TextView textViewRestaurantLocation;

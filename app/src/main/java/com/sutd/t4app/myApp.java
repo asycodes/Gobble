@@ -12,7 +12,9 @@ import io.realm.RealmConfiguration;
 import io.realm.RealmMigration;
 import io.realm.RealmObjectSchema;
 import io.realm.RealmSchema;
-
+/**
+ * The `myApp` class in the Android application initializes Realm
+ */
 
 @HiltAndroidApp
 public class myApp extends Application {
