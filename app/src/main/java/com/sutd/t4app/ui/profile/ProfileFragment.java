@@ -25,7 +25,16 @@ import com.sutd.t4app.R;
 import com.sutd.t4app.SignUpActivity;
 import com.sutd.t4app.databinding.FragmentNotificationsBinding;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+import io.realm.mongodb.App;
+
+
+@AndroidEntryPoint
 public class ProfileFragment extends Fragment {
+    @Inject
+    App realmApp;
     private GoogleSignInClient mGoogleSignInClient;
 
     private FragmentNotificationsBinding binding;
@@ -67,9 +76,11 @@ public class ProfileFragment extends Fragment {
                 .addOnCompleteListener(getActivity(), task -> {
                     // Sign-out was successful, redirect to LoginActivity
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent);
                     getActivity().finish();  // Call finish() to close the current activity
+                    startActivity(intent);
+
                 });
+
     }
 
 
