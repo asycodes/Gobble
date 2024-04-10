@@ -28,6 +28,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.mongodb.App;
 import io.realm.mongodb.Credentials;
@@ -78,9 +79,9 @@ public class QuestionFragment extends Fragment {
     }
     private void observeUserProfile() {
         Log.v("CHECK 2", "we have called obsercerUserProfile ");
-
         // Perform your Realm query
-        realmResults = realm.where(UserProfile.class).findAllAsync();
+        User user = realmApp.currentUser();
+        realmResults = realm.where(UserProfile.class).equalTo("userId", user.getId()).findAll();;
         Log.v("CHECK 3", "we have received results realm " + realmResults);
 
         realmResults.addChangeListener(new RealmChangeListener<RealmResults<UserProfile>>() {
@@ -263,26 +264,28 @@ public class QuestionFragment extends Fragment {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
+                User user = realmApp.currentUser();
+                UserProfile item = realm.where(UserProfile.class)
+                        .equalTo("userId", user.getId())
+                        .findFirst();
+                if (userProfile != null) {
 
-                UserProfile item = realm.createObject(UserProfile.class,new ObjectId());
-                item.setUserId(userProfile.getUserId());
-                item.setUsername(userProfile.getUsername());
-                item.setEmail(userProfile.getEmail());
-                item.setPassword(userProfile.getPassword());
-                item.setCuisinePreferences(userProfile.getCuisinePreferences());
-                item.setDietaryPreferences(userProfile.getDietaryPreferences());
-                item.setLocationPreference(userProfile.getLocationPreference());
-                item.setBudgetPreference(userProfile.getBudgetPreference());
-                item.setFoodPreferences(userProfile.getFoodPreferences());
-                item.setCuisineAdventurousness(userProfile.getCuisineAdventurousness());
-                item.setSpicyTolerance(userProfile.getSpicyTolerance());
-                item.setSweetTooth(userProfile.getSweetTooth());
-                item.setSpecialtyDishes(userProfile.getSpecialtyDishes());
-                item.setHealthWellnessImportance(userProfile.getHealthWellnessImportance());
-                item.setAmbiencePreferences(userProfile.getAmbiencePreferences());
-                item.setMealTimePreferences(userProfile.getMealTimePreferences());
-                item.setIngredientPreferences(userProfile.getIngredientPreferences());
-                item.setIngredientDislikes(userProfile.getIngredientDislikes());
+                    item.setCuisinePreferences(userProfile.getCuisinePreferences());
+                    item.setDietaryPreferences(userProfile.getDietaryPreferences());
+                    item.setLocationPreference(userProfile.getLocationPreference());
+                    item.setBudgetPreference(userProfile.getBudgetPreference());
+                    item.setFoodPreferences(userProfile.getFoodPreferences());
+                    item.setCuisineAdventurousness(userProfile.getCuisineAdventurousness());
+                    item.setSpicyTolerance(userProfile.getSpicyTolerance());
+                    item.setSweetTooth(userProfile.getSweetTooth());
+                    item.setSpecialtyDishes(userProfile.getSpecialtyDishes());
+                    item.setHealthWellnessImportance(userProfile.getHealthWellnessImportance());
+                    item.setAmbiencePreferences(userProfile.getAmbiencePreferences());
+                    item.setMealTimePreferences(userProfile.getMealTimePreferences());
+                    item.setIngredientPreferences(userProfile.getIngredientPreferences());
+                    item.setIngredientDislikes(userProfile.getIngredientDislikes());
+                }
+
 
             }
         }, () -> {

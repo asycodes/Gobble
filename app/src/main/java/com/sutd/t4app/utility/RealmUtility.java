@@ -1,5 +1,7 @@
 package com.sutd.t4app.utility;
 
+import android.util.Log;
+
 import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.ui.ProfileQuestions.UserProfile;
 
@@ -23,58 +25,12 @@ public class RealmUtility {
 
     public static synchronized void getDefaultSyncConfig(App realmApp, ConfigCallback callback) {
 
-        if(firstime){
-            firstime = false;
-            Credentials emailPasswordCredentials = Credentials.emailPassword("user@example.com", "password");
-            User user = realmApp.currentUser();
-            realmApp.loginAsync(emailPasswordCredentials, result -> {
-                if (result.isSuccess()) {
-                    defaultSyncConfig = new SyncConfiguration.Builder(user)
-                            .initialSubscriptions(new SyncConfiguration.InitialFlexibleSyncSubscriptions() {
-                                @Override
-                                public void configure(Realm realm, MutableSubscriptionSet subscriptions) {
-                                    // add a subscription with a name
-                                    boolean ressubscriptionExists = false;
-                                    boolean usersubscriptionExists = false;
-                                    for (Subscription existingSubscription : subscriptions) {
-                                        if ("restaurantsSubscription".equals(existingSubscription.getName())) {
-                                            ressubscriptionExists = true;
-                                        }
-                                        if ("usersSubscription".equals(existingSubscription.getName())) {
-                                            usersubscriptionExists = true;
-                                        }
-                                    }
-
-                                    if(!ressubscriptionExists){
-                                        subscriptions.add(Subscription.create("restaurantsSubscription",
-                                                realm.where(Restaurant.class)));
-                                    }
-
-                                    if(!usersubscriptionExists){
-                                        subscriptions.add(Subscription.create("usersSubscription",
-                                                realm.where(UserProfile.class)));
-                                    }
-
-                                }
-
-                            })
-                            .build();
-
-
-                    callback.onConfigReady(defaultSyncConfig);
-                } else {
-                    callback.onError(new Exception("Login failed"));
-                }
-            });
-
-
-        }
-        else{
             if (defaultSyncConfig != null) {
                 callback.onConfigReady(defaultSyncConfig);
 
             }else{
                 User user = realmApp.currentUser();
+                Log.d("user",""+user);
                 defaultSyncConfig = new SyncConfiguration.Builder(user)
                         .initialSubscriptions(new SyncConfiguration.InitialFlexibleSyncSubscriptions() {
                             @Override
@@ -105,9 +61,8 @@ public class RealmUtility {
 
                         })
                         .build();
+                callback.onConfigReady(defaultSyncConfig);
 
-
-            }
 
 
 
