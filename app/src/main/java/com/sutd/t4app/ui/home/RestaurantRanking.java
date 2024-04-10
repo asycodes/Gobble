@@ -7,6 +7,7 @@ import com.sutd.t4app.ui.ProfileQuestions.UserProfile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,10 @@ public class RestaurantRanking {
         return ranker;
     }
     private List<String> parseList(String listString) {
+        if (listString == null || listString.isEmpty()) {
+            Log.e("DEBUG NULL OBJECT", "Input string is null or empty.");
+            return Collections.emptyList(); // Return an empty list if the input string is null or empty
+        }
         Log.d("DEBUG NULL OBJECT", "" + listString);
         // Assuming the listString is in the format "[item1,item2,...]"
         listString = listString.substring(1, listString.length() - 1); // Remove the brackets
@@ -63,6 +68,11 @@ public class RestaurantRanking {
     }
 
     private int matchPriceRange(String restaurantPrice, String userBudget) {
+
+        if (restaurantPrice == null || userBudget == null) {
+            Log.d("DEBUG NULL", "One of the price range strings is null.");
+            return 0;
+        }
         // Remove the dollar sign and parse the price and budget into integers
         int restaurantMaxPrice = Integer.parseInt(restaurantPrice.replace("$", ""));
         int userBudgetInt = Integer.parseInt(userBudget.replace("$", ""));
