@@ -263,7 +263,6 @@ public class CompareFragment extends Fragment {
 
     }
 
-
     private void initializeRealm() {
         RealmUtility.getDefaultSyncConfig(realmApp, new RealmUtility.ConfigCallback() {
             @Override

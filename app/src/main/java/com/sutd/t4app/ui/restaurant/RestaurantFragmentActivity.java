@@ -73,7 +73,6 @@ public class RestaurantFragmentActivity extends Fragment {
             User2=root.findViewById(R.id.User2);
             User2Review=root.findViewById(R.id.User2_review);
             User2Ratings=root.findViewById(R.id.user2_rating);
-
             Menu1.setText(restaurant.getTopMenu1());
             Log.d("RestaurantData", "Top Menu1: " + restaurant.getTopMenu1());
             Menu2.setText(restaurant.getTopMenu2());
