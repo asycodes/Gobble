@@ -129,11 +129,13 @@ public class HomeFragmentViewModel extends ViewModel {
 
             if (userProfile != null) {
                 UserProfile detachedUserProfile = realm.copyFromRealm(userProfile);
+                Log.d("UserProfileDataExplore", "User profile found: " + userProfile.toString());
 
                 userProfilesLiveData.postValue(detachedUserProfile);
             } else {
                 // Handle the case where the user profile is not found, e.g., post null or a default UserProfile object
                 userProfilesLiveData.postValue(null);
+                Log.d("UserProfileDataExplore", "No user profile found for ID: " + currentUserId);
             }
         }
     }
@@ -161,6 +163,10 @@ public class HomeFragmentViewModel extends ViewModel {
         // Get the sorted restaurants
         List<Restaurant> rankedRestaurants = ranker.getRankedRestaurants();
         rankedRestaurantsLiveData.postValue(rankedRestaurants);
+    }
+
+    public MutableLiveData<List<Restaurant>> getRankedRestaurantsLiveData() {
+        return rankedRestaurantsLiveData;
     }
 
     protected void cleanUp() {

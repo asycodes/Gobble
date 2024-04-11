@@ -67,11 +67,22 @@ public class HomeFragment extends Fragment {
 
         // Observe the LiveData from the ViewModel
         viewModel.getRestaurantsLiveData().observe(getViewLifecycleOwner(), restaurants -> {
-            // Update the adapter with the list of restaurants
-            Log.d("HomeFragment", "Number of restaurants received: " + restaurants.size());
-            adapter.updateData(restaurants); // See note below about adapter
-            hotAdapter.updateData(restaurants);
+            Log.d("HomeFragment", "Number of unranked restaurants received: " + restaurants.size());
+            // Use this data for something that doesn't need ranked data, for example, for `hotAdapter`
+            if (restaurants.size() >= 1) {
+                List<Restaurant> hotRestaurants = restaurants.subList(0, Math.min(2, restaurants.size()));
+                hotAdapter.updateData(hotRestaurants);
+            }
+        });
 
+        // Observe the LiveData for ranked restaurants
+        viewModel.getRankedRestaurantsLiveData().observe(getViewLifecycleOwner(), rankedRestaurants -> {
+
+            if (rankedRestaurants.size() >= 1) {
+                List<Restaurant> hotRestaurants = rankedRestaurants.subList(0, Math.min(2, rankedRestaurants.size()));
+            // Update the adapter with the ranked list of restaurants
+                 Log.d("HomeFragment", "Number of ranked restaurants received: " + rankedRestaurants.size());
+                 adapter.updateData(rankedRestaurants);}
         });
         //TextView fuelPlus1Card = root.findViewById(R.id.FuelPlus1);
 
