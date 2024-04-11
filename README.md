@@ -19,14 +19,10 @@ View the Figma Prototype of Gobble [here](https://www.figma.com/proto/kKKdI45mlW
 
 ## OOP Principles Used
 1. Encapsulation
-
-Classes such as Restaurant and UserProfile encapsulate data and its manipulation, exposing only the necessary information through their public methods.
+- Classes such as Restaurant and UserProfile encapsulate data and its manipulation, exposing only the necessary information through their public methods.
 2. Abstraction
-
-Interfaces like TripAdvisorService and YelpService abstract the details of HTTP requests and responses, providing a clear API for data retrieval.
+- Interfaces like TripAdvisorService and YelpService abstract the details of HTTP requests and responses, providing a clear API for data retrieval.
 3. Inheritance
-
-By extending from base classes such as Fragment and ViewModel, specialized behaviors are enabled (e.g., HomeFragment, HomeFragmentViewModel) while reusing common functionality.
+- By extending from base classes such as Fragment and ViewModel, specialized behaviors are enabled (e.g., HomeFragment, HomeFragmentViewModel) while reusing common functionality.
 4. Polymorphism
-
-Overridden methods within Activities, Fragments, and ViewModels allow for polymorphic behavior that is tailored to specific needs.
+- Overridden methods within Activities, Fragments, and ViewModels allow for polymorphic behavior that is tailored to specific needs.
