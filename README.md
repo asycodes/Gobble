@@ -8,38 +8,12 @@ Khoo Yong Xuan, 1006962
 Raphael Xujie Yip, 1006657
 Muhammad Asyraf Bin Omar, 1006938
 
-## About
+## About Gobble
+
+## Gobble Poster
 ![Gobble Poster](https://github.com/ilenhanako/t4app/assets/9971306/043d2807-228f-4d66-bce6-848a7eea5ad4)
 
-## General Git
-1) Create new branch for every new feature from master branch (please create from master branch and pull changes before doing this command)
-`git checkout -b feature_name`
-2) Always check what files have changed from your session of intense coding
-`git status`
-3) Add your changes
-`git add.`
-4) Commit your changes
-`git commit -am "feat:added cool feature"`
-5) Pull changes from master before pushing to check for updates
-`git pull origin master`
-6) Push your changes to your branch
-`git push origin feature_name`
-7) Once your branch is complete, go to github and do a PR to request merge to the master branch
-
-## Other Git commands
-1) Switching to other branches
-`git switch wtv_branch_name`
-
-
-## Architecture - MVVM
-View: This portion of the architecture is responsible for presenting data to user, all xml files and activities (Activity files within UI FOLDER, XML files within LAYOUT FOLDER)
-Model: Responsible for the business logic and data retrieval/updates to and from the local and remote data sources. (DATA FOLDER)
-ViewModel: This portion is responsible for connecting the View and Model components. ( UI FOLDER )
-
-### Benefits of MVVM
-
-### Alternatives to MVVM
-
+View the Figma Prototype of Gobble [here]](https://www.figma.com/proto/kKKdI45mlW6sPdlUEojrtE/50.001?type=design&node-id=48-151&t=EhO0q2kSAlFj3sfv-0&scaling=scale-down&page-id=0%3A1&starting-point-node-id=39%3A49)
 ## OOP Principles Used
 1) Inheritance ( reduce code duplication)
   1.1) Base Folder within UI folder
