@@ -18,8 +18,11 @@ View the Figma Prototype of Gobble [here](https://www.figma.com/proto/kKKdI45mlW
 ![Gobble Poster](https://github.com/ilenhanako/t4app/assets/9971306/043d2807-228f-4d66-bce6-848a7eea5ad4)
 
 ## OOP Principles Used
-1) Inheritance ( reduce code duplication)
-  1.1) Base Folder within UI folder
-    1.1.1) Contains base forms for Acitivity, ViewModel and Fragment files
-  1.2) Base Folder within DATA folder
-2) Polymorphism
+1. Encapsulation
+Classes such as Restaurant and UserProfile encapsulate data and its manipulation, exposing only the necessary information through their public methods.
+2. Abstraction
+Interfaces like TripAdvisorService and YelpService abstract the details of HTTP requests and responses, providing a clear API for data retrieval.
+3. Inheritance
+By extending from base classes such as Fragment and ViewModel, specialized behaviors are enabled (e.g., HomeFragment, HomeFragmentViewModel) while reusing common functionality.
+4. Polymorphism
+Overridden methods within Activities, Fragments, and ViewModels allow for polymorphic behavior that is tailored to specific needs.
