@@ -24,6 +24,7 @@ import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.databinding.FragmentHomeBinding;
 import com.sutd.t4app.ui.ProfileQuestions.UserProfile;
 import com.sutd.t4app.ui.ProfileQuestions.UserProfileViewModel;
+import com.sutd.t4app.ui.filter.FilterViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,7 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
 
     private ImageView questionnaire;
+    private FilterViewModel filterViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -63,6 +65,7 @@ public class HomeFragment extends Fragment {
 
         // Initialize the ViewModel
         viewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
+        filterViewModel= new ViewModelProvider(requireActivity()).get(FilterViewModel.class);
 
 
         // Observe the LiveData from the ViewModel
@@ -84,17 +87,7 @@ public class HomeFragment extends Fragment {
                  Log.d("HomeFragment", "Number of ranked restaurants received: " + rankedRestaurants.size());
                  adapter.updateData(rankedRestaurants);}
         });
-        //TextView fuelPlus1Card = root.findViewById(R.id.FuelPlus1);
 
-        /*
-        fuelPlus1Card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("work?","yes working cliking");
-                Navigation.findNavController(v).navigate(R.id.torestaurantfragment);
-            }
-        });
-        */
 
         questionnaire= root.findViewById(R.id.questionsicon);
         questionnaire.setOnClickListener(new View.OnClickListener() {
@@ -130,15 +123,49 @@ public class HomeFragment extends Fragment {
 
         return root;
     }
+    private void triggerRanking() {
+        if (!viewModel.getRestaurantsLiveData().getValue().isEmpty() && viewModel.getUserProfilesLiveData().getValue() != null) {
+            viewModel.rankAndUpdateRestaurants(viewModel.getUserProfilesLiveData().getValue());
+        }
+    }
+    private void fetchData(){
+        viewModel.fetchRestaurantandUser();
+    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        fetchData();
+
+        viewModel.getRestaurantsLiveData().observe(getViewLifecycleOwner(), restaurants -> {
+            if (!restaurants.isEmpty()) {
+                triggerRanking();
+            }
+        });
+
         viewModel.getUserProfilesLiveData().observe(getViewLifecycleOwner(), userProfile -> {
             if (userProfile != null) {
                 // Use the user profile to rank restaurants, for example
                 viewModel.rankAndUpdateRestaurants(userProfile);
             }
         });
+
+        // Observe LiveData for ranked restaurants
+        viewModel.getRankedRestaurantsLiveData().observe(getViewLifecycleOwner(), rankedRestaurants -> {
+            // Update the adapter with the ranked list of restaurants
+            Log.d("HomeFragment", "Ranked restaurants updated.");
+            adapter.updateData(rankedRestaurants);
+        });
+
+        filterViewModel.getFilteredRestaurantsLiveData().observe(getViewLifecycleOwner(),filteredRestaurants ->{
+            // Update the adapter with the filtered list of restaurants
+            if (filteredRestaurants != null) {
+                Log.d("HomeFragmentFilterWidget", "Filtered restaurants received: " + filteredRestaurants.size());
+                adapter.updateData(filteredRestaurants);
+            }
+
+        });
+
+
     }
     private void showFeedPage() {
         isExplorePage = false;

@@ -171,11 +171,15 @@ public class FilterFragment extends Fragment {
         filterStar4.setOnClickListener(v -> setRating(filterStar4, 4, "filter"));
         filterStar5.setOnClickListener(v -> setRating(filterStar5, 5, "filter"));
 
+        FilterViewModel filterViewModel= new ViewModelProvider(requireActivity()).get(FilterViewModel.class);
+
         // Set onClickListener for show results button
         showResultsButton.setOnClickListener(v -> {
             List<Restaurant> filteredRestaurants = applyFilters();
             Toast.makeText(getContext(), "Filtered Restaurants: " + filteredRestaurants.size(), Toast.LENGTH_SHORT).show();
             //add navigation back to home later
+            filterViewModel.setFilteredRestaurants(filteredRestaurants);
+            Navigation.findNavController(v).navigate(R.id.rest_back_to_home);
         });
     }
 

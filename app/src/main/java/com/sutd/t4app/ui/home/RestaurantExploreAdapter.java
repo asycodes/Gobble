@@ -92,6 +92,7 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
     public void updateData(List<Restaurant> newRestaurantList) {
         Log.d("AdapterUpdate", "Updating data with " + newRestaurantList.size() + " restaurants.");
         this.restaurantList = newRestaurantList;
+        this.restaurantList.addAll(newRestaurantList);
         notifyDataSetChanged();
     }
     static class ViewHolder extends RecyclerView.ViewHolder {

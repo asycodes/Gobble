@@ -83,6 +83,8 @@ public class HomeFragmentViewModel extends ViewModel {
 
 
     }
+
+
     private void initializeRealm() {
         RealmUtility.getDefaultSyncConfig(realmApp, new RealmUtility.ConfigCallback() {
             @Override
@@ -138,6 +140,11 @@ public class HomeFragmentViewModel extends ViewModel {
                 Log.d("UserProfileDataExplore", "No user profile found for ID: " + currentUserId);
             }
         }
+    }
+
+    public void fetchRestaurantandUser(){
+        observeRestaurants();
+        fetchUserProfiles();
     }
     public LiveData<UserProfile> getUserProfilesLiveData() {
         return userProfilesLiveData;
