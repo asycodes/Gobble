@@ -9,11 +9,10 @@ Raphael Xujie Yip, 1006657
 Muhammad Asyraf Bin Omar, 1006938
 
 ## About Gobble
-
+View the Figma Prototype of Gobble [here](https://www.figma.com/proto/kKKdI45mlW6sPdlUEojrtE/50.001?type=design&node-id=48-151&t=EhO0q2kSAlFj3sfv-0&scaling=scale-down&page-id=0%3A1&starting-point-node-id=39%3A49)
 ## Gobble Poster
 ![Gobble Poster](https://github.com/ilenhanako/t4app/assets/9971306/043d2807-228f-4d66-bce6-848a7eea5ad4)
 
-View the Figma Prototype of Gobble [here]](https://www.figma.com/proto/kKKdI45mlW6sPdlUEojrtE/50.001?type=design&node-id=48-151&t=EhO0q2kSAlFj3sfv-0&scaling=scale-down&page-id=0%3A1&starting-point-node-id=39%3A49)
 ## OOP Principles Used
 1) Inheritance ( reduce code duplication)
   1.1) Base Folder within UI folder
