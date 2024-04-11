@@ -1,10 +1,15 @@
 # Gobble - Team 53
 
-# Tutorial
+## Team members
+Adelaine Ruth Hanako Suhendro, 1007059
+Avitra Phon, 1006946
+Muvil Kothari, 1006885
+Khoo Yong Xuan, 1006962
+Raphael Xujie Yip, 1006657
+Muhammad Asyraf Bin Omar, 1006938
 
-- BottomSheet: https://www.youtube.com/watch?v=JL6Ga7aM68M
-# T4app
-# (insert app description here)
+## About
+![Gobble Poster](https://github.com/ilenhanako/t4app/assets/9971306/043d2807-228f-4d66-bce6-848a7eea5ad4)
 
 ## General Git
 1) Create new branch for every new feature from master branch (please create from master branch and pull changes before doing this command)
