@@ -59,6 +59,7 @@ public class SignUpFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("checking","cehcking");
                 viewModel.validateAndSave(firstName.getText().toString(),lastName.getText().toString(),email.getText().toString(),pass.getText().toString());
 
             }

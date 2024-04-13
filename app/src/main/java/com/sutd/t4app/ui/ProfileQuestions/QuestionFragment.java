@@ -1,5 +1,6 @@
 package com.sutd.t4app.ui.ProfileQuestions;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.sutd.t4app.LoginSignUpActivity;
+import com.sutd.t4app.MainActivity;
 import com.sutd.t4app.R;
 import com.sutd.t4app.data.model.UserProfile;
 import com.sutd.t4app.databinding.QuestionsBinding;
@@ -95,7 +98,17 @@ public class QuestionFragment extends Fragment {
             Log.d("CHECK 5", "userprofile" + userProfile);
 
             saveUserProfile(userProfile);
-            Navigation.findNavController(v).navigate(R.id.navigation_home);
+
+            if (getActivity() instanceof MainActivity) {
+                Navigation.findNavController(v).navigate(R.id.navigation_home);
+                // Do something specific for MainActivity
+            } else if (getActivity() instanceof LoginSignUpActivity) {
+                // Do something specific for LoginSignUpActivity
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+
         });
     }
 

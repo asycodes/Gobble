@@ -66,17 +66,6 @@ public class HomeFragment extends Fragment {
             hotAdapter.updateData(restaurants);
 
         });
-        //TextView fuelPlus1Card = root.findViewById(R.id.FuelPlus1);
-
-        /*
-        fuelPlus1Card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("work?","yes working cliking");
-                Navigation.findNavController(v).navigate(R.id.torestaurantfragment);
-            }
-        });
-        */
 
         questionnaire= root.findViewById(R.id.questionsicon);
         questionnaire.setOnClickListener(new View.OnClickListener() {

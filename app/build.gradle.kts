@@ -29,6 +29,13 @@ android {
     namespace = "com.sutd.t4app"
     compileSdk = 34
 
+    packaging {
+        resources {
+            excludes += "META-INF/LICENSE.md"
+            excludes += "META-INF/LICENSE-notice.md"
+        }
+    }
+
     defaultConfig {
         applicationId = "com.sutd.t4app"
         minSdk = 24
@@ -72,6 +79,8 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.44")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("junit:junit:4.12")
+    implementation("org.junit.jupiter:junit-jupiter:5.8.1")
     annotationProcessor("com.google.dagger:dagger-compiler:2.51")
     annotationProcessor("com.google.dagger:hilt-android-compiler:2.44")
 
@@ -91,10 +100,14 @@ dependencies {
     implementation("com.squareup.picasso:picasso:2.8")
 
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation ("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation ("androidx.test:runner:1.4.0")
+    androidTestImplementation ("androidx.test:rules:1.4.0")
 
-    //OpenAI
+
+
+                //OpenAI
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
 
     // Captcha

@@ -54,7 +54,7 @@
         android:padding="16dp"
         app:layout_constraintTop_toBottomOf="@id/subtitleTextView">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
         android:padding="16dp"
         app:layout_constraintTop_toBottomOf="@id/emailTextInputLayout">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

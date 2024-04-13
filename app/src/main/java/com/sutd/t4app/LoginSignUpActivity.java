@@ -1,6 +1,7 @@
 package com.sutd.t4app;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -10,10 +11,15 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sutd.t4app.databinding.ActivityLoginSignupBinding;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class LoginSignUpActivity extends AppCompatActivity {
     private ActivityLoginSignupBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("check","LoginSignUp works");
 
         super.onCreate(savedInstanceState);
 

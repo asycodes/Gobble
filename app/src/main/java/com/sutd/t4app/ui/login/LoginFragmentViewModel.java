@@ -101,36 +101,10 @@ public class LoginFragmentViewModel extends ViewModel {
         if (query.count() > 0) {
             Log.v("DB_CHECK", "User data exists.");
             // User data exists, proceed accordingly
+            navigationTrigger.setValue("GO NExt");
         } else {
             Log.v("DB_CHECK", "User data does not exist.");
-            // User data does not exist, create the user
-            UserProfile userProfile = createUserProfileFromForm();
-            realm.executeTransactionAsync(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
 
-                    com.sutd.t4app.data.model.UserProfile item = realm.createObject(com.sutd.t4app.data.model.UserProfile.class,new ObjectId());
-                    item.setUserId(userProfile.getUserId());
-                    item.setUsername(userProfile.getUsername());
-                    item.setEmail(userProfile.getEmail());
-                    item.setPassword(userProfile.getPassword());
-                    Log.v("UserProfile", "Saving UserProfile with data: " +
-                            "\nUsername: " + userProfile.getUsername() +
-                            "\nEmail: " + userProfile.getEmail() +
-                            "\nCuisine Preferences: " + userProfile.getUserId() +
-                            "\nEmail: " + userProfile.getPassword())
-                    ;
-                }
-            }, () -> {
-                // Transaction was a success.
-                Log.v("UserProfile", "User profile saved successfully,");
-                realm.close();
-                navigationTrigger.postValue("Home"); // need to go MAIN ACTIVITY
-                // PROCEED TO BE QUESTIONED
-            }, error -> {
-                // Transaction failed and was automatically canceled.
-                Log.e("UserProfile", "Error saving user profile", error);
-            });
         }
 
 

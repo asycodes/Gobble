@@ -20,6 +20,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.sutd.t4app.LoginActivity;
+import com.sutd.t4app.LoginSignUpActivity;
 import com.sutd.t4app.MainActivity;
 import com.sutd.t4app.R;
 import com.sutd.t4app.SignUpActivity;
@@ -86,7 +87,7 @@ public class ProfileFragment extends Fragment {
             user.logOutAsync(result -> {
                 if (result.isSuccess()) {
                     Log.v("User", "Successfully logged out.");
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    Intent intent = new Intent(getActivity(), LoginSignUpActivity.class);
                     getActivity().finish();  // Call finish() to close the current activity
                     startActivity(intent);
                     // At this point, currentUser() will be null if there are no other users logged in.

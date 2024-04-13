@@ -71,8 +71,8 @@ public class SignUpFragmentViewModel extends ViewModel {
 
     public void validateAndSave(String firstname, String lastname, String email, String password){
         boolean isValid = true;
-        String lastNameValidationResult = FormValidation.validateFirstName(firstname);
-        String firstNameValidationResult = FormValidation.validateLastName(lastname);
+        String firstNameValidationResult = FormValidation.validateFirstName(firstname);
+        String lastNameValidationResult = FormValidation.validateLastName(lastname);
         String emailValidationResult = FormValidation.validateEmail(email);
         String passwordValidationResult = FormValidation.validatePass(password);
 
@@ -81,11 +81,19 @@ public class SignUpFragmentViewModel extends ViewModel {
         emailError.setValue(emailValidationResult);
         passwordError.setValue(passwordValidationResult);
 
-        if (firstNameError != null || emailValidationResult != null || passwordValidationResult != null || lastnameError!= null) {
+        if (firstNameError.getValue() != null || lastnameError.getValue() != null || emailError.getValue() != null || lastnameError.getValue()!= null) {
             isValid = false;
         }
-
+        Log.d("CheckErros","firstNameError: "+firstNameError.getValue() +
+                "\n lastnameError: " +lastnameError.getValue() +
+                "\n EmailError: " +emailError.getValue() +
+                "\n PassError: " +passwordError.getValue());
         if (isValid) {
+            this.firstName.setValue(firstname);
+            this.lastName.setValue(lastname);
+            this.password.setValue(password);
+            this.email.setValue(email);
+            Log.d("checking2","checking");
             realmApp.getEmailPassword().registerUserAsync(email, password, result -> {
                 if (result.isSuccess()) {
                     Log.d("Register Info","SUCCESS");

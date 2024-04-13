@@ -4,9 +4,9 @@
     <string name="title_reviews">Reviews</string>
     <string name="title_profile">Profile</string>
     <string name="title_map">My Map</string>
-    <string name="title_preferences">My Map</string>
-    <string name="title_login">My Map</string>
-    <string name="title_signup">My Map</string>
+    <string name="title_preferences">Preference Questions</string>
+    <string name="title_login">Login</string>
+    <string name="title_signup">Signup</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
