@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -38,7 +39,14 @@ public class LoginFragment extends Fragment {
 
         EditText pass = root.findViewById(R.id.passwordEditText);
         TextInputLayout passTextInputLayout = root.findViewById(R.id.passwordTextInputLayout);
-
+        Button signup = root.findViewById(R.id.sign_up_button);
+        Button submit = root.findViewById(R.id.signInButton);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewModel.loginProcess(email.getText().toString(),pass.getText().toString());
+            }
+        });
 
         // Initialize the ViewModel
         viewModel = new ViewModelProvider(this).get(LoginFragmentViewModel.class);
@@ -48,6 +56,15 @@ public class LoginFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        viewModel.getEmailError().observe(getViewLifecycleOwner(), emailError -> {
+            emailTextInputLayout.setError(emailError);
+
+        });
+        viewModel.getPasswordError().observe(getViewLifecycleOwner(), passError -> {
+            passTextInputLayout.setError(passError);
+        });
+
+
         return root;
     }
 

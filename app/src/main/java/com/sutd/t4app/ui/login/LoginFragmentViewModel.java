@@ -36,6 +36,8 @@ public class LoginFragmentViewModel extends ViewModel {
 
     private MutableLiveData<String> password = new MutableLiveData<>();
     private MutableLiveData<String> email = new MutableLiveData<>();
+    private MutableLiveData<String> emailError = new MutableLiveData<>();
+    private MutableLiveData<String> passwordError = new MutableLiveData<>();
 
 
     @Inject
@@ -46,8 +48,10 @@ public class LoginFragmentViewModel extends ViewModel {
     public LiveData<String> getNavigationTrigger() {
         return navigationTrigger;
     }
+    public LiveData<String> getEmailError() { return emailError; }
+    public LiveData<String> getPasswordError() { return passwordError; }
 
-    private void loginProcess(String email, String password){
+    protected void loginProcess(String email, String password){
         // do a loginasync with the credentials provided by the user , email and pass, if error means doesnt exist or smth
         // if manage to login means that we can go next
         Credentials credentials = Credentials.emailPassword(email, password);
@@ -58,6 +62,8 @@ public class LoginFragmentViewModel extends ViewModel {
                 initializeRealm();
             } else {
                 Log.d("Login Info","FAILED" +  loginResult.getError().getErrorMessage());
+                emailError.setValue("some error");
+                passwordError.setValue("some erorr please remb to change");
             }
 
     });}
