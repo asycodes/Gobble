@@ -28,6 +28,8 @@ import com.sutd.t4app.R;
 import com.sutd.t4app.SignUpActivity;
 import com.sutd.t4app.databinding.FragmentNotificationsBinding;
 
+import java.util.Set;
+
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -41,6 +43,9 @@ public class ProfileFragment extends Fragment {
     private GoogleSignInClient mGoogleSignInClient;
 
     private FragmentNotificationsBinding binding;
+    private Button questions;
+    private Button EditProfile;
+    private Button Settings;
 
 
 
@@ -65,6 +70,29 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 Log.d("work?","yes working cliking");
                 signOut();
+            }
+        });
+
+        questions=root.findViewById(R.id.ProfileQuestions);
+        questions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.toQuestionspage);
+            }
+        });
+        EditProfile=root.findViewById(R.id.editprofilebutton);
+        EditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.toeditProfile);
+            }
+        });
+
+        Settings=root.findViewById(R.id.Settings);
+        Settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.tosettings);
             }
         });
 

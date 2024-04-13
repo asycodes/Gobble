@@ -39,6 +39,8 @@ public class HomeFragment extends Fragment {
     private HomeFragmentViewModel viewModel;
     private RestaurantExploreAdapter adapter;
     private RestaurantExploreAdapter hotAdapter;
+    // TODO: 14/4/24 hotAdapter TikTokAdapter
+//    private TikTokAdapter hotAdapter;
 
     private FragmentHomeBinding binding;
 
@@ -69,15 +71,30 @@ public class HomeFragment extends Fragment {
         filterViewModel= new ViewModelProvider(requireActivity()).get(FilterViewModel.class);
 
 
+
         // Observe the LiveData from the ViewModel
         viewModel.getRestaurantsLiveData().observe(getViewLifecycleOwner(), restaurants -> {
-            Log.d("HomeFragment", "Number of unranked restaurants received: " + restaurants.size());
+            Log.d("HomeFragmenthotAdaptor", "Number of unranked restaurants received: " + restaurants.size());
             // Use this data for something that doesn't need ranked data, for example, for `hotAdapter`
             if (restaurants.size() >= 1) {
-                List<Restaurant> hotRestaurants = restaurants.subList(0, Math.min(2, restaurants.size()));
-                hotAdapter.updateData(hotRestaurants);
+
+                hotAdapter.updateData(restaurants);
             }
         });
+        // TODO: 14/4/24 viewModel.getTikTokLiveData() & hotAdapter
+//        viewModel.getTikTokLiveData().observe(getViewLifecycleOwner(), tikToks -> {
+//            if (tikToks != null && !tikToks.isEmpty()) {
+//                Log.d("LiveDataObserver", "TikTok LiveData changed: " + tikToks.size() + " entries.");
+//                if (hotAdapter == null) {
+//                    hotAdapter = new TikTokAdapter(new ArrayList<>(), R.layout.tiktok_item_layout);
+//                    binding.recyclerViewHot.setAdapter(hotAdapter);
+//                }
+//                hotAdapter.updateDataTikTok(tikToks);
+//            } else {
+//                Log.d("LiveDataObserver", "No TikTok entries received.");
+//            }
+//        });
+
 
         // Observe the LiveData for ranked restaurants
         viewModel.getRankedRestaurantsLiveData().observe(getViewLifecycleOwner(), rankedRestaurants -> {
@@ -90,14 +107,6 @@ public class HomeFragment extends Fragment {
         });
 
 
-        questionnaire= root.findViewById(R.id.questionsicon);
-        questionnaire.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewModel.cleanUp();
-                Navigation.findNavController(v).navigate(R.id.toQuestionspage);
-            }
-        });
 
         filterIcon = root.findViewById(R.id.filterIcon);
         filterIcon.setOnClickListener(new View.OnClickListener() {

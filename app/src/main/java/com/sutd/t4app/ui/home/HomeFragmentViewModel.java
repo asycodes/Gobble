@@ -17,6 +17,7 @@ import io.realm.RealmResults;
 import com.sutd.t4app.data.api.TripAdvisorService;
 import com.sutd.t4app.data.api.YelpService;
 import com.sutd.t4app.data.model.Restaurant;
+import com.sutd.t4app.data.model.TikTok;
 import com.sutd.t4app.data.model.apiresponses.LocationSearchResponse;
 import com.sutd.t4app.data.model.apiresponses.YelpSearchResponse;
 import com.sutd.t4app.myApp;
@@ -53,7 +54,9 @@ public class HomeFragmentViewModel extends ViewModel {
     private final MutableLiveData<List<Restaurant>> restaurantsLiveData = new MutableLiveData<>();
     private Realm realm;
     private RealmResults<Restaurant> realmResults;
+    private RealmResults<TikTok> tiktokresult;
     private final MutableLiveData<List<Restaurant>> rankedRestaurantsLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<TikTok>> TikTokLiveData = new MutableLiveData<>();
 
 
     @Inject
@@ -98,6 +101,8 @@ public class HomeFragmentViewModel extends ViewModel {
                         Log.d("HomeFragmentViewModel", "Realm instance has been initialized successfully.");
                         observeRestaurants(); // Observes data and updates LiveData
                         fetchUserProfiles();
+                        // TODO: 14/4/24 fetchTikTok() 
+//                        fetchTikTok(); 
                     }
                 });
             }
@@ -123,6 +128,24 @@ public class HomeFragmentViewModel extends ViewModel {
                 }
             });
         }}
+    // TODO: 14/4/24 fetchTikTok 
+
+//    private void fetchTikTok() {
+//        if (realm != null) {
+//            Log.d("TikTokFetch", "Fetching TikTok data...");
+//            tiktokresult = realm.where(TikTok.class).findAllAsync();
+//            tiktokresult.addChangeListener(new RealmChangeListener<RealmResults<TikTok>>() {
+//                @Override
+//                public void onChange(RealmResults<TikTok> tikToks) {
+//                    Log.d("TikTokFetch", "TikTok data fetched: " + tikToks.size() + " entries.");
+//                    TikTokLiveData.postValue(realm.copyFromRealm(tikToks));
+//                }
+//            });
+//        } else {
+//            Log.e("TikTokFetch", "Realm is not initialized.");
+//        }
+//    }
+
 
     private void fetchUserProfiles() {
         String currentUserId="bshfbefnwoef212100001";
@@ -147,6 +170,11 @@ public class HomeFragmentViewModel extends ViewModel {
         observeRestaurants();
         fetchUserProfiles();
     }
+    // TODO: 14/4/24 getTikTokLiveData() 
+
+//    public LiveData<List<TikTok>> getTikTokLiveData(){
+//        return TikTokLiveData;
+//    }
 
 
     public LiveData<UserProfile> getUserProfilesLiveData() {

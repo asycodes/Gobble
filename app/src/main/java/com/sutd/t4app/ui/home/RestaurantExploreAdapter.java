@@ -25,6 +25,7 @@ import com.sutd.t4app.data.model.Restaurant;
 import java.util.ArrayList;
 import java.util.List;
 import com.squareup.picasso.Picasso;
+import com.sutd.t4app.data.model.TikTok;
 
 public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExploreAdapter.ViewHolder>{
 
