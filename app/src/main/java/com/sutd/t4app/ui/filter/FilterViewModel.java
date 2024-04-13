@@ -18,4 +18,7 @@ public class FilterViewModel extends ViewModel {
     public LiveData<List<Restaurant>> getFilteredRestaurantsLiveData() {
         return filteredRestaurantsLiveData;
     }
+
+
+
 }

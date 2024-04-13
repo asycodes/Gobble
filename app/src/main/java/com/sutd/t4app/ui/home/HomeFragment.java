@@ -44,6 +44,7 @@ public class HomeFragment extends Fragment {
 
     private ImageView questionnaire;
     private FilterViewModel filterViewModel;
+    private boolean fromFilter= false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -102,6 +103,7 @@ public class HomeFragment extends Fragment {
         filterIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                fromFilter=false;
                 Navigation.findNavController(v).navigate(R.id.tofilterfragment);
             }
         });
@@ -129,42 +131,96 @@ public class HomeFragment extends Fragment {
         }
     }
     private void fetchData(){
-        viewModel.fetchRestaurantandUser();
+//        viewModel.fetchRestaurantandUser();
+        filterViewModel.getFilteredRestaurantsLiveData().observe(getViewLifecycleOwner(), filteredRestaurants -> {
+            if (filteredRestaurants != null && !filteredRestaurants.isEmpty()) {
+                Log.d("HomeFragmentFilterWidget", "Filtered restaurants received: " + filteredRestaurants.size());
+                adapter.updateData(filteredRestaurants);
+            } else {
+                viewModel.fetchRestaurantandUser();
+            }
+        });
     }
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        fetchData();
-
-        viewModel.getRestaurantsLiveData().observe(getViewLifecycleOwner(), restaurants -> {
-            if (!restaurants.isEmpty()) {
-                triggerRanking();
+    private void observeLiveData() {
+        // Observe the filtered restaurant changes
+        filterViewModel.getFilteredRestaurantsLiveData().observe(getViewLifecycleOwner(), filteredRestaurants -> {
+            if (filteredRestaurants != null && !filteredRestaurants.isEmpty()) {
+                Log.d("HomeFragment", "Filtered restaurants received: " + filteredRestaurants.size());
+                adapter.updateData(filteredRestaurants);
             }
         });
 
+        // Observe the full restaurant list only when no filtered data is available
+        viewModel.getRestaurantsLiveData().observe(getViewLifecycleOwner(), restaurants -> {
+            if ((filterViewModel.getFilteredRestaurantsLiveData().getValue() == null ||
+                    filterViewModel.getFilteredRestaurantsLiveData().getValue().isEmpty()) && !restaurants.isEmpty()) {
+                Log.d("HomeFragment", "Unfiltered restaurants received: " + restaurants.size());
+                adapter.updateData(restaurants);
+            }
+        });
+
+        // Observe the user profile for ranking updates
         viewModel.getUserProfilesLiveData().observe(getViewLifecycleOwner(), userProfile -> {
             if (userProfile != null) {
-                // Use the user profile to rank restaurants, for example
+                Log.d("HomeFragment", "User profile received for ranking.");
                 viewModel.rankAndUpdateRestaurants(userProfile);
             }
         });
 
-        // Observe LiveData for ranked restaurants
+        // Observe the ranked restaurants
         viewModel.getRankedRestaurantsLiveData().observe(getViewLifecycleOwner(), rankedRestaurants -> {
-            // Update the adapter with the ranked list of restaurants
-            Log.d("HomeFragment", "Ranked restaurants updated.");
-            adapter.updateData(rankedRestaurants);
-        });
-
-        filterViewModel.getFilteredRestaurantsLiveData().observe(getViewLifecycleOwner(),filteredRestaurants ->{
-            // Update the adapter with the filtered list of restaurants
-            if (filteredRestaurants != null) {
-                Log.d("HomeFragmentFilterWidget", "Filtered restaurants received: " + filteredRestaurants.size());
-                adapter.updateData(filteredRestaurants);
+            if (rankedRestaurants != null && !rankedRestaurants.isEmpty()) {
+                adapter.updateData(rankedRestaurants);
+            } else {
+                Log.d("HomeFragment", "No ranked restaurants to display.");
             }
-
         });
+    }
 
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        observeLiveData();
+
+//        viewModel.getRestaurantsLiveData().observe(getViewLifecycleOwner(), restaurants -> {
+//            if (!restaurants.isEmpty()) {
+//                triggerRanking();
+//            }
+//        });
+//
+//        viewModel.getUserProfilesLiveData().observe(getViewLifecycleOwner(), userProfile -> {
+//            if (userProfile != null) {
+//                // Use the user profile to rank restaurants, for example
+//                viewModel.rankAndUpdateRestaurants(userProfile);
+//            }
+//        });
+//
+//        // Observe LiveData for ranked restaurants
+//        viewModel.getRankedRestaurantsLiveData().observe(getViewLifecycleOwner(), rankedRestaurants -> {
+//            // Update the adapter with the ranked list of restaurants
+//            Log.d("HomeFragment", "Ranked restaurants updated.");
+//            adapter.updateData(rankedRestaurants);
+//        });
+//
+////        filterViewModel.getFilteredRestaurantsLiveData().observe(getViewLifecycleOwner(),filteredRestaurants ->{
+////            // Update the adapter with the filtered list of restaurants
+////            if (filteredRestaurants != null) {
+////                Log.d("HomeFragmentFilterWidget", "Filtered restaurants received: " + filteredRestaurants.size());
+////                adapter.updateData(filteredRestaurants);
+////            }
+////
+////        });
+//        filterViewModel.getFilteredRestaurantsLiveData().observe(getViewLifecycleOwner(), filteredRestaurants -> {
+//            if (filteredRestaurants != null) {
+//                Log.d("HomeFragmentFilterWidget", "Filtered restaurants received: " + filteredRestaurants.size());
+//                adapter.updateData(filteredRestaurants);
+//                fromFilter = true;  // Set the flag when data is received from filter
+//            }
+//        });
+//        if (!fromFilter) {
+//            viewModel.fetchRestaurantandUser();
+//        }
 
     }
     private void showFeedPage() {
@@ -188,6 +244,5 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
 
 }

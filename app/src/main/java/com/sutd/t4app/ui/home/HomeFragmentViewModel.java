@@ -55,6 +55,7 @@ public class HomeFragmentViewModel extends ViewModel {
     private RealmResults<Restaurant> realmResults;
     private final MutableLiveData<List<Restaurant>> rankedRestaurantsLiveData = new MutableLiveData<>();
 
+
     @Inject
     public HomeFragmentViewModel(App realmApp, TripAdvisorService tripadvisorService, YelpService yelpservice) {
         this.tripAdvisorService = tripadvisorService;
@@ -146,6 +147,8 @@ public class HomeFragmentViewModel extends ViewModel {
         observeRestaurants();
         fetchUserProfiles();
     }
+
+
     public LiveData<UserProfile> getUserProfilesLiveData() {
         return userProfilesLiveData;
     }
