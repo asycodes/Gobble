@@ -6,19 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.sutd.t4app.R;
-import com.sutd.t4app.data.model.Restaurant;
+import com.sutd.t4app.data.model.UserProfile;
 import com.sutd.t4app.databinding.QuestionsBinding;
-import com.sutd.t4app.ui.home.HomeFragmentViewModel;
 import com.sutd.t4app.utility.RealmUtility;
-
-import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +24,9 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
-import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.mongodb.App;
-import io.realm.mongodb.Credentials;
 import io.realm.mongodb.User;
-import io.realm.mongodb.sync.MutableSubscriptionSet;
-import io.realm.mongodb.sync.Subscription;
 import io.realm.mongodb.sync.SyncConfiguration;
 
 

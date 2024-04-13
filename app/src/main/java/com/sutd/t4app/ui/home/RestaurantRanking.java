@@ -3,12 +3,11 @@ package com.sutd.t4app.ui.home;
 import android.util.Log;
 
 import com.sutd.t4app.data.model.Restaurant;
-import com.sutd.t4app.ui.ProfileQuestions.UserProfile;
+import com.sutd.t4app.data.model.UserProfile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class RestaurantRanking {
     public List<RestaurantScore> rankRestaurants(List<Restaurant> restaurants, UserProfile userProfile) {

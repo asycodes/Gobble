@@ -29,6 +29,7 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.realm.mongodb.App;
+import io.realm.mongodb.User;
 
 
 @AndroidEntryPoint
@@ -54,8 +55,6 @@ public class ProfileFragment extends Fragment {
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(getContext(), gso);
 
-        Log.d("work?","Profile page");
-
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,11 +74,28 @@ public class ProfileFragment extends Fragment {
         mGoogleSignInClient.signOut()
                 .addOnCompleteListener(getActivity(), task -> {
                     // Sign-out was successful, redirect to LoginActivity
+
+                    Log.d("Log out", "Logged off from Google");
+                });
+
+        User user = realmApp.currentUser();
+        if (user!=null){
+            Log.d("signup check","all valid and user is NOT NULL");
+            // that means we already this fella in the database naturally coz we have log him in
+            // now we log out and use wtv he is providing
+            user.logOutAsync(result -> {
+                if (result.isSuccess()) {
+                    Log.v("User", "Successfully logged out.");
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     getActivity().finish();  // Call finish() to close the current activity
                     startActivity(intent);
+                    // At this point, currentUser() will be null if there are no other users logged in.
+                } else {
+                    Log.e("User", "Failed to log out, reason: " + result.getError());
+                }
+            });
 
-                });
+        }
 
     }
 

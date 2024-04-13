@@ -3,11 +3,10 @@ package com.sutd.t4app.utility;
 import android.util.Log;
 
 import com.sutd.t4app.data.model.Restaurant;
-import com.sutd.t4app.ui.ProfileQuestions.UserProfile;
+import com.sutd.t4app.data.model.UserProfile;
 
 import io.realm.Realm;
 import io.realm.mongodb.App;
-import io.realm.mongodb.Credentials;
 import io.realm.mongodb.User;
 import io.realm.mongodb.sync.MutableSubscriptionSet;
 import io.realm.mongodb.sync.Subscription;

@@ -97,6 +97,9 @@ dependencies {
     //OpenAI
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
 
+    // Captcha
+    implementation("com.google.android.recaptcha:recaptcha:18.5.0-beta02")
+
 //    implementation("androidx.activity:activity-ktx:1.8.2")
 //    implementation("androidx.fragment:fragment-ktx:1.8.2")
 }
