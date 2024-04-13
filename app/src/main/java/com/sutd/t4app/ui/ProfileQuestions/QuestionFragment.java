@@ -1,24 +1,23 @@
 package com.sutd.t4app.ui.ProfileQuestions;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.sutd.t4app.LoginSignUpActivity;
+import com.sutd.t4app.MainActivity;
 import com.sutd.t4app.R;
-import com.sutd.t4app.data.model.Restaurant;
+import com.sutd.t4app.data.model.UserProfile;
 import com.sutd.t4app.databinding.QuestionsBinding;
-import com.sutd.t4app.ui.home.HomeFragmentViewModel;
 import com.sutd.t4app.utility.RealmUtility;
-
-import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +30,7 @@ import io.realm.RealmChangeListener;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.mongodb.App;
-import io.realm.mongodb.Credentials;
 import io.realm.mongodb.User;
-import io.realm.mongodb.sync.MutableSubscriptionSet;
-import io.realm.mongodb.sync.Subscription;
 import io.realm.mongodb.sync.SyncConfiguration;
 
 
@@ -103,7 +99,17 @@ public class QuestionFragment extends Fragment {
             Log.d("CHECK 5", "userprofile" + userProfile);
 
             saveUserProfile(userProfile);
-            Navigation.findNavController(v).navigate(R.id.navigation_home);
+
+            if (getActivity() instanceof MainActivity) {
+                Navigation.findNavController(v).navigate(R.id.navigation_home);
+                // Do something specific for MainActivity
+            } else if (getActivity() instanceof LoginSignUpActivity) {
+                // Do something specific for LoginSignUpActivity
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+
         });
     }
 

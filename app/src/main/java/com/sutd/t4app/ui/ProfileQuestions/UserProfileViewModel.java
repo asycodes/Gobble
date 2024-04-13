@@ -4,17 +4,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.sutd.t4app.data.model.Restaurant;
+import com.sutd.t4app.data.model.UserProfile;
 import com.sutd.t4app.utility.RealmUtility;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
-import dagger.hilt.android.AndroidEntryPoint;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.realm.Realm;
-import io.realm.RealmResults;
 import io.realm.mongodb.App;
 import io.realm.mongodb.sync.SyncConfiguration;
 

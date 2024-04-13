@@ -1,10 +1,8 @@
 package com.sutd.t4app.ui.home;
 
 import com.sutd.t4app.data.model.Restaurant;
-import com.sutd.t4app.ui.ProfileQuestions.UserProfile;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class RestaurantRanker {
     private PriorityQueue<RestaurantScore> maxHeap;

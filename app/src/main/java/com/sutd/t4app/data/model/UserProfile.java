@@ -1,4 +1,4 @@
-package com.sutd.t4app.ui.ProfileQuestions;
+package com.sutd.t4app.data.model;
 
 import org.bson.types.ObjectId;
 

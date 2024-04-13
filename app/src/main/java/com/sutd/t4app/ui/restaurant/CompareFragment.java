@@ -26,8 +26,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.sutd.t4app.BuildConfig;
 import com.sutd.t4app.R;
 import com.sutd.t4app.data.model.Restaurant;
-import com.sutd.t4app.ui.ProfileQuestions.QuestionFragment;
-import com.sutd.t4app.ui.ProfileQuestions.UserProfile;
+import com.sutd.t4app.data.model.UserProfile;
 import com.sutd.t4app.ui.home.HomeFragmentViewModel;
 import com.sutd.t4app.utility.RealmUtility;
 
@@ -41,7 +40,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import dagger.hilt.android.AndroidEntryPoint;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.mongodb.App;
