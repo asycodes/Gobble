@@ -38,9 +38,9 @@ public class HomeFragment extends Fragment {
     private boolean isExplorePage = true; // initial is explore page
     private HomeFragmentViewModel viewModel;
     private RestaurantExploreAdapter adapter;
-    private RestaurantExploreAdapter hotAdapter;
+//    private RestaurantExploreAdapter hotAdapter;
     // TODO: 14/4/24 hotAdapter TikTokAdapter
-//    private TikTokAdapter hotAdapter;
+    private TikTokAdapter hotAdapter;
 
     private FragmentHomeBinding binding;
 
@@ -61,7 +61,10 @@ public class HomeFragment extends Fragment {
         binding.recyclerViewRestaurants.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerViewRestaurants.setAdapter(adapter);
 
-        hotAdapter = new RestaurantExploreAdapter(new ArrayList<>(), R.layout.restaurant_hot_item);
+//        hotAdapter = new RestaurantExploreAdapter(new ArrayList<>(), R.layout.restaurant_hot_item);
+//        binding.recyclerViewHot.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true));
+//        binding.recyclerViewHot.setAdapter(hotAdapter);
+        hotAdapter = new TikTokAdapter(new ArrayList<>(), R.layout.tiktok_item_layout);
         binding.recyclerViewHot.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true));
         binding.recyclerViewHot.setAdapter(hotAdapter);
 
@@ -73,27 +76,22 @@ public class HomeFragment extends Fragment {
 
 
         // Observe the LiveData from the ViewModel
-        viewModel.getRestaurantsLiveData().observe(getViewLifecycleOwner(), restaurants -> {
-            Log.d("HomeFragmenthotAdaptor", "Number of unranked restaurants received: " + restaurants.size());
-            // Use this data for something that doesn't need ranked data, for example, for `hotAdapter`
-            if (restaurants.size() >= 1) {
-
-                hotAdapter.updateData(restaurants);
-            }
-        });
-        // TODO: 14/4/24 viewModel.getTikTokLiveData() & hotAdapter
-//        viewModel.getTikTokLiveData().observe(getViewLifecycleOwner(), tikToks -> {
-//            if (tikToks != null && !tikToks.isEmpty()) {
-//                Log.d("LiveDataObserver", "TikTok LiveData changed: " + tikToks.size() + " entries.");
-//                if (hotAdapter == null) {
-//                    hotAdapter = new TikTokAdapter(new ArrayList<>(), R.layout.tiktok_item_layout);
-//                    binding.recyclerViewHot.setAdapter(hotAdapter);
-//                }
-//                hotAdapter.updateDataTikTok(tikToks);
-//            } else {
-//                Log.d("LiveDataObserver", "No TikTok entries received.");
+//        viewModel.getRestaurantsLiveData().observe(getViewLifecycleOwner(), restaurants -> {
+//            Log.d("HomeFragmenthotAdaptor", "Number of unranked restaurants received: " + restaurants.size());
+//            // Use this data for something that doesn't need ranked data, for example, for `hotAdapter`
+//            if (restaurants.size() >= 1) {
+//
+//                hotAdapter.updateData(restaurants);
 //            }
 //        });
+        // TODO: 14/4/24 viewModel.getTikTokLiveData() & hotAdapter
+        viewModel.getTikTokLiveData().observe(getViewLifecycleOwner(), tikToks -> {
+            if (tikToks.size() >= 1) {
+                Log.d("TikTokFetch", "TikToks received: " + tikToks.size());
+
+                hotAdapter.updateDataTikTok(tikToks);
+            }
+        });
 
 
         // Observe the LiveData for ranked restaurants

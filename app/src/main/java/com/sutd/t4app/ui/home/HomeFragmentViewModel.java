@@ -102,7 +102,7 @@ public class HomeFragmentViewModel extends ViewModel {
                         observeRestaurants(); // Observes data and updates LiveData
                         fetchUserProfiles();
                         // TODO: 14/4/24 fetchTikTok() 
-//                        fetchTikTok(); 
+                        fetchTikTok();
                     }
                 });
             }
@@ -130,21 +130,21 @@ public class HomeFragmentViewModel extends ViewModel {
         }}
     // TODO: 14/4/24 fetchTikTok 
 
-//    private void fetchTikTok() {
-//        if (realm != null) {
-//            Log.d("TikTokFetch", "Fetching TikTok data...");
-//            tiktokresult = realm.where(TikTok.class).findAllAsync();
-//            tiktokresult.addChangeListener(new RealmChangeListener<RealmResults<TikTok>>() {
-//                @Override
-//                public void onChange(RealmResults<TikTok> tikToks) {
-//                    Log.d("TikTokFetch", "TikTok data fetched: " + tikToks.size() + " entries.");
-//                    TikTokLiveData.postValue(realm.copyFromRealm(tikToks));
-//                }
-//            });
-//        } else {
-//            Log.e("TikTokFetch", "Realm is not initialized.");
-//        }
-//    }
+    private void fetchTikTok() {
+        if (realm != null) {
+            Log.d("TikTokFetch", "Fetching TikTok data...");
+            tiktokresult = realm.where(TikTok.class).findAllAsync();
+            tiktokresult.addChangeListener(new RealmChangeListener<RealmResults<TikTok>>() {
+                @Override
+                public void onChange(RealmResults<TikTok> tikToks) {
+                    Log.d("TikTokFetch", "TikTok data fetched: " + tikToks.size() + " entries.");
+                    TikTokLiveData.postValue(realm.copyFromRealm(tikToks));
+                }
+            });
+        } else {
+            Log.e("TikTokFetch", "Realm is not initialized.");
+        }
+    }
 
 
     private void fetchUserProfiles() {
@@ -170,11 +170,11 @@ public class HomeFragmentViewModel extends ViewModel {
         observeRestaurants();
         fetchUserProfiles();
     }
-    // TODO: 14/4/24 getTikTokLiveData() 
+    // TODO: 14/4/24 getTikTokLiveData()
 
-//    public LiveData<List<TikTok>> getTikTokLiveData(){
-//        return TikTokLiveData;
-//    }
+    public LiveData<List<TikTok>> getTikTokLiveData(){
+        return TikTokLiveData;
+    }
 
 
     public LiveData<UserProfile> getUserProfilesLiveData() {
