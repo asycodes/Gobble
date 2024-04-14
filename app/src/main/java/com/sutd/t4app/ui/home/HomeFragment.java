@@ -121,8 +121,13 @@ public class HomeFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Filter restaurants as the user types the query
-                filterAndDisplayRestaurants(newText);
+                if (newText.isEmpty()) {
+                    // Query cleared, show ranked list
+                    showRankedRestaurants();
+                } else {
+                    // Filter restaurants as the user types the query
+                    filterAndDisplayRestaurants(newText);
+                }
                 return false;
             }
         });
@@ -286,15 +291,20 @@ public class HomeFragment extends Fragment {
         binding = null;
     }
     private void filterAndDisplayRestaurants(String query) {
-        // Get the list of restaurants from the ViewModel
-        List<Restaurant> allRestaurants = viewModel.getRestaurantsLiveData().getValue();
-
-        if (allRestaurants != null) {
-            // Perform filtering based on the search query
-            List<Restaurant> filteredList = SearchRestaurants(allRestaurants, query);
-
-            // Update the RecyclerView adapter with the filtered list of restaurants
-            adapter.updateData(filteredList);
+        if (query.isEmpty()) {
+            showRankedRestaurants();
+        } else {
+            List<Restaurant> allRestaurants = viewModel.getRestaurantsLiveData().getValue();
+            if (allRestaurants != null) {
+                List<Restaurant> filteredList = SearchRestaurants(allRestaurants, query);
+                if (!filteredList.isEmpty()) {
+                    adapter.updateData(filteredList);
+                    isFilterActive = true;
+                } else {
+                    // No results found, possibly show a message or clear adapter
+                    isFilterActive = false;
+                }
+            }
         }
     }
     private List<Restaurant> SearchRestaurants(List<Restaurant> restaurants, String query) {
@@ -313,5 +323,16 @@ public class HomeFragment extends Fragment {
                 viewModel.rankAndUpdateRestaurants(viewModel.getUserProfilesLiveData().getValue());
             }
         }
+
+    private void showRankedRestaurants() {
+        isFilterActive = false;  // Ensure filter flag is reset
+        if (viewModel.getRankedRestaurantsLiveData().getValue() != null) {
+            adapter.updateData(viewModel.getRankedRestaurantsLiveData().getValue());
+        } else {
+            // If ranked data is not available, trigger its update
+            triggerRanking();
+        }
     }
+
+}
 
