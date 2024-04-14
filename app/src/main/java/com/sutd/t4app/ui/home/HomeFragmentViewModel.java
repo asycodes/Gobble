@@ -148,7 +148,7 @@ public class HomeFragmentViewModel extends ViewModel {
 
 
     private void fetchUserProfiles() {
-        String currentUserId="bshfbefnwoef212100001";
+        String currentUserId="bshfbefnwoef2121100101";
         if (realm != null && currentUserId != null) {
             UserProfile userProfile = realm.where(UserProfile.class).equalTo("userId", currentUserId)
                     .findFirst();
