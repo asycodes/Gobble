@@ -8,8 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +36,8 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class HomeFragment extends Fragment {
+    private Button searchButton;
+    private SearchView searchbar;
     private SwitchCompat pageSwitch;
     private ImageView filterIcon;
     private boolean isExplorePage = true; // initial is explore page
@@ -106,6 +111,24 @@ public class HomeFragment extends Fragment {
                  adapter.updateData(rankedRestaurants);}
         });
 
+        searchbar=root.findViewById(R.id.mySearchView);
+        searchbar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Filter restaurants when the user submits the query
+                filterAndDisplayRestaurants(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Filter restaurants as the user types the query
+                filterAndDisplayRestaurants(newText);
+                return false;
+            }
+        });
+
+
 
 
         filterIcon = root.findViewById(R.id.filterIcon);
@@ -134,11 +157,7 @@ public class HomeFragment extends Fragment {
 
         return root;
     }
-    private void triggerRanking() {
-        if (!viewModel.getRestaurantsLiveData().getValue().isEmpty() && viewModel.getUserProfilesLiveData().getValue() != null) {
-            viewModel.rankAndUpdateRestaurants(viewModel.getUserProfilesLiveData().getValue());
-        }
-    }
+
     private void fetchData(){
 //        viewModel.fetchRestaurantandUser();
         filterViewModel.getFilteredRestaurantsLiveData().observe(getViewLifecycleOwner(), filteredRestaurants -> {
@@ -185,6 +204,8 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
+
 
 
     @Override
@@ -253,5 +274,33 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+    private void filterAndDisplayRestaurants(String query) {
+        // Get the list of restaurants from the ViewModel
+        List<Restaurant> allRestaurants = viewModel.getRestaurantsLiveData().getValue();
 
-}
+        if (allRestaurants != null) {
+            // Perform filtering based on the search query
+            List<Restaurant> filteredList = SearchRestaurants(allRestaurants, query);
+
+            // Update the RecyclerView adapter with the filtered list of restaurants
+            adapter.updateData(filteredList);
+        }
+    }
+    private List<Restaurant> SearchRestaurants(List<Restaurant> restaurants, String query) {
+        // Implement your filtering logic here
+        List<Restaurant> filteredList = new ArrayList<>();
+        for (Restaurant restaurant : restaurants) {
+            // Add the restaurant to the filtered list if it matches the query
+            if (restaurant.getName().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(restaurant);
+            }
+        }
+        return filteredList;
+    }
+        private void triggerRanking() {
+            if (!viewModel.getRestaurantsLiveData().getValue().isEmpty() && viewModel.getUserProfilesLiveData().getValue() != null) {
+                viewModel.rankAndUpdateRestaurants(viewModel.getUserProfilesLiveData().getValue());
+            }
+        }
+    }
+
