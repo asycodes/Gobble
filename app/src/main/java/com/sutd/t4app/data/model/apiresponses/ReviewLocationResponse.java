@@ -2,23 +2,40 @@ package com.sutd.t4app.data.model.apiresponses;
 import java.util.List;
 import java.util.Map;
 
-public class    ReviewLocationResponse {
-    private long id;
-    private String lang;
-    private long location_id;
-    private String published_date;
-    private int rating;
-    private int helpful_votes;
-    private String rating_image_url;
-    private String url;
-    private String text;
-    private String title;
-    private String trip_type;
-    private String travel_date;
-    private User user;
-    private Map<String, Subrating> subratings;
+public class ReviewLocationResponse {
+    private List<ReviewLocationResponse.TripReviews> data;
 
-    // Getters and setters
+    // Getters and Setters
+    public List<ReviewLocationResponse.TripReviews> getData() {
+        return data;
+    }
+
+    public void setData(List<ReviewLocationResponse.TripReviews> data) {
+        this.data = data;
+    }
+    public class TripReviews{
+        private long id;
+        private String lang;
+        private long location_id;
+        private String published_date;
+        private int rating;
+        private int helpful_votes;
+        private String rating_image_url;
+        private String url;
+        private String text;
+        private String title;
+        private String trip_type;
+        private String travel_date;
+        private User user;
+        private Map<String, Subrating> subratings;
+
+        // Getters and setters
+
+        public String gettext(){return this.text;}
+
+    }
+
+
 
     public static class User {
         private String username;

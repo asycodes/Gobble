@@ -4,16 +4,16 @@ package com.sutd.t4app.data.model.apiresponses;
 import java.util.List;
 
 public class YelpReviewResponse {
-    private List<Review> reviews;
+    private List<YelpReviews> reviews;
     private int total;
     private List<String> possibleLanguages;
 
     // Getters and Setters
-    public List<Review> getReviews() {
+    public List<YelpReviews> getReviews() {
         return reviews;
     }
 
-    public void setReviews(List<Review> reviews) {
+    public void setReviews(List<YelpReviews> reviews) {
         this.reviews = reviews;
     }
 
@@ -33,7 +33,7 @@ public class YelpReviewResponse {
         this.possibleLanguages = possibleLanguages;
     }
 
-    public static class Review {
+    public static class YelpReviews {
         private String id;
         private String url;
         private String text;

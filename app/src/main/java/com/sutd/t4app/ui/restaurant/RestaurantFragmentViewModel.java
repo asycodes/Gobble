@@ -13,6 +13,8 @@ import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.data.model.Review;
 import com.sutd.t4app.data.model.UserProfile;
 import com.sutd.t4app.data.model.apiresponses.LocationSearchResponse;
+import com.sutd.t4app.data.model.apiresponses.ReviewLocationResponse;
+import com.sutd.t4app.data.model.apiresponses.YelpReviewResponse;
 import com.sutd.t4app.data.model.apiresponses.YelpSearchResponse;
 import com.sutd.t4app.ui.home.HomeFragmentViewModel;
 import com.sutd.t4app.utility.RealmUtility;
@@ -29,6 +31,7 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.mongodb.App;
 import io.realm.mongodb.sync.SyncConfiguration;
+import retrofit2.http.Query;
 
 @HiltViewModel
 public class RestaurantFragmentViewModel extends ViewModel {
@@ -39,7 +42,9 @@ public class RestaurantFragmentViewModel extends ViewModel {
     private TripAdvisorService tripAdvisorService;
     private YelpService yelpService;
     private LocationSearchResponse.Location Tripsearchresults;
+    private List<ReviewLocationResponse.TripReviews> TripreviewSearch;
     private YelpSearchResponse.Business Yelpsearchresults;
+    private List<YelpReviewResponse.YelpReviews> YelpreviewSearch;
 
     @Inject
     public RestaurantFragmentViewModel(App realmApp, TripAdvisorService tripadvisorService, YelpService yelpservice) {
@@ -147,22 +152,56 @@ public class RestaurantFragmentViewModel extends ViewModel {
                             Log.d("FIRST YELP SEARCH RESULTS", "" + Yelpsearchresults);
                         }, throwable -> {
                             // Handle error
+                            Log.d("YelpAdvisor Error", "Error occurred: " + throwable.getMessage());
                         });
             }
             // once they have their own IDs, we find the reviews from each service
 
-            try {
-                int tripAdvisorId = Integer.parseInt(this.currRes.getTripAdvisorId());
-                tripAdvisorService.getReviews(tripAdvisorId,)
-            } catch (NumberFormatException e) {
-                System.out.println("Error converting to integer: " + e.getMessage());
+            RealmResults<Review> results = realm.where(Review.class)
+                    .equalTo("restaurantId", this.currRes.getId())
+                    .equalTo("source", "TripAdvisor ")
+                    .findAll();
+            if(results.isEmpty()){
+                try {
+                    int tripAdvisorId = Integer.parseInt(this.currRes.getTripAdvisorId());
+                    tripAdvisorService.getReviews(tripAdvisorId,BuildConfig.TRIP_API,"en").subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(result -> {
+                                this.TripreviewSearch = result.getData();
+                                // get review text and overall rating AND if the source is not in-house please remove likes
+                                Log.d("FIRST YELP SEARCH RESULTS", "" + TripreviewSearch);
+                            }, throwable -> {
+                                // Handle error
+                                Log.d("TripAdvisor Error Getting Reviews", "Error occurred: " + throwable.getMessage());
+                            });
+
+                } catch (NumberFormatException e) {
+                    System.out.println("Error converting to integer: " + e.getMessage());
+                }
             }
+
+            RealmResults<Review> resultsyelp = realm.where(Review.class)
+                    .equalTo("restaurantId", this.currRes.getId())
+                    .equalTo("source", "Yelp ")
+                    .findAll();
+
+            if(resultsyelp.isEmpty()){
+                yelpService.getReviews(this.currRes.getYelpId(),BuildConfig.YELP_API).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(result -> {
+                            this.YelpreviewSearch = result.getReviews();
+
+                            Log.d("FIRST YELP SEARCH RESULTS", "" + YelpreviewSearch);
+                        }, throwable -> {
+                            // Handle error
+                            Log.d("Yelp Error Getting Reviews", "Error occurred: " + throwable.getMessage());
+                        });
+            }
+            }
+
 
 
 
         }
 
-
-        // if STILL NULL, then ok, just show a "empty reviews"
-    }
     }
