@@ -14,6 +14,7 @@ public class UserProfile extends RealmObject {
 
     private String userId;
     private String username;
+    private Integer rep;
     private String email;
     private String password;
     private String cuisinePreferences;
@@ -33,14 +34,13 @@ public class UserProfile extends RealmObject {
 
     // Default constructor
     public UserProfile() {
-        this.userId = "bshfbefnwoef212100001";
-        this.username = "Avitra Phon";
-        this.email = "gobbleterm4app@gmail.com";
-        this.password="angieasylainterm4app";
         this._id= new ObjectId();
+        this.rep = 0;
     }
+    public Integer getRep(){return this.rep;}
+    public void setRep(Integer newrep){this.rep = newrep;}
 
-//     Getters and Setters
+    //     Getters and Setters
     public ObjectId get_id() {
         return _id;
     }

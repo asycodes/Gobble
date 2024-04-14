@@ -2,7 +2,7 @@ package com.sutd.t4app.data.model.apiresponses;
 import java.util.List;
 import java.util.Map;
 
-public class ReviewLocationResponse {
+public class    ReviewLocationResponse {
     private long id;
     private String lang;
     private long location_id;

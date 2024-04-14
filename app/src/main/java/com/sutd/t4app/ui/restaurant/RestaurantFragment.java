@@ -14,15 +14,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.squareup.picasso.Picasso;
 import com.sutd.t4app.R;
 import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.databinding.FragmentDashboardBinding;
 import com.sutd.t4app.databinding.FragmentRestuarantProfileBinding;
+import com.sutd.t4app.ui.home.HomeFragmentViewModel;
+import com.sutd.t4app.ui.home.RestaurantExploreAdapter;
 
-public class RestaurantFragmentActivity extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
+
+public class RestaurantFragment extends Fragment {
     private FragmentRestuarantProfileBinding binding;
     private TextView textViewRestaurantLocation;
     private ImageView restImageHolder;
@@ -42,6 +49,9 @@ public class RestaurantFragmentActivity extends Fragment {
     private RatingBar User2Ratings;
     private Restaurant restaurant;
     private ImageView restaurantProfileImage;
+    private RestaurantFragmentViewModel viewModel;
+    private ReviewListAdapter adapter;
+
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -51,11 +61,39 @@ public class RestaurantFragmentActivity extends Fragment {
         binding = FragmentRestuarantProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         Bundle arguments = getArguments();
+        adapter = new ReviewListAdapter(new ArrayList<>(), R.layout.review_item );
+        binding.reviewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.reviewRecyclerView.setAdapter(adapter);
+        viewModel = new ViewModelProvider(this).get(RestaurantFragmentViewModel.class);
+
         String value = null;
         if (arguments != null) {
             restaurant = arguments.getParcelable("restaurant");
+            viewModel.setcurrRes(restaurant);
+            viewModel.getreviewsLiveData().observe(getViewLifecycleOwner(), reviews -> {
+                // Update the adapter with the list of restaurants
+                Log.d("HomeFragment", "Number of restaurants received: " + reviews.size());
+
+                //take the first two of restaurants
+                if (reviews.size() >= 1) {
+                    adapter.updateData(reviews); // See note below about adapter
+                }
+                else {
+                    // TODO: meaning empty, SHOW EMPTY UI
+                }
+
+            });
             TextView restaurantNameTextView = root.findViewById(R.id.textViewRestaurantName);
             //TextView restaurantNameTextView = root.findViewById(R.id.restaurantName);
+            // if the tripadId is empty we find it first
+            // likewise for yelpId
+            // we run the find id using lat, lng and name
+            // pick the first result then run the find reviews
+            // once we have gained the reviews, we insert into the review collection if it doesnt exist
+            // show in- house reviews first
+
+
+/*
 
             restaurantNameTextView.setText(restaurant.getName());
             Log.d("RestaurantData", "Restaurant name: " + restaurant.getName());
@@ -67,12 +105,6 @@ public class RestaurantFragmentActivity extends Fragment {
             foodRating=root.findViewById(R.id.foodRatingBar);
             serviceRating=root.findViewById(R.id.serivceRatingBar);
             atmosphereRating=root.findViewById(R.id.atmosphereRatingBar);
-            User1=root.findViewById(R.id.User1);
-            User1Review=root.findViewById(R.id.User1_review);
-            User1Ratings=root.findViewById(R.id.User1_rating);
-            User2=root.findViewById(R.id.User2);
-            User2Review=root.findViewById(R.id.User2_review);
-            User2Ratings=root.findViewById(R.id.user2_rating);
             Menu1.setText(restaurant.getTopMenu1());
             Log.d("RestaurantData", "Top Menu1: " + restaurant.getTopMenu1());
             Menu2.setText(restaurant.getTopMenu2());
@@ -94,6 +126,7 @@ public class RestaurantFragmentActivity extends Fragment {
             Picasso.get()
                     .load(restaurant.getImgMainURL()) // Assuming `getImageUrl()` is a method in your `Restaurant` class
                     .into(restaurantProfileImage);
+*/
 
 
         }
