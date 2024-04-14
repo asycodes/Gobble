@@ -3,6 +3,7 @@ package com.sutd.t4app.utility;
 import android.util.Log;
 
 import com.sutd.t4app.data.model.Restaurant;
+import com.sutd.t4app.data.model.TikTok;
 import com.sutd.t4app.ui.ProfileQuestions.UserProfile;
 
 import io.realm.Realm;
@@ -41,6 +42,7 @@ public class RealmUtility {
                                 // add a subscription with a name
                                 boolean ressubscriptionExists = false;
                                 boolean usersubscriptionExists = false;
+                                boolean tiktoksucriptionExists= false;
                                 for (Subscription existingSubscription : subscriptions) {
                                     if ("restaurantsSubscription".equals(existingSubscription.getName())) {
                                         ressubscriptionExists = true;
@@ -48,6 +50,10 @@ public class RealmUtility {
                                     if ("usersSubscription".equals(existingSubscription.getName())) {
                                         usersubscriptionExists = true;
                                     }
+                                    if ("TikTokSubscription".equals(existingSubscription.getName())) {
+                                        tiktoksucriptionExists = true;
+                                    }
+
                                 }
 
                                 if(!ressubscriptionExists){
@@ -59,6 +65,12 @@ public class RealmUtility {
                                     subscriptions.add(Subscription.create("usersSubscription",
                                             realm.where(UserProfile.class)));
                                 }
+
+                                if(!tiktoksucriptionExists){
+                                    subscriptions.add(Subscription.create("TikTokSubscription",
+                                            realm.where(TikTok.class)));
+                                }
+
 
                             }
 

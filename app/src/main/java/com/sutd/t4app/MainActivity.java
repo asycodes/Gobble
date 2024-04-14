@@ -50,30 +50,18 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.navigation_home) {
-                // If the current destination is not home, navigate to home
-                if (navController.getCurrentDestination() != null && navController.getCurrentDestination().getId() != R.id.navigation_home) {
+            int itemId = item.getItemId();
+            if (itemId == R.id.navigation_home) {
+                if (navController.getCurrentDestination().getId() != R.id.navigation_home) {
                     navController.navigate(R.id.navigation_home);
                 }
                 return true;
-            } else {
-                // Use the default NavigationUI handler for other navigation items
-                return NavigationUI.onNavDestinationSelected(item, navController);
-            }
-
-
-        });
-        navView.setOnItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.navigation_map) {
-                // Always navigate to the map page when the map icon is clicked
+            } else if (itemId == R.id.navigation_map) {
                 navController.navigate(R.id.navigation_map);
-                return true; // Consume the click event
+                return true;
             } else {
-                // Use the default NavigationUI handler for other navigation items
                 return NavigationUI.onNavDestinationSelected(item, navController);
             }
-
-
         });
 
 

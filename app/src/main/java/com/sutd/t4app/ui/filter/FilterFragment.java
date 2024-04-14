@@ -239,7 +239,7 @@ public class FilterFragment extends Fragment {
 
         // Log the initial size of the restaurant list
         Log.d("InitialData", "Initial number of restaurants: " + allRestaurants.size());
-        // TODO: Problem: it seems like it is not pulling any data  "Initial number of restaurants: 0"
+
 
 
 

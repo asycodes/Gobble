@@ -57,6 +57,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private List<Restaurant> restaurantList;
 
+
     // TODO: Rename and change types of parameters
 
 
@@ -112,6 +113,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.googleMap=googleMap;
+        // Disable 3D buildings
+        googleMap.setBuildingsEnabled(false);
+
+        // Disable indoor maps
+        googleMap.setIndoorEnabled(false);
+
+        // Disable traffic layer (if not needed)
+        googleMap.setTrafficEnabled(false);
+
+        // Set map type (e.g., normal map type)
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         homeViewmodel.getRestaurantsLiveData().observe(getViewLifecycleOwner(), new Observer<List<Restaurant>>() {
             @Override
             public void onChanged(List<Restaurant> list) {
@@ -123,6 +135,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 }
             }
         });
+
 
         // Set marker click listener
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -148,6 +161,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         });
 
     }
+
 
     private Restaurant getRestaurantFromMarker(Marker marker) {
         // Iterate through the list of restaurants to find the one associated with the clicked marker
