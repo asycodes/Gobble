@@ -60,7 +60,23 @@ public class MainActivity extends AppCompatActivity {
                 // Use the default NavigationUI handler for other navigation items
                 return NavigationUI.onNavDestinationSelected(item, navController);
             }
+
+
         });
+        navView.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.navigation_map) {
+                // Always navigate to the map page when the map icon is clicked
+                navController.navigate(R.id.navigation_map);
+                return true; // Consume the click event
+            } else {
+                // Use the default NavigationUI handler for other navigation items
+                return NavigationUI.onNavDestinationSelected(item, navController);
+            }
+
+
+        });
+
+
 
 
 
