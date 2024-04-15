@@ -64,17 +64,19 @@ public class HomeFragment extends Fragment {
         viewModel.getRestaurantsLiveData().observe(getViewLifecycleOwner(), restaurants -> {
             // Update the adapter with the list of restaurants
             Log.d("HomeFragment", "Number of restaurants received: " + restaurants.size());
-            
+
+            /*
             //take the first two of restaurants
             if (restaurants.size() >= 1) {
-                List<Restaurant> hotRestaurants = restaurants.subList(0, 2);
+                List<Restaurant> hotRestaurants = restaurants.subList(0, );
                 adapter.updateData(hotRestaurants); // See note below about adapter
                 hotAdapter.updateData(hotRestaurants);
             }            
             else {
+            */
                 adapter.updateData(restaurants); // See note below about adapter
                 hotAdapter.updateData(restaurants);
-            }
+            //}
             
         });
 

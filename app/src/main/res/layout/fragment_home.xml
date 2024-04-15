@@ -109,7 +109,8 @@
                     android:layout_gravity="left"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="0dp"
+
                     android:text="Trending on TikTok"
                     android:textStyle="bold"
                     android:textColor="@color/black"
