@@ -69,7 +69,7 @@ public class HomeFragment extends Fragment {
             
             //take the first two of restaurants
             if (restaurants.size() >= 1) {
-                List<Restaurant> hotRestaurants = restaurants.subList(0, 5);
+                List<Restaurant> hotRestaurants = restaurants.subList(0, 2);
                 adapter.updateData(hotRestaurants); // See note below about adapter
                 hotAdapter.updateData(hotRestaurants);
             }            

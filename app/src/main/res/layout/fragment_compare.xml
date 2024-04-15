@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.restaurant.CompareFragment">
+    tools:context=".ui.restaurant.CompareFragment"
+    android:background="@drawable/gradient_list"
+    android:id="@+id/mainLayout">
 
 
     <ScrollView
@@ -26,7 +28,7 @@
                 android:shadowDy="2"
                 android:shadowRadius="2"
                 android:text="COMPARE &amp; RECOMMEND"
-                android:textColor="@color/primaryVariant"
+                android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
