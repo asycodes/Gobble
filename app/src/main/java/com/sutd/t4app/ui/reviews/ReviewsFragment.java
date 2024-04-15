@@ -28,6 +28,10 @@ import com.sutd.t4app.R;
 import com.sutd.t4app.databinding.FragmentDashboardBinding;
 import java.io.IOException;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
+
 public class ReviewsFragment extends Fragment {
 
     private ReviewViewModel viewModel;
@@ -43,15 +47,11 @@ public class ReviewsFragment extends Fragment {
     private EditText reviews;
     private ActivityResultLauncher<String> imagePickerLauncher;
 
-    public ReviewsFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-
         viewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
 
         uploadImageButton=root.findViewById(R.id.uploadimage);
