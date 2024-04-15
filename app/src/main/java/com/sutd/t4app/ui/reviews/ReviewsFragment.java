@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,18 +24,29 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.sutd.t4app.R;
+import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.databinding.FragmentDashboardBinding;
+import com.sutd.t4app.databinding.FragmentRestuarantProfileBinding;
+import com.sutd.t4app.ui.restaurant.ReviewListAdapter;
+
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.realm.RealmResults;
+import io.realm.mongodb.App;
 
 @AndroidEntryPoint
-
 public class ReviewsFragment extends Fragment {
-
+    private FragmentDashboardBinding binding;
     private ReviewViewModel viewModel;
+    private SuggestionAdapter adapter;
     private ImageView foodStar1, foodStar2, foodStar3, foodStar4, foodStar5;
     private ImageView serviceStar1, serviceStar2, serviceStar3, serviceStar4, serviceStar5;
     private ImageView atmosphereStar1, atmosphereStar2, atmosphereStar3, atmosphereStar4, atmosphereStar5;
@@ -46,20 +58,52 @@ public class ReviewsFragment extends Fragment {
     private ImageView selectedImage;
     private EditText reviews;
     private ActivityResultLauncher<String> imagePickerLauncher;
+    @Inject
+    App realmApp;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
         viewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
+        adapter = new SuggestionAdapter(new ArrayList<>(), R.layout.suggestion_item );
+        binding.suggestionRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.suggestionRecyclerView.setAdapter(adapter);
 
+
+
+        EditText searchEditText = root.findViewById(R.id.searchEditText);
+        RecyclerView suggestionRecyclerView = root.findViewById(R.id.suggestionRecyclerView);
         uploadImageButton=root.findViewById(R.id.uploadimage);
         uploadImageButton.setOnClickListener(v -> openImageChooser());
         selectedImage=root.findViewById(R.id.selectedImage);
         reviews=root.findViewById(R.id.user_review);
         Button postreviewbutton= root.findViewById(R.id.post_review);
         postreviewbutton.setOnClickListener(v -> submitReview());
+
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() >= 2) { // Only query if there are at least 2 characters
+                    suggestionRecyclerView.setVisibility(View.VISIBLE);
+                    updateSearchResults(s.toString());
+                } else {
+                    suggestionRecyclerView.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+
 
 
 
@@ -107,6 +151,7 @@ public class ReviewsFragment extends Fragment {
 
         return root;
     }
+
 
     private void openImageChooser() {
         // Launch the image picker using the Activity Result API

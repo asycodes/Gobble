@@ -26,14 +26,19 @@
             android:textSize="18sp"
             android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/restaurantName"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fuel Plus ?"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:textStyle="bold"/>
+            android:hint="Search restaurants..."
+            android:inputType="text" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/suggestionRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
 
 
 
