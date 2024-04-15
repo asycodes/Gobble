@@ -14,6 +14,7 @@ public class UserProfile extends RealmObject {
 
     private String userId;
     private String username;
+    private Integer rep;
     private String email;
     private String password;
     private String cuisinePreferences;
@@ -30,17 +31,18 @@ public class UserProfile extends RealmObject {
     private String mealTimePreferences;
     private String ingredientPreferences;
     private String ingredientDislikes;
+    private String user_img_link;
+
 
     // Default constructor
     public UserProfile() {
-        this.userId = "bshfbefnwoef212100001";
-        this.username = "Avitra Phon";
-        this.email = "gobbleterm4app@gmail.com";
-        this.password="angieasylainterm4app";
         this._id= new ObjectId();
+        this.rep = 0;
     }
+    public Integer getRep(){return this.rep;}
+    public void setRep(Integer newrep){this.rep = newrep;}
 
-//     Getters and Setters
+    //     Getters and Setters
     public ObjectId get_id() {
         return _id;
     }
@@ -187,4 +189,6 @@ public class UserProfile extends RealmObject {
     public void setIngredientDislikes(String ingredientDislikes) {
         this.ingredientDislikes = ingredientDislikes;
     }
+    public String getUser_img_link(){return this.user_img_link;}
+    public void setUser_img_link(String userimglink){this.user_img_link=userimglink;}
 }

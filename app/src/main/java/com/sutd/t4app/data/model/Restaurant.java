@@ -40,6 +40,11 @@ public class Restaurant extends RealmObject implements Parcelable {
 
     private String Description;
     private String Area;
+    private String TripAdvisorId;
+    private String YelpId;
+    private String RestaurantId;
+
+
 
     // Standard getters & setters
 
@@ -81,6 +86,9 @@ public class Restaurant extends RealmObject implements Parcelable {
         ReviewRating2 = in.readDouble();
         Ambience=in.readString();
         Area=in.readString();
+        TripAdvisorId=in.readString();
+        YelpId=in.readString();
+        RestaurantId = in.readString();
 
     }
 
@@ -95,6 +103,16 @@ public class Restaurant extends RealmObject implements Parcelable {
             return new Restaurant[size];
         }
     };
+    public String getTripAdvisorId(){return this.TripAdvisorId;}
+    public void setTripAdvisorId(String newid){this.TripAdvisorId=newid;}
+    public String getRestaurantId(){return this.RestaurantId;}
+    public void setRestaurantId(String resid){ this.RestaurantId = resid;}
+
+
+    public String getYelpId(){return this.YelpId;}
+    public void setYelpId(String newid){this.YelpId=newid;}
+
+
     public String getImgMainURL(){
         return this.imgMainURL;
     }
@@ -111,8 +129,6 @@ public class Restaurant extends RealmObject implements Parcelable {
     public void setName(String Name) { this.Name = Name; }
     public Double getRatings() { return this.Ratings; }
     public void setRatings(Double Ratings) { this.Ratings = Ratings; }
-//    public String getStatus() { return this.Status; }
-//    public void setStatus(String Status) { this.Status = Status; }
     public String getType() { return this.Type; }
     public void setType(String Type) { this.Type = Type; }
     public String getClosestLandmark(){return this.ClosestLandmark;}

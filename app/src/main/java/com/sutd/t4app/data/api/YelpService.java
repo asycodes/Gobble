@@ -2,6 +2,7 @@ package com.sutd.t4app.data.api;
 
 import com.sutd.t4app.data.model.apiresponses.LocationSearchResponse;
 import com.sutd.t4app.data.model.apiresponses.ReviewLocationResponse;
+import com.sutd.t4app.data.model.apiresponses.YelpReviewResponse;
 import com.sutd.t4app.data.model.apiresponses.YelpSearchResponse;
 
 import io.reactivex.Observable;
@@ -20,4 +21,9 @@ public interface YelpService {
             @Query("longitude") double longitude,
             @Query("term") String term
     );
+
+    @GET("{business_id_or_alias}/reviews")
+    Observable<YelpReviewResponse> getReviews(
+            @Path("business_id_or_alias") String business_id_or_alias,
+            @Header("Authorization") String authToken);
 }

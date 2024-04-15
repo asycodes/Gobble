@@ -50,6 +50,8 @@ public class YelpSearchResponse {
         private double distance;
 
         // Getters and Setters...
+
+        public String getId(){return this.id;}
     }
 
     public static class Category {
