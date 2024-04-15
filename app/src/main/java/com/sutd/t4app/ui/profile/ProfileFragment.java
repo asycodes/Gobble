@@ -104,7 +104,7 @@ public class ProfileFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.toQuestionspage);
             }
         });
-        EditProfile=root.findViewById(R.id.editprofilebutton);
+        EditProfile=root.findViewById(R.id.editProfilebutton);
         EditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

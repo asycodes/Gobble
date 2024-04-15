@@ -71,6 +71,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
     private HomeFragmentViewModel viewModel;
     private MapView mapView;
     private GoogleMap googleMap;
+    private TextView restaurantDescription;
 
 
 
@@ -152,6 +153,9 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
 //        User2Review = root.findViewById(R.id.User2_review);
 //        User2Ratings = root.findViewById(R.id.user2_rating);
         restaurantProfileImage = root.findViewById(R.id.restaurantProfileImage);
+        restaurantProfileImage = root.findViewById(R.id.restaurantProfileImage);
+        restaurantDescription = root.findViewById(R.id.restDescription);
+        restaurantDescription.setText(restaurant.getDescription());
     }
     public void displayRestaurantDetails(Restaurant restaurant) {
         if (restaurantNameTextView != null && Ratings != null && Menu1 != null) {
@@ -170,6 +174,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
 //            User2.setText(restaurant.getUserId2());
 //            User2Review.setText(restaurant.getReview2());
 //            User2Ratings.setRating((float) restaurant.getReviewRating2().doubleValue());
+
             Picasso.get()
                     .load(restaurant.getImgMainURL())
                     .resize(1024, 768) // You can adjust these values as needed
