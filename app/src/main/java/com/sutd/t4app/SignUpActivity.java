@@ -6,15 +6,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.sutd.t4app.data.model.Restaurant;
-import com.sutd.t4app.ui.ProfileQuestions.UserProfile;
-import com.sutd.t4app.ui.home.HomeFragmentViewModel;
+import com.sutd.t4app.data.model.UserProfile;
 import com.sutd.t4app.utility.RealmUtility;
 
 import org.bson.types.ObjectId;
@@ -23,7 +20,6 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.realm.Realm;
-import io.realm.RealmChangeListener;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.mongodb.App;
@@ -33,7 +29,6 @@ import io.realm.mongodb.sync.SyncConfiguration;
 
 
 @AndroidEntryPoint
-
 public class SignUpActivity extends AppCompatActivity {
     @Inject
     App realmApp;

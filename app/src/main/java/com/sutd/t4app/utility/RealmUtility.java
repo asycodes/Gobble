@@ -3,11 +3,11 @@ package com.sutd.t4app.utility;
 import android.util.Log;
 
 import com.sutd.t4app.data.model.Restaurant;
-import com.sutd.t4app.ui.ProfileQuestions.UserProfile;
+import com.sutd.t4app.data.model.Review;
+import com.sutd.t4app.data.model.UserProfile;
 
 import io.realm.Realm;
 import io.realm.mongodb.App;
-import io.realm.mongodb.Credentials;
 import io.realm.mongodb.User;
 import io.realm.mongodb.sync.MutableSubscriptionSet;
 import io.realm.mongodb.sync.Subscription;
@@ -38,12 +38,16 @@ public class RealmUtility {
                                 // add a subscription with a name
                                 boolean ressubscriptionExists = false;
                                 boolean usersubscriptionExists = false;
+                                boolean reviewsubscriptionExists = false;
                                 for (Subscription existingSubscription : subscriptions) {
                                     if ("restaurantsSubscription".equals(existingSubscription.getName())) {
                                         ressubscriptionExists = true;
                                     }
                                     if ("usersSubscription".equals(existingSubscription.getName())) {
                                         usersubscriptionExists = true;
+                                    }
+                                    if ("reviewsSubscription".equals(existingSubscription.getName())) {
+                                        reviewsubscriptionExists = true;
                                     }
                                 }
 
@@ -55,6 +59,10 @@ public class RealmUtility {
                                 if(!usersubscriptionExists){
                                     subscriptions.add(Subscription.create("usersSubscription",
                                             realm.where(UserProfile.class)));
+                                }
+                                if(!reviewsubscriptionExists){
+                                    subscriptions.add(Subscription.create("reviewsSubscription",
+                                            realm.where(Review.class)));
                                 }
 
                             }

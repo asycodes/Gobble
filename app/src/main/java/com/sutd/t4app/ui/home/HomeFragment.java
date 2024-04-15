@@ -19,8 +19,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.sutd.t4app.R;
 import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.databinding.FragmentHomeBinding;
-import com.sutd.t4app.ui.ProfileQuestions.UserProfile;
-import com.sutd.t4app.ui.ProfileQuestions.UserProfileViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,17 +77,6 @@ public class HomeFragment extends Fragment {
             }
             
         });
-        //TextView fuelPlus1Card = root.findViewById(R.id.FuelPlus1);
-
-        /*
-        fuelPlus1Card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("work?","yes working cliking");
-                Navigation.findNavController(v).navigate(R.id.torestaurantfragment);
-            }
-        });
-        */
 
         questionnaire= root.findViewById(R.id.questionsicon);
         questionnaire.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +141,9 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        viewModel.cleanUp();
         binding = null;
+
     }
 
 

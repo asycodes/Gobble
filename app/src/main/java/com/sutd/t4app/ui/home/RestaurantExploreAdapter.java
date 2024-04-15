@@ -70,6 +70,8 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
             //add restImage update imageView
             Picasso.get()
                 .load(restaurant.getImgMainURL()) // Assuming `getImageUrl()` is a method in your `Restaurant` class
+                    .resize(350, 170)  // specify your desired size
+                    .centerInside()
                 .into(holder.restImageHolder);
 
 

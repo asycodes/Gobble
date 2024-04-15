@@ -1,43 +1,34 @@
-# T4app - food
+# Gobble - Team 53
 
-# Tutorial
+## Team members
+- Adelaine Ruth Hanako Suhendro, 1007059
+- Avitra Phon, 1006946
+- Muvil Kothari, 1006885
+- Khoo Yong Xuan, 1006962
+- Raphael Xujie Yip, 1006657
+- Muhammad Asyraf Bin Omar, 1006938
 
-- BottomSheet: https://www.youtube.com/watch?v=JL6Ga7aM68M
-# T4app
-# (insert app description here)
+## About Gobble
 
-## General Git
-1) Create new branch for every new feature from master branch (please create from master branch and pull changes before doing this command)
-`git checkout -b feature_name`
-2) Always check what files have changed from your session of intense coding
-`git status`
-3) Add your changes
-`git add.`
-4) Commit your changes
-`git commit -am "feat:added cool feature"`
-5) Pull changes from master before pushing to check for updates
-`git pull origin master`
-6) Push your changes to your branch
-`git push origin feature_name`
-7) Once your branch is complete, go to github and do a PR to request merge to the master branch
+"Gobble" is a centralized review app that aggregates data from diverse sources like Google Business, SmartLocal reviews, TikTok, and user-generated content. Gobble stands out by offering personalized restaurant recommendations based on user profiles, incorporating generative AI to suggest specific dishes within budget constraints, and enabling comparative insights between eateries.
 
-## Other Git commands
-1) Switching to other branches
-`git switch wtv_branch_name`
+API documentation utilized: Google Business, Google Cloud Platform, Yelp, TripAdvisor, Tiktok, OpenAI
 
+- View the Figma Prototype of Gobble [here](https://www.figma.com/proto/kKKdI45mlW6sPdlUEojrtE/50.001?type=design&node-id=48-151&t=EhO0q2kSAlFj3sfv-0&scaling=scale-down&page-id=0%3A1&starting-point-node-id=39%3A49)
+- View Gobble's business and technical proposal(Checkoff 1) [here](https://github.com/ilenhanako/t4app/files/14941705/1D.project.gobble.pdf)
 
-## Architecture - MVVM
-View: This portion of the architecture is responsible for presenting data to user, all xml files and activities (Activity files within UI FOLDER, XML files within LAYOUT FOLDER)
-Model: Responsible for the business logic and data retrieval/updates to and from the local and remote data sources. (DATA FOLDER)
-ViewModel: This portion is responsible for connecting the View and Model components. ( UI FOLDER )
-
-### Benefits of MVVM
-
-### Alternatives to MVVM
+## Gobble Poster
+![Gobble Poster](https://github.com/ilenhanako/t4app/assets/9971306/043d2807-228f-4d66-bce6-848a7eea5ad4)
 
 ## OOP Principles Used
-1) Inheritance ( reduce code duplication)
-  1.1) Base Folder within UI folder
-    1.1.1) Contains base forms for Acitivity, ViewModel and Fragment files
-  1.2) Base Folder within DATA folder
-2) Polymorphism
+**1. Encapsulation**
+- Classes such as Restaurant and UserProfile encapsulate data and its manipulation, exposing only the necessary information through their public methods.
+  
+**2. Abstraction**
+- Interfaces like TripAdvisorService and YelpService abstract the details of HTTP requests and responses, providing a clear API for data retrieval.
+  
+**3. Inheritance**
+- By extending from base classes such as Fragment and ViewModel, specialized behaviors are enabled (e.g., HomeFragment, HomeFragmentViewModel) while reusing common functionality.
+  
+**4. Polymorphism**
+- Overridden methods within Activities, Fragments, and ViewModels allow for polymorphic behavior that is tailored to specific needs.

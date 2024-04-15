@@ -20,7 +20,7 @@ public interface TripAdvisorService {
             @Query("key") String apiKey
     );
     @GET("{locationId}/reviews")
-    Call<ReviewLocationResponse> getReviews(
+    Observable<ReviewLocationResponse> getReviews(
             @Path("locationId") int locationId,
             @Query("key") String apiKey,
             @Query("language") String language

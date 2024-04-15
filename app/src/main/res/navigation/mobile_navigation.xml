@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/navigation_restaurant"
-        android:name="com.sutd.t4app.ui.restaurant.RestaurantFragmentActivity"
+        android:name="com.sutd.t4app.ui.restaurant.RestaurantFragment"
         android:label="ResturantProfile"
         tools:layout="@layout/fragment_restuarant_profile"/>
 

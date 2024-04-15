@@ -7,17 +7,12 @@
     android:layout_height="match_parent">
 
 
+
     <ScrollView
         android:id="@+id/verticalScrollViewRestaurant"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:layout_marginBottom="48dp"
-        android:fillViewport="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
         <LinearLayout
@@ -470,139 +465,19 @@
 
             </LinearLayout>
 
-            <!-- Review Item 1 -->
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/reviewRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <!-- User Image and Name -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:src="@drawable/profile"
-                        android:scaleType="centerCrop"
-                        android:layout_marginEnd="16dp" />
-
-                    <TextView
-                        android:id="@+id/User1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Adelaine"
-                        android:textSize="16sp"
-                        android:textColor="#000000"
-                        android:textStyle="bold" />
-                    <RatingBar
-                        android:id="@+id/User1_rating"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:numStars="5"
-                        android:rating="4.5"
-                        android:stepSize="0.5"
-                        android:isIndicator="true"
-                        android:scaleX="0.4"
-                        android:scaleY="0.4"
-                        android:progressTint="#FFD700"
-                        />
-
-                </LinearLayout>
-
-
-
-                <!-- Review Description -->
-                <TextView
-                    android:id="@+id/User1_review"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer gravida turpis ac euismod fermentum. Quisque eu mi nec lorem sodales fermentum."
-                    android:textSize="14sp"
-                    android:textColor="#333333"
-                    android:layout_marginTop="8dp" />
-
-            </LinearLayout>
-
-            <!-- Separator Line -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#CCCCCC" />
-
-            <!-- Review Item 2 -->
-            <!-- Review Item 1 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <!-- User Image and Name -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:src="@drawable/profile"
-                        android:scaleType="centerCrop"
-                        android:layout_marginEnd="16dp" />
-
-                    <TextView
-                        android:id="@+id/User2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Adelaine"
-                        android:textSize="16sp"
-                        android:textColor="#000000"
-                        android:textStyle="bold" />
-                    <RatingBar
-                        android:id="@+id/user2_rating"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:numStars="5"
-                        android:rating="4.5"
-                        android:stepSize="0.5"
-                        android:isIndicator="true"
-                        android:scaleX="0.4"
-                        android:scaleY="0.4"
-                        android:progressTint="#FFD700" />
-
-                </LinearLayout>
-
-
-
-                <!-- Review Description -->
-                <TextView
-                    android:id="@+id/User2_review"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer gravida turpis ac euismod fermentum. Quisque eu mi nec lorem sodales fermentum."
-                    android:textSize="14sp"
-                    android:textColor="#333333"
-                    android:layout_marginTop="8dp" />
-
-
-
-            </LinearLayout>
-
-            <!-- Separator Line -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#CCCCCC"/>
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
