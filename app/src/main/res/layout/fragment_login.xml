@@ -122,7 +122,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="120dp"
-        android:backgroundTint="@color/primaryVariant"
+        android:backgroundTint="@color/primary"
         android:gravity="center_horizontal"
         android:text="Sign In"
         android:textAllCaps="false"
