@@ -42,6 +42,7 @@ public class UserProfile extends RealmObject {
         this.email = "gobbleterm4app@gmail.com";
         this.password="angieasylainterm4app";
         this._id= new ObjectId();
+        this.reviewCount=0; //initialise to zero for new users
     }
 
 //     Getters and Setters
