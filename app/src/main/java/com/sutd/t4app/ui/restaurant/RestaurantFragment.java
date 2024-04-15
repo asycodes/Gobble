@@ -56,6 +56,7 @@ public class RestaurantFragment extends Fragment {
     private ImageView restaurantProfileImage;
     private RestaurantFragmentViewModel viewModel;
     private ReviewListAdapter adapter;
+    private TextView restaurantDescription;
 
 
 
@@ -98,6 +99,8 @@ public class RestaurantFragment extends Fragment {
             serviceRating.setRating((float) restaurant.getServiceRating().doubleValue());
             atmosphereRating.setRating((float) restaurant.getAmbienceRating().doubleValue());
             restaurantProfileImage = root.findViewById(R.id.restaurantProfileImage);
+            restaurantDescription = root.findViewById(R.id.restDescription);
+            restaurantDescription.setText(restaurant.getDescription());
             Picasso.get()
                     .load(restaurant.getImgMainURL()) // Assuming `getImageUrl()` is a method in your `Restaurant` class
                     .into(restaurantProfileImage);

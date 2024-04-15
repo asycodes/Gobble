@@ -69,6 +69,17 @@
                             android:textStyle="bold"
                             android:layout_gravity="center_horizontal"/>
 
+                        <TextView
+                            android:id="@+id/restDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Restaurant Description"
+                            android:layout_gravity="center_horizontal"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:maxLines="3"
+                            android:ellipsize="end"/>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -97,6 +108,7 @@
                                 android:text="3.0(100 reviews)"
                                 android:textColor="#282828"
                                 android:textSize="10dp" />
+
                         </LinearLayout>
 
                         <androidx.cardview.widget.CardView
@@ -138,18 +150,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#fbb862"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"
-                android:layout_margin="8dp">
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_margin="8dp"
+                android:elevation="4dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Menu"
                     android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
 
             </FrameLayout>
             <TextView
@@ -305,19 +319,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#fbb862"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"
-                android:layout_marginTop="10dp"
-                android:layout_margin="8dp">
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_margin="8dp"
+                android:elevation="4dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ratings"
                     android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
 
             </FrameLayout>
             <!-- Food Rating -->
@@ -346,6 +361,7 @@
                 <RatingBar
                     android:id="@+id/foodRatingBar"
                     style="@style/SmallRatingBar"
+                    android:layout_gravity="right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:numStars="5"
@@ -386,6 +402,7 @@
                 android:layout_height="wrap_content"
                 android:numStars="5"
                 android:rating="3"
+                android:layout_gravity="right"
                 android:stepSize="0.1"
                 android:isIndicator="true"/>
             </LinearLayout>
@@ -419,6 +436,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:numStars="5"
+                    android:layout_gravity="right"
                     android:rating="2"
                     android:stepSize="0.1"
                     android:isIndicator="true"/>
@@ -432,24 +450,25 @@
 
                 android:gravity="center_vertical">
 
+        
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="#fbb862"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:paddingTop="3dp"
-                    android:paddingBottom="3dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_margin="8dp">
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:layout_margin="8dp"
+                    android:elevation="4dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Reviews"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:textSize="20sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold"/>
 
                 </FrameLayout>
 
