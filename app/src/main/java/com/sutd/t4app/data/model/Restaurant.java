@@ -44,6 +44,7 @@ public class Restaurant extends RealmObject implements Parcelable {
 
     private String Description;
     private String Area;
+    private String RestaurantId;
 
     // Standard getters & setters
 
@@ -85,6 +86,7 @@ public class Restaurant extends RealmObject implements Parcelable {
         ReviewRating2 = in.readDouble();
         Ambience=in.readString();
         Area=in.readString();
+        RestaurantId=in.readString();
 
     }
 
@@ -99,6 +101,8 @@ public class Restaurant extends RealmObject implements Parcelable {
             return new Restaurant[size];
         }
     };
+    public String getRestaurantId(){return this.RestaurantId;}
+    public void setRestaurantId(String RestaurantId){this.RestaurantId=RestaurantId;}
     public String getImgMainURL(){
         return this.imgMainURL;
     }
@@ -323,5 +327,6 @@ public class Restaurant extends RealmObject implements Parcelable {
         dest.writeDouble(ReviewRating2);
         dest.writeString(Ambience);
         dest.writeString(Area);
+        dest.writeString(RestaurantId);
     }
 }

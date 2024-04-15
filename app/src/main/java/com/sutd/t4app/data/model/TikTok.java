@@ -16,6 +16,7 @@ public class TikTok extends RealmObject implements Parcelable {
     private String name;
     private String img;
     private String link;
+    private String RestaurantId;
 
     public TikTok(){}
 
@@ -24,6 +25,8 @@ public class TikTok extends RealmObject implements Parcelable {
         img= in.readString();
         link=in.readString();
         name=in.readString();
+        RestaurantId=in.readString();
+
     }
 
     public static final Creator<TikTok> CREATOR= new Creator<TikTok>() {
@@ -37,6 +40,7 @@ public class TikTok extends RealmObject implements Parcelable {
             return new TikTok[size];
         }
     };
+    public String getRestaurantId(){return this.RestaurantId;}
 
     public String getNameTikTok(){ return this.name;}
     public String getImg(){return this.img;}
@@ -51,6 +55,7 @@ public class TikTok extends RealmObject implements Parcelable {
         dest.writeString(img);
         dest.writeString(link);
         dest.writeString(name);
+        dest.writeString(RestaurantId);
 
     }
 }

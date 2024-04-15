@@ -3,6 +3,7 @@ package com.sutd.t4app.ui.home;
  * The HomeFragment class in an Android app displays a list of restaurants and allows users to switch
  * between explore and feed pages.
  */
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,10 +14,12 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -35,7 +38,7 @@ import java.util.List;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements TikTokAdapter.OnTikTokClickListener {
     private Button searchButton;
     private SearchView searchbar;
     private SwitchCompat pageSwitch;
@@ -55,6 +58,29 @@ public class HomeFragment extends Fragment {
     private int totalRestaurantCount;
 
     @Override
+    public void onRestaurantSelected(String restaurantId) {
+        Log.d("RestaurantFragment", "Navigating to details for Restaurant ID: " + restaurantId);
+        Bundle bundle = new Bundle();
+        bundle.putString("restaurantId", restaurantId);
+        Navigation.findNavController(getView()).navigate(R.id.torestaurantfragment, bundle);
+    }
+    @Override
+    public void onTikTokLinkSelected(String url) {
+        openLinkInCustomTab(url);
+    }
+    private void openLinkInCustomTab(String url) {
+        if (url != null && !url.isEmpty()) {
+            CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+            CustomTabsIntent customTabsIntent = builder.build();
+            customTabsIntent.launchUrl(getContext(), Uri.parse(url));
+        } else {
+            Log.e("HomeFragment", "Attempted to open a null or empty URL.");
+            // Optionally, show a toast or error message to the user
+            Toast.makeText(getContext(), "No link available", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         // Existing binding setup
@@ -68,9 +94,10 @@ public class HomeFragment extends Fragment {
         binding.recyclerViewRestaurants.setAdapter(adapter);
 
 //        hotAdapter = new RestaurantExploreAdapter(new ArrayList<>(), R.layout.restaurant_hot_item);
-//        binding.recyclerViewHot.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true));
+//        binding.recyclerViewHot.setLayoutManager(new /**/LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true));
 //        binding.recyclerViewHot.setAdapter(hotAdapter);
-        hotAdapter = new TikTokAdapter(new ArrayList<>(), R.layout.tiktok_item_layout);
+
+        hotAdapter = new TikTokAdapter(new ArrayList<>(), R.layout.tiktok_item_layout,this);
         binding.recyclerViewHot.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true));
         binding.recyclerViewHot.setAdapter(hotAdapter);
 

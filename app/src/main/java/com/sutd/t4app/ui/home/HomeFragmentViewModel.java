@@ -3,6 +3,7 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
@@ -57,6 +58,8 @@ public class HomeFragmentViewModel extends ViewModel {
     private RealmResults<TikTok> tiktokresult;
     private final MutableLiveData<List<Restaurant>> rankedRestaurantsLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<TikTok>> TikTokLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Restaurant> specificRestaurantLiveData = new MutableLiveData<>();
+
 
 
     @Inject
@@ -164,6 +167,57 @@ public class HomeFragmentViewModel extends ViewModel {
                 Log.d("UserProfileDataExplore", "No user profile found for ID: " + currentUserId);
             }
         }
+    }
+
+//    public void fetchRestaurantById(String restaurantId) {
+//        if (realm != null) {
+//            RealmResults<Restaurant> results = realm.where(Restaurant.class)
+//                    .equalTo("RestaurantId", restaurantId) // Make sure the field name matches your schema
+//                    .findAllAsync();
+//
+//            results.addChangeListener(new RealmChangeListener<RealmResults<Restaurant>>() {
+//                @Override
+//                public void onChange(RealmResults<Restaurant> restaurants) {
+//                    if (!restaurants.isEmpty()) {
+//                        Restaurant restaurant = realm.copyFromRealm(restaurants.first());
+//                        specificRestaurantLiveData.postValue(restaurant);
+//                        Log.d("ViewModel", "Restaurant fetched: " + restaurant.getName() + " with ID: " + restaurantId);
+//                    } else {
+//                        specificRestaurantLiveData.postValue(null);
+//                        Log.e("ViewModel", "No restaurant found with ID: " + restaurantId);
+//                    }
+//                }
+//            });
+//        } else {
+//            specificRestaurantLiveData.postValue(null);
+//            Log.e("ViewModel", "Realm is not initialized.");
+//        }
+//    }
+
+    public LiveData<Restaurant> getRestaurantById(String restaurantId) {
+        MutableLiveData<Restaurant> specificRestaurant = new MutableLiveData<>();
+
+        // This will only attach an observer once, preventing multiple observations
+        restaurantsLiveData.observeForever(new Observer<List<Restaurant>>() {
+            @Override
+            public void onChanged(List<Restaurant> restaurants) {
+                for (Restaurant restaurant : restaurants) {
+                    if (restaurant.getRestaurantId().equals(restaurantId)) {
+                        specificRestaurant.setValue(restaurant);
+                        Log.d("ViewModel", "Restaurant fetched: " + restaurant.getName() + " with ID: " + restaurantId);
+                        restaurantsLiveData.removeObserver(this); // Remove observer after fetching data
+                        break;
+                    }
+                }
+            }
+        });
+
+        return specificRestaurant;
+    }
+
+
+    public LiveData<Restaurant> getSpecificRestaurantLiveData() {
+        return specificRestaurantLiveData;
     }
 
     public void fetchRestaurantandUser(){

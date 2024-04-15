@@ -13,9 +13,12 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,6 +37,7 @@ import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.databinding.FragmentDashboardBinding;
 import com.sutd.t4app.databinding.FragmentRestuarantProfileBinding;
 import com.sutd.t4app.BuildConfig;
+import com.sutd.t4app.ui.home.HomeFragmentViewModel;
 
 /**
  * The `RestaurantFragmentActivity` class is responsible for displaying restaurant details and allowing
@@ -46,6 +50,7 @@ public class RestaurantFragmentActivity extends Fragment implements OnMapReadyCa
     private RatingBar Ratings;//Overall
     private TextView Menu1;
     private TextView Menu2;
+    private TextView restaurantNameTextView;
     private TextView Menu3;
     private TextView Menu4;
     private RatingBar foodRating;
@@ -61,6 +66,8 @@ public class RestaurantFragmentActivity extends Fragment implements OnMapReadyCa
     private ImageView restaurantProfileImage;
     private MapView mapView;
     private GoogleMap googleMap;
+    private String RestaurantId;
+    private HomeFragmentViewModel viewModel;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -69,55 +76,33 @@ public class RestaurantFragmentActivity extends Fragment implements OnMapReadyCa
 
         binding = FragmentRestuarantProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        viewModel = new ViewModelProvider(requireActivity()).get(HomeFragmentViewModel.class);
+
 
         mapView = root.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
+        initialiseUI(root);
+
         Bundle arguments = getArguments();
         String value = null;
         if (arguments != null) {
             restaurant = arguments.getParcelable("restaurant");
-            TextView restaurantNameTextView = root.findViewById(R.id.textViewRestaurantName);
-            //TextView restaurantNameTextView = root.findViewById(R.id.restaurantName);
+            if (restaurant != null) {
 
-            restaurantNameTextView.setText(restaurant.getName());
-            Log.d("RestaurantData", "Restaurant name: " + restaurant.getName());
-            Ratings=root.findViewById(R.id.ratingRest);
-            Menu1= root.findViewById(R.id.Menu1);
-            Menu2= root.findViewById(R.id.Menu2);
-            Menu3= root.findViewById(R.id.Menu3);
-            Menu4= root.findViewById(R.id.Menu4);
-            foodRating=root.findViewById(R.id.foodRatingBar);
-            serviceRating=root.findViewById(R.id.serivceRatingBar);
-            atmosphereRating=root.findViewById(R.id.atmosphereRatingBar);
-            User1=root.findViewById(R.id.User1);
-            User1Review=root.findViewById(R.id.User1_review);
-            User1Ratings=root.findViewById(R.id.User1_rating);
-            User2=root.findViewById(R.id.User2);
-            User2Review=root.findViewById(R.id.User2_review);
-            User2Ratings=root.findViewById(R.id.user2_rating);
-            Menu1.setText(restaurant.getTopMenu1());
-            Log.d("RestaurantData", "Top Menu1: " + restaurant.getTopMenu1());
-            Menu2.setText(restaurant.getTopMenu2());
-            Menu3.setText(restaurant.getTopMenu3());
-            Menu4.setText(restaurant.getTopMenu4());
-            Ratings.setRating((float) restaurant.getRatings().doubleValue());
-            foodRating.setRating((float) restaurant.getFoodRating().doubleValue());
-            Log.d("RestaurantData", "foodrating: " + restaurant.getFoodRating());
-            serviceRating.setRating((float) restaurant.getServiceRating().doubleValue());
-            atmosphereRating.setRating((float) restaurant.getAmbienceRating().doubleValue());
-            User1.setText(restaurant.getUserId1());
-            User1Review.setText(restaurant.getReview1());
-            User1Ratings.setRating((float) restaurant.getReviewRating1().doubleValue());
-            User2.setText(restaurant.getUserId2());
-            User2Review.setText(restaurant.getReview2());
-            User2Ratings.setRating((float) restaurant.getReviewRating2().doubleValue());
+                displayRestaurantDetails(restaurant);
 
-            restaurantProfileImage = root.findViewById(R.id.restaurantProfileImage);
-            Picasso.get()
-                    .load(restaurant.getImgMainURL()) // Assuming `getImageUrl()` is a method in your `Restaurant` class
-                    .into(restaurantProfileImage);
+            }
+
+            else {
+                String restaurantId = arguments.getString("restaurantId");
+                if (restaurantId != null) {
+                    // Fetch the restaurant details using the provided ID
+                    observeSpecificRestaurant(restaurantId);
+                }
+
+            }
 
 
         }
@@ -146,6 +131,79 @@ public class RestaurantFragmentActivity extends Fragment implements OnMapReadyCa
 
         return root;
     }
+
+    public void initialiseUI(View root){
+        restaurantNameTextView = root.findViewById(R.id.textViewRestaurantName);
+        Ratings = root.findViewById(R.id.ratingRest);
+        Menu1 = root.findViewById(R.id.Menu1);
+        Menu2 = root.findViewById(R.id.Menu2);
+        Menu3 = root.findViewById(R.id.Menu3);
+        Menu4 = root.findViewById(R.id.Menu4);
+        foodRating = root.findViewById(R.id.foodRatingBar);
+        serviceRating = root.findViewById(R.id.serivceRatingBar);
+        atmosphereRating = root.findViewById(R.id.atmosphereRatingBar);
+        User1 = root.findViewById(R.id.User1);
+        User1Review = root.findViewById(R.id.User1_review);
+        User1Ratings = root.findViewById(R.id.User1_rating);
+        User2 = root.findViewById(R.id.User2);
+        User2Review = root.findViewById(R.id.User2_review);
+        User2Ratings = root.findViewById(R.id.user2_rating);
+        restaurantProfileImage = root.findViewById(R.id.restaurantProfileImage);
+    }
+
+    public void displayRestaurantDetails(Restaurant restaurant) {
+        if (restaurantNameTextView != null && Ratings != null && Menu1 != null) {
+            restaurantNameTextView.setText(restaurant.getName());
+            Menu1.setText(restaurant.getTopMenu1());
+            Menu2.setText(restaurant.getTopMenu2());
+            Menu3.setText(restaurant.getTopMenu3());
+            Menu4.setText(restaurant.getTopMenu4());
+            Ratings.setRating((float) restaurant.getRatings().doubleValue());
+            foodRating.setRating((float) restaurant.getFoodRating().doubleValue());
+            serviceRating.setRating((float) restaurant.getServiceRating().doubleValue());
+            atmosphereRating.setRating((float) restaurant.getAmbienceRating().doubleValue());
+            User1.setText(restaurant.getUserId1());
+            User1Review.setText(restaurant.getReview1());
+            User1Ratings.setRating((float) restaurant.getReviewRating1().doubleValue());
+            User2.setText(restaurant.getUserId2());
+            User2Review.setText(restaurant.getReview2());
+            User2Ratings.setRating((float) restaurant.getReviewRating2().doubleValue());
+            Picasso.get()
+                    .load(restaurant.getImgMainURL())
+                    .resize(1024, 768) // You can adjust these values as needed
+                    .centerInside()
+                    .into(restaurantProfileImage);
+            Log.e("RestaurantFragmentActivity", "UI components successful.");
+        } else {
+            Log.e("RestaurantFragmentActivity", "UI components are not initialized.");
+        }
+    }
+
+    //    private void observeRestaurantLiveData() {
+//        viewModel.getSpecificRestaurantLiveData().observe(getViewLifecycleOwner(), fetchedRestaurant -> {
+//            if (fetchedRestaurant != null) {
+//                this.restaurant = fetchedRestaurant;
+//                displayRestaurantDetails(fetchedRestaurant);
+//            } else {
+//                Log.e("RestaurantFragmentActivity", "No restaurant details available.");
+//                // Optionally show an error message or a placeholder
+//            }
+//        });
+//    }
+public void observeSpecificRestaurant(String restaurantId) {
+    viewModel.getRestaurantById(restaurantId).observe(getViewLifecycleOwner(), new Observer<Restaurant>() {
+        @Override
+        public void onChanged(Restaurant restaurant) {
+            if (restaurant != null) {
+                displayRestaurantDetails(restaurant);
+            } else {
+                Log.e("RestaurantFragmentActivity", "No restaurant details available.");
+                // Optionally show an error message or a placeholder
+            }
+        }
+    });
+}
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -225,5 +283,21 @@ public class RestaurantFragmentActivity extends Fragment implements OnMapReadyCa
         super.onDestroyView();
         binding = null;
     }
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        viewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
+//    }
+//    private void fetchAndDisplayRestaurant(String restaurantId) {
+//        // Assuming you have a method to fetch a Restaurant by ID
+//        viewModel.fetchRestaurantById(restaurantId).observe(getViewLifecycleOwner(), fetchedRestaurant -> {
+//            if (fetchedRestaurant != null) {
+//                this.restaurant = fetchedRestaurant;
+//                displayRestaurantDetails(fetchedRestaurant);
+//            } else {
+//                Log.e("RestaurantFragment", "Failed to load restaurant details for ID: " + restaurantId);
+//            }
+//        });
+//    }
 
 }
