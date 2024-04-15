@@ -16,7 +16,10 @@ import dagger.Provides;
 import io.reactivex.schedulers.Schedulers;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Singleton;
-
+/**
+ * The `YelpApiModule` class provides a method to create and configure a `YelpService` instance using
+ * Retrofit for making API calls to the Yelp API.
+ */
 @InstallIn(SingletonComponent.class)
 @Module
 public class YelpApiModule {

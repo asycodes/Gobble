@@ -1,3 +1,7 @@
+/**
+ * The `LocationSearchResponse` class represents a response containing a list of locations with details
+ * such as name, distance, bearing, and address.
+ */
 package com.sutd.t4app.data.model.apiresponses;
 import java.util.List;
 

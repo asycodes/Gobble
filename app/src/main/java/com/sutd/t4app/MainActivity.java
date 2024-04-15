@@ -24,6 +24,10 @@ import android.util.Log;
 
 
 import javax.inject.Inject;
+/**
+ * The MainActivity class in this Android app sets up navigation using BottomNavigationView and
+ * NavController.
+ */
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
@@ -37,10 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_reviews, R.id.navigation_profile, R.id.navigation_map, R.id.navigation_restaurant, R.id.navigation_filter, R.id.navigation_questions)
                 .build();
@@ -48,7 +48,38 @@ public class MainActivity extends AppCompatActivity {
         // NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        //handling home button
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+//        navView.setOnItemSelectedListener(item -> {
+//            int itemId = item.getItemId();
+//            if (itemId == R.id.navigation_home) {
+//                Log.d("NavigationView", "Item selected: " + item.getTitle());
+//                if (navController.getCurrentDestination().getId() != R.id.navigation_home) {
+//                    navController.navigate(R.id.navigation_home);
+//                }
+//                return true;
+//            } else if (itemId == R.id.navigation_map) {
+//                if (navController.getCurrentDestination().getId() != R.id.navigation_map) {
+//                    navController.navigate(R.id.navigation_map);
+//                }
+//                return true;
+//            } else {
+//                return NavigationUI.onNavDestinationSelected(item, navController);
+//            }
+//        });
+        navView.setOnItemSelectedListener(item -> {
+            // Pop the back stack to the first fragment to clear previous navigation state
+            // The first argument false will ensure the home fragment itself is not popped
+            navController.popBackStack(navController.getGraph().getStartDestination(), false);
+
+            // Navigate to the selected item ID
+            navController.navigate(item.getItemId());
+            return true;
+        });
+
+
+
+
+
     }
 
     @Override

@@ -66,23 +66,26 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/editTextText2"
+            <TextView
+                android:id="@+id/SettingsName"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="40dp"
                 android:ems="10"
                 android:inputType="text"
                 android:text="Adelaine Suhendro" />
 
-            <EditText
-                android:id="@+id/editTextPhone"
+            <TextView
+                android:id="@+id/SettingsEmail"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:ems="10"
-                android:inputType="phone" />
+                android:inputType="text"
+                android:textSize="12dp"
+                android:text="angie@gmail.com" />
+
 
         </LinearLayout>
 
@@ -110,19 +113,6 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/activityDuration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="Last 30 days: 17 Jan - 18 Feb"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
 
     </LinearLayout>
 
@@ -161,6 +151,7 @@
                     android:src="@drawable/ic_reviews" />
 
                 <TextView
+                    android:id="@+id/reviewCountTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="12dp"
@@ -180,54 +171,14 @@
 
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="110dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="8dp"
-            android:background="@color/primary"
-            android:elevation="20dp"
-            app:cardBackgroundColor="@color/lightOrange"
-            app:cardCornerRadius="20dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:paddingTop="12dp"
-                    android:src="@drawable/ic_posts" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="12dp"
-                    android:text="2"
-                    android:textColor="@color/black"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="12dp"
-                    android:text="Posts Created"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="110dp"
             android:layout_height="match_parent"
-            android:layout_marginRight="8dp"
             android:background="@color/primary"
             android:elevation="20dp"
+            android:layout_marginRight="8dp"
             app:cardBackgroundColor="@color/lightOrange"
             app:cardCornerRadius="20dp">
 
@@ -276,8 +227,9 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:layout_marginLeft="15dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.052"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activityTilesLayout" />
 
@@ -302,24 +254,69 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginRight="20dp"
-                android:adjustViewBounds="true"
+                android:src="@drawable/ic_profile"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_profile" />
+                android:adjustViewBounds="true"
+                android:layout_marginTop="16dp"/>
 
             <!-- Button with text and properties -->
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/transparent"
                 android:drawablePadding="8dp"
                 android:gravity="start|center_vertical"
                 android:paddingStart="16dp"
                 android:text="Edit Profile"
+                android:textColor="@android:color/black"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="10dp"
                 android:textAllCaps="false"
-                android:textColor="@android:color/black" />
+                android:id="@+id/editprofilebutton"/>
+
+        </LinearLayout>
+        <!-- Or Separator -->
+        <View
+            android:id="@+id/orSeparatorView5"
+            android:layout_width="380dp"
+            android:layout_gravity="center"
+            android:layout_height="1dp"
+            android:background="@color/darkGrey"
+            android:layout_marginTop="2dp"
+            app:layout_constraintTop_toBottomOf="@id/signInButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+        <LinearLayout
+            android:id="@+id/editProfileQuestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/questions"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:layout_marginTop="16dp"/>
+
+            <!-- Button with text and properties -->
+            <Button
+                android:id="@+id/ProfileQuestions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
+                android:gravity="start|center_vertical"
+                android:paddingStart="16dp"
+                android:text="Edit Preferences"
+                android:textColor="@android:color/black"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="10dp"
+                android:textAllCaps="false"/>
 
         </LinearLayout>
 
@@ -327,62 +324,18 @@
         <View
             android:id="@+id/orSeparatorView3"
             android:layout_width="380dp"
-            android:layout_height="1dp"
             android:layout_gravity="center"
-            android:layout_marginTop="2dp"
+            android:layout_height="1dp"
             android:background="@color/darkGrey"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="2dp"
+            app:layout_constraintTop_toBottomOf="@id/signInButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/signInButton" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
-
-        <LinearLayout
-            android:id="@+id/SavedPlaces"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="20dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/saved_black" />
-
-            <!-- Button with text and properties -->
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/transparent"
-                android:drawablePadding="8dp"
-                android:gravity="start|center_vertical"
-                android:paddingStart="16dp"
-                android:text="Saved Places"
-                android:textAllCaps="false"
-                android:textColor="@android:color/black" />
-
-        </LinearLayout>
 
         <!-- Or Separator -->
-        <View
-            android:id="@+id/orSeparatorView4"
-            android:layout_width="380dp"
-            android:layout_height="1dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="2dp"
-            android:background="@color/darkGrey"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/signInButton" />
 
         <LinearLayout
-            android:id="@+id/Settings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -393,24 +346,25 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginRight="20dp"
-                android:adjustViewBounds="true"
+                android:src="@drawable/settings"
                 android:scaleType="fitCenter"
-                android:src="@drawable/settings" />
+                android:adjustViewBounds="true"
+                android:layout_marginTop="16dp"/>
 
             <!-- Button with text and properties -->
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/transparent"
                 android:drawablePadding="8dp"
                 android:gravity="start|center_vertical"
                 android:paddingStart="16dp"
                 android:text="Settings"
+                android:textColor="@android:color/black"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="10dp"
                 android:textAllCaps="false"
-                android:textColor="@android:color/black" />
+                android:id="@+id/Settings"/>
 
         </LinearLayout>
 
@@ -418,13 +372,13 @@
         <View
             android:id="@+id/orSeparatorView"
             android:layout_width="380dp"
-            android:layout_height="1dp"
             android:layout_gravity="center"
-            android:layout_marginTop="2dp"
+            android:layout_height="1dp"
             android:background="@color/darkGrey"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="2dp"
+            app:layout_constraintTop_toBottomOf="@id/signInButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/signInButton" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <LinearLayout
 
@@ -438,25 +392,25 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginRight="20dp"
-                android:adjustViewBounds="true"
+                android:src="@drawable/outline_arrow_outward_24"
                 android:scaleType="fitCenter"
-                android:src="@drawable/outline_arrow_outward_24" />
+                android:adjustViewBounds="true"
+                android:layout_marginTop="16dp"/>
 
             <!-- Button with text and properties -->
             <Button
                 android:id="@+id/Logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/transparent"
                 android:drawablePadding="8dp"
                 android:gravity="start|center_vertical"
                 android:paddingStart="16dp"
                 android:text="Log out"
-                android:textAllCaps="false"
-                android:textColor="@android:color/holo_orange_dark" />
+                android:textColor="@android:color/holo_orange_dark"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="10dp"
+                android:textAllCaps="false"/>
 
         </LinearLayout>
 
@@ -464,13 +418,14 @@
         <View
             android:id="@+id/orSeparatorView2"
             android:layout_width="380dp"
-            android:layout_height="1dp"
             android:layout_gravity="center"
-            android:layout_marginTop="2dp"
+            android:layout_height="1dp"
             android:background="@color/darkGrey"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="2dp"
+            app:layout_constraintTop_toBottomOf="@id/signInButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/signInButton" />
+            app:layout_constraintEnd_toEndOf="parent" />
+
 
 
     </LinearLayout>

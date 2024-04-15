@@ -1,5 +1,8 @@
 package com.sutd.t4app.data.model;
-
+/**
+ * The UserProfile class represents a user profile with various attributes and corresponding getters
+ * and setters.
+ */
 import org.bson.types.ObjectId;
 
 import java.util.List;
@@ -11,6 +14,7 @@ import io.realm.annotations.Required;
 
 public class UserProfile extends RealmObject {
     @PrimaryKey @Required private ObjectId _id;
+    private int reviewCount;
 
     private String userId;
     private String username;
@@ -37,12 +41,14 @@ public class UserProfile extends RealmObject {
     // Default constructor
     public UserProfile() {
         this._id= new ObjectId();
-        this.rep = 0;
+        this.reviewCount=0; //initialise to zero for new users
     }
     public Integer getRep(){return this.rep;}
     public void setRep(Integer newrep){this.rep = newrep;}
 
-    //     Getters and Setters
+//     Getters and Setters
+    public int getReviewCount(){return reviewCount;}
+    public void setReviewCount(int reviewCount){this.reviewCount=reviewCount;}
     public ObjectId get_id() {
         return _id;
     }

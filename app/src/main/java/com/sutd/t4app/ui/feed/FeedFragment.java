@@ -9,7 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.sutd.t4app.databinding.FeedPageBinding;
-
+/**
+ * The FeedFragment class is a fragment in an Android app that inflates a layout using data binding.
+ */
 
 public class FeedFragment extends Fragment {
     private FeedPageBinding binding;

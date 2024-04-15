@@ -1,5 +1,7 @@
 package com.sutd.t4app.di;
-
+/**
+ * The AppModule class provides a singleton instance of a Realm App with a specific configuration.
+ */
 import android.text.TextUtils;
 import android.util.Log;
 

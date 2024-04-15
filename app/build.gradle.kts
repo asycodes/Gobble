@@ -73,6 +73,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.navigation:navigation-fragment:2.7.7")
     implementation("androidx.navigation:navigation-ui:2.7.7")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
 
     // Dagger Hilt for Data injection
     implementation("com.google.dagger:dagger:2.51")
@@ -112,6 +113,7 @@ dependencies {
 
     // Captcha
     implementation("com.google.android.recaptcha:recaptcha:18.5.0-beta02")
+    implementation("androidx.browser:browser:1.8.0")
 
 //    implementation("androidx.activity:activity-ktx:1.8.2")
 //    implementation("androidx.fragment:fragment-ktx:1.8.2")

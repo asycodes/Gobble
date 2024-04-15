@@ -1,5 +1,11 @@
 package com.sutd.t4app.ui.home;
+/*
+ * The `RestaurantExploreAdapter` class is a RecyclerView adapter used to display a list of restaurants
+ * with their details and images in an Android app.
+ */
+import static android.app.PendingIntent.getActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,8 +22,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sutd.t4app.R;
 import com.sutd.t4app.data.model.Restaurant;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.squareup.picasso.Picasso;
+import com.sutd.t4app.data.model.TikTok;
 
 public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExploreAdapter.ViewHolder>{
 
@@ -86,11 +94,12 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
         return restaurantList != null ? restaurantList.size() : 0;
     }
 
-    public void updateData(List<Restaurant> newRestaurantList) {
-        Log.d("AdapterUpdate", "Updating data with " + newRestaurantList.size() + " restaurants.");
-        this.restaurantList = newRestaurantList;
-        notifyDataSetChanged();
-    }
+public void updateData(List<Restaurant> newRestaurants) {
+    restaurantList.clear();  // Clear existing data
+    restaurantList.addAll(newRestaurants);  // Add new data
+    notifyDataSetChanged();  // Notify the RecyclerView of data change
+}
+
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView textViewName;
         TextView textViewRestaurantCuisine;

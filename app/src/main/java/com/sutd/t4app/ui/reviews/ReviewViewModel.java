@@ -7,7 +7,10 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
+/**
+ * The ReviewViewModel class in Java contains LiveData objects for user's feedback on food, service, and atmosphere
+ * ratings with getter and setter methods.
+ */
 public class ReviewViewModel extends ViewModel {
 
     private MutableLiveData<Integer> foodRating = new MutableLiveData<>(3);

@@ -1,5 +1,8 @@
 package com.sutd.t4app.ui.ProfileQuestions;
-
+/**
+ * The `QuestionFragment` class in the Android app handles user profile creation and storage using
+ * Realm database.
+ */
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -16,11 +20,14 @@ import com.sutd.t4app.LoginSignUpActivity;
 import com.sutd.t4app.MainActivity;
 import com.sutd.t4app.R;
 import com.sutd.t4app.data.model.UserProfile;
+import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.databinding.QuestionsBinding;
 import com.sutd.t4app.utility.RealmUtility;
-
+import com.sutd.t4app.data.model.Restaurant;
+import org.bson.types.ObjectId;
 import java.util.ArrayList;
 import java.util.List;
+import com.sutd.t4app.ui.home.HomeFragmentViewModel;
 
 import javax.inject.Inject;
 
@@ -30,7 +37,10 @@ import io.realm.RealmChangeListener;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.mongodb.App;
+import io.realm.mongodb.Credentials;
 import io.realm.mongodb.User;
+import io.realm.mongodb.sync.MutableSubscriptionSet;
+import io.realm.mongodb.sync.Subscription;
 import io.realm.mongodb.sync.SyncConfiguration;
 
 

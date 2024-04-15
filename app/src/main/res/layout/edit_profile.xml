@@ -40,22 +40,12 @@
                 android:id="@+id/firstNameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="First Name"
+                android:hint="Username (FirstName LastName)"
                 app:layout_constraintTop_toBottomOf="@id/signUpTitleTextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="24dp"/>
 
-            <!-- Last Name -->
-            <EditText
-                android:id="@+id/lastNameEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Last Name"
-                app:layout_constraintTop_toBottomOf="@id/firstNameEditText"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp"/>
 
             <!-- Email Address -->
             <EditText
@@ -81,92 +71,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="16dp"/>
 
-            <!-- Location -->
-            <EditText
-                android:id="@+id/locationEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Location"
-                app:layout_constraintTop_toBottomOf="@id/passwordEditText"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp"/>
-
-            <!-- Profile Picture -->
-            <Button
-                android:id="@+id/changePhotoButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Change Profile Picture"
-                app:layout_constraintTop_toBottomOf="@id/locationEditText"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="16dp"/>
-
-            <!-- Date of Birth -->
-            <EditText
-                android:id="@+id/dateOfBirthEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Date of Birth (YYYY-MM-DD)"
-                android:inputType="date"
-                app:layout_constraintTop_toBottomOf="@id/changePhotoButton"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp"/>
-
-            <!-- Gender -->
-            <RadioGroup
-                android:id="@+id/genderRadioGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/dateOfBirthEditText"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp">
-
-                <RadioButton
-                    android:id="@+id/radioMale"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Male" />
-
-                <RadioButton
-                    android:id="@+id/radioFemale"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Female" />
-
-                <RadioButton
-                    android:id="@+id/radioOther"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Other" />
-
-            </RadioGroup>
-
-            <!-- Phone Number -->
-            <EditText
-                android:id="@+id/phoneNumberEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Phone Number"
-                android:inputType="phone"
-                app:layout_constraintTop_toBottomOf="@id/genderRadioGroup"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp"/>
-
-            <!-- Bio/About Me -->
-            <EditText
-                android:id="@+id/bioEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Bio/About Me"
-                app:layout_constraintTop_toBottomOf="@id/phoneNumberEditText"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp"/>
 
             <!-- Update Button -->
             <Button
@@ -177,7 +81,6 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:background="@color/primary"
-                app:layout_constraintTop_toBottomOf="@id/bioEditText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="24dp"/>
