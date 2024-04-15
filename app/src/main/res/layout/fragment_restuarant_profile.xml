@@ -448,7 +448,8 @@
                         android:layout_height="wrap_content"
                         android:text="Reviews"
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:textStyle="bold"
+                        android:textSize="20sp" />
 
                 </FrameLayout>
 
@@ -478,6 +479,6 @@
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
