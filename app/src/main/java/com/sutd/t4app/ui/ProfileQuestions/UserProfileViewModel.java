@@ -3,6 +3,8 @@ package com.sutd.t4app.ui.ProfileQuestions;
  * The UserProfileViewModel class manages the user profile data using Realm database and provides
  * LiveData for observing changes in the user profile.
  */
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -55,7 +57,7 @@ public class UserProfileViewModel extends ViewModel {
 
 
     private void fetchUserProfiles() {
-        String currentUserId="bshfbefnwoef212100001";
+        String currentUserId="bshfbefnwoef2121100101";
         if (realm != null && currentUserId != null) {
             UserProfile userProfile = realm.where(UserProfile.class).equalTo("userId", currentUserId)
                     .findFirst();
@@ -70,6 +72,22 @@ public class UserProfileViewModel extends ViewModel {
                 }
         }
     }
+    public void updateUserProfile(UserProfile userProfile) {
+        if (realm != null) {
+            realm.executeTransactionAsync(r -> {
+                r.insertOrUpdate(userProfile);
+            }, () -> {
+                // After successful update, fetch user profile again to update LiveData
+                fetchUserProfiles();  // This should trigger LiveData observers
+                Log.d("UserProfileVM", "User profile updated successfully.");
+            }, error -> {
+                Log.e("UserProfileVM", "Error updating user profile.", error);
+            });
+        }
+    }
+
+
+
 
     public LiveData<UserProfile> getUserProfilesLiveData() {
         return userProfilesLiveData;
@@ -80,5 +98,25 @@ public class UserProfileViewModel extends ViewModel {
         super.onCleared();
         if (realm != null) {
             realm.close();}
+    }
+
+    public void deleteUserProfile() {
+        UserProfile currentUser = userProfilesLiveData.getValue();
+        if (currentUser != null && realm != null) {
+            realm.executeTransactionAsync(r -> {
+                UserProfile userProfile = r.where(UserProfile.class).equalTo("userId", currentUser.getUserId()).findFirst();
+                if (userProfile != null) {
+                    userProfile.deleteFromRealm();
+                    Log.d("UserProfileVM", "User profile deleted successfully.");
+                }
+            }, () -> {
+                userProfilesLiveData.postValue(null); // Update LiveData after deletion
+                Log.d("ViewModel", "LiveData updated after deletion.");
+            }, error -> {
+                Log.e("UserProfileVM", "Error deleting user profile", error);
+            });
+        } else {
+            Log.e("UserProfileVM", "No user profile loaded or Realm instance is null.");
+        }
     }
 }

@@ -90,5 +90,9 @@
         android:id="@+id/tosettings"
         app:destination="@id/nav_to_settings"/>
 
+    <action
+        android:id="@+id/backtoprofile"
+        app:destination="@id/navigation_profile"/>
+
 
 </navigation>

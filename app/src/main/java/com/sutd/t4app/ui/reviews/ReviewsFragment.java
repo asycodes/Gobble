@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,10 +28,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.sutd.t4app.R;
 import com.sutd.t4app.databinding.FragmentDashboardBinding;
+import com.sutd.t4app.ui.ProfileQuestions.UserProfile;
+import com.sutd.t4app.ui.ProfileQuestions.UserProfileViewModel;
+
 import java.io.IOException;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
 /**
  * The ReviewsFragment class in an Android app allows users to submit reviews with ratings and images.
  */
+@AndroidEntryPoint
 public class ReviewsFragment extends Fragment {
 
     private ReviewViewModel viewModel;
@@ -45,6 +53,7 @@ public class ReviewsFragment extends Fragment {
     private ImageView selectedImage;
     private EditText reviews;
     private ActivityResultLauncher<String> imagePickerLauncher;
+    private UserProfileViewModel UserViewModel;
 
     public ReviewsFragment() {
         // Required empty public constructor
@@ -56,6 +65,7 @@ public class ReviewsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         viewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
+        UserViewModel= new ViewModelProvider(this).get(UserProfileViewModel.class);
 
         uploadImageButton=root.findViewById(R.id.uploadimage);
         uploadImageButton.setOnClickListener(v -> openImageChooser());
@@ -163,7 +173,23 @@ public class ReviewsFragment extends Fragment {
         // Get review text
         String reviewText = reviews.getText().toString().trim();
 
-        // TODO: 23/3/24 store and process averagerating, imageURI and reviews to save to database 
+        // TODO: 23/3/24 store and process averagerating, imageURI and reviews to save to database
+        // Increment the user's review count
+        UserViewModel.getUserProfilesLiveData().observe(getViewLifecycleOwner(), userProfile -> {
+            if (userProfile != null) {
+                int newReviewCount = userProfile.getReviewCount() + 1;
+                userProfile.setReviewCount(newReviewCount);
+                UserViewModel.updateUserProfile(userProfile);  // This should save the updated profile to Realm
+
+                // Log the updated review count
+                Log.d("ReviewFragment", "Review count updated: " + newReviewCount);
+            } else {
+                // Handle the case where userProfile is null
+                Log.e("ReviewFragment", "User profile is null");
+            }
+        });
+
+
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

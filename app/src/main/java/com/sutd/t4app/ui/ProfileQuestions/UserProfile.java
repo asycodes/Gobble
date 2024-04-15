@@ -14,6 +14,7 @@ import io.realm.annotations.Required;
 
 public class UserProfile extends RealmObject {
     @PrimaryKey @Required private ObjectId _id;
+    private int reviewCount;
 
     private String userId;
     private String username;
@@ -44,6 +45,8 @@ public class UserProfile extends RealmObject {
     }
 
 //     Getters and Setters
+    public int getReviewCount(){return reviewCount;}
+    public void setReviewCount(int reviewCount){this.reviewCount=reviewCount;}
     public ObjectId get_id() {
         return _id;
     }

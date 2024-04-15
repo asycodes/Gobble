@@ -27,6 +27,7 @@ import com.sutd.t4app.MainActivity;
 import com.sutd.t4app.R;
 import com.sutd.t4app.SignUpActivity;
 import com.sutd.t4app.databinding.FragmentNotificationsBinding;
+import com.sutd.t4app.ui.ProfileQuestions.UserProfileViewModel;
 
 import java.util.Set;
 
@@ -46,6 +47,10 @@ public class ProfileFragment extends Fragment {
     private Button questions;
     private Button EditProfile;
     private Button Settings;
+    private TextView reviewCountTextView;
+    private UserProfileViewModel viewModel;
+    private TextView NameTextView;
+    private TextView EmailTextView;
 
 
 
@@ -72,6 +77,23 @@ public class ProfileFragment extends Fragment {
                 signOut();
             }
         });
+        reviewCountTextView = root.findViewById(R.id.reviewCountTextView);
+        NameTextView=root.findViewById(R.id.SettingsName);
+        EmailTextView=root.findViewById(R.id.SettingsEmail);
+        viewModel= new ViewModelProvider(this).get(UserProfileViewModel.class);
+
+//        String currentUserId = "bshfbefnwoef2121100101";
+        viewModel.getUserProfilesLiveData().observe(getViewLifecycleOwner(), userProfile -> {
+            if (userProfile != null) {
+                reviewCountTextView.setText(String.valueOf(userProfile.getReviewCount()));
+                NameTextView.setText(userProfile.getUsername());
+                EmailTextView.setText(userProfile.getEmail());
+
+            }
+        });
+
+
+
 
         questions=root.findViewById(R.id.ProfileQuestions);
         questions.setOnClickListener(new View.OnClickListener() {
@@ -122,4 +144,11 @@ public class ProfileFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Force refresh user profile
+        viewModel.getUserProfilesLiveData();  // Assuming you make this method public in ViewModel
+    }
+
 }
