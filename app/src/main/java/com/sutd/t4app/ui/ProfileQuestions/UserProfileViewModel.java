@@ -48,7 +48,7 @@ public class UserProfileViewModel extends ViewModel {
 
 
     private void fetchUserProfiles() {
-        String currentUserId="bshfbefnwoef212100001";
+        String currentUserId=realmApp.currentUser().getId();
         if (realm != null && currentUserId != null) {
             UserProfile userProfile = realm.where(UserProfile.class).equalTo("userId", currentUserId)
                     .findFirst();

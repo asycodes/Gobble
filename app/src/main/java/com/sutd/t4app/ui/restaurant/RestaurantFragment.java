@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.squareup.picasso.Picasso;
 import com.sutd.t4app.R;
 import com.sutd.t4app.data.model.Restaurant;
+import com.sutd.t4app.data.model.Review;
 import com.sutd.t4app.databinding.FragmentDashboardBinding;
 import com.sutd.t4app.databinding.FragmentRestuarantProfileBinding;
 import com.sutd.t4app.ui.home.HomeFragmentViewModel;
@@ -29,6 +31,9 @@ import com.sutd.t4app.ui.home.RestaurantExploreAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class RestaurantFragment extends Fragment {
     private FragmentRestuarantProfileBinding binding;
     private TextView textViewRestaurantLocation;
@@ -69,31 +74,8 @@ public class RestaurantFragment extends Fragment {
         String value = null;
         if (arguments != null) {
             restaurant = arguments.getParcelable("restaurant");
-            viewModel.setcurrRes(restaurant);
-            viewModel.getreviewsLiveData().observe(getViewLifecycleOwner(), reviews -> {
-                // Update the adapter with the list of restaurants
-                Log.d("HomeFragment", "Number of restaurants received: " + reviews.size());
-
-                //take the first two of restaurants
-                if (reviews.size() >= 1) {
-                    adapter.updateData(reviews); // See note below about adapter
-                }
-                else {
-                    // TODO: meaning empty, SHOW EMPTY UI
-                }
-
-            });
             TextView restaurantNameTextView = root.findViewById(R.id.textViewRestaurantName);
             //TextView restaurantNameTextView = root.findViewById(R.id.restaurantName);
-            // if the tripadId is empty we find it first
-            // likewise for yelpId
-            // we run the find id using lat, lng and name
-            // pick the first result then run the find reviews
-            // once we have gained the reviews, we insert into the review collection if it doesnt exist
-            // show in- house reviews first
-
-
-/*
 
             restaurantNameTextView.setText(restaurant.getName());
             Log.d("RestaurantData", "Restaurant name: " + restaurant.getName());
@@ -115,45 +97,38 @@ public class RestaurantFragment extends Fragment {
             Log.d("RestaurantData", "foodrating: " + restaurant.getFoodRating());
             serviceRating.setRating((float) restaurant.getServiceRating().doubleValue());
             atmosphereRating.setRating((float) restaurant.getAmbienceRating().doubleValue());
-            User1.setText(restaurant.getUserId1());
-            User1Review.setText(restaurant.getReview1());
-            User1Ratings.setRating((float) restaurant.getReviewRating1().doubleValue());
-            User2.setText(restaurant.getUserId2());
-            User2Review.setText(restaurant.getReview2());
-            User2Ratings.setRating((float) restaurant.getReviewRating2().doubleValue());
-
             restaurantProfileImage = root.findViewById(R.id.restaurantProfileImage);
             Picasso.get()
                     .load(restaurant.getImgMainURL()) // Assuming `getImageUrl()` is a method in your `Restaurant` class
                     .into(restaurantProfileImage);
-*/
+            viewModel.setcurrRes(restaurant);
 
 
         }
-        Button btnCompare = root.findViewById(R.id.compareButton);
-
-        btnCompare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("restaurant", restaurant);
-                // TODO: Add your code here to be executed when the button is clicked
-                Navigation.findNavController(v).navigate(R.id.compare_fragment, bundle);
-            }
-        });
-        //update restaurantName textview values with value from restaurant.getName()
-
-//        CardView fuelPlus1Card= root.findViewById(R.id.FuelPlus1);
-//
-//        fuelPlus1Card.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Navigation.findNavController(v).navigate(R.id.torestaurantfragment);
-//            }
-//        });
 
 
         return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        viewModel.getReviewsLiveData().observe(getViewLifecycleOwner(), reviews -> {
+            if (reviews != null && !reviews.isEmpty()) {
+                adapter.updateData(reviews);
+                Log.d("LiveData Update", "Adapter updated with new data.");
+            } else {
+                Log.d("LiveData Update", "Received null or empty data.");
+                // TODO: Handle empty or null data appropriately.
+            }
+        });
+
+        Button btnCompare = view.findViewById(R.id.compareButton);
+        btnCompare.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("restaurant", restaurant);
+            Navigation.findNavController(v).navigate(R.id.compare_fragment, bundle);
+        });
     }
 
     @Override

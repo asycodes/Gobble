@@ -47,42 +47,64 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Vi
             Review review = reviewList.get(position);
             Log.d("AdapterDebug", "Binding restaurant at position " + position + ": " + review.getReview());
 
-            holder.Username.setText(review.getUsername());
-            Log.d("DEBUGGING"," resName " + holder.Username.getText() );
+            if ("In-House".equals(review.getSource())){
+                holder.Username.setText(review.getUsername());
+                Log.d("DEBUGGING"," resName " + holder.Username.getText() );
 
-            if(holder.UserReview != null) {
+                if(holder.UserReview != null) {
+                    holder.UserReview.setText(review.getReview());
+                    Log.d("DEBUGGING"," resLandmark " + holder.UserReview.getText() );
+                }
+                if(holder.UserRatings != null) {
+                    holder.UserRatings.setRating((float) review.getRating().doubleValue());
+                    Log.d("DEBUGGING", " resCuisine " + holder.UserRatings.getRating());
+                }
+
+                if(holder.ReviewLikes != null){
+                    holder.ReviewLikes.setText(review.getLikes().toString());
+
+                }
+                Picasso.get().setLoggingEnabled(true);
+
+
+                if(review.getUserImgLink()!= ""){
+                    Picasso.get()
+                            .load(review.getUserImgLink()) // Assuming `getImageUrl()` is a method in your `Review` class
+                            .into(holder.imageViewUser);
+                    holder.imageViewUser.setVisibility(View.VISIBLE);
+                }
+
+                if(review.getImgPostLink()!= ""){
+                    Picasso.get()
+                            .load(review.getImgPostLink()) // Assuming `getImageUrl()` is a method in your `Review` class
+                            .into(holder.postImageView);
+                    holder.postImageView.setVisibility(View.VISIBLE);
+                }else{
+                    // make the postImageView invisible
+                    holder.postImageView.setVisibility(View.GONE);
+
+                }
+            }
+            if ("Yelp".equals(review.getSource())){
+                holder.Username.setText("Yelp User");
                 holder.UserReview.setText(review.getReview());
-                Log.d("DEBUGGING"," resLandmark " + holder.UserReview.getText() );
-            }
-            if(holder.UserRatings != null) {
-                holder.UserRatings.setRating((float) review.getRating());
-                Log.d("DEBUGGING", " resCuisine " + holder.UserRatings.getRating());
-            }
-
-            if(holder.ReviewLikes != null){
-                holder.ReviewLikes.setText(review.getLikes());
-                Log.d("DEBUGGING"," resLocation " + holder.ReviewLikes.getText() );
-            }
-            Picasso.get().setLoggingEnabled(true);
-
-
-            if(review.getUser_img_link()!= ""){
-                Picasso.get()
-                        .load(review.getUser_img_link()) // Assuming `getImageUrl()` is a method in your `Review` class
-                        .into(holder.imageViewUser);
-                holder.imageViewUser.setVisibility(View.VISIBLE);
-            }
-
-            if(review.getImg_post_link()!= ""){
-                Picasso.get()
-                        .load(review.getImg_post_link()) // Assuming `getImageUrl()` is a method in your `Review` class
-                        .into(holder.postImageView);
-                holder.postImageView.setVisibility(View.VISIBLE);
-            }else{
-                // make the postImageView invisible
+                holder.UserRatings.setRating((float) review.getRating().doubleValue());
+                holder.imageViewUser.setImageResource(R.drawable.yelpemblem);
                 holder.postImageView.setVisibility(View.GONE);
-
+                holder.ReviewLikes.setVisibility(View.GONE);
+                holder.Likeicon.setVisibility(View.GONE);
             }
+            if ("TripAdvisor".equals(review.getSource())){
+                holder.Username.setText("TripAdvisor User");
+                holder.UserReview.setText(review.getReview());
+                holder.UserRatings.setRating((float) review.getRating().doubleValue());
+                holder.imageViewUser.setImageResource(R.drawable.tripadvisor_icon_logo);
+                holder.postImageView.setVisibility(View.GONE);
+                holder.ReviewLikes.setVisibility(View.GONE);
+                holder.Likeicon.setVisibility(View.GONE);
+            }
+
+
         }
 
     }
@@ -91,9 +113,9 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Vi
         return reviewList != null ? reviewList.size() : 0;
     }
 
-    public void updateData(List<Review> newReviewlist) {
-        Log.d("AdapterUpdate", "Updating data with " + newReviewlist.size() + " restaurants.");
-        this.reviewList = newReviewlist;
+    public void updateData(List<Review> newReviews) {
+        this.reviewList.clear();
+        this.reviewList.addAll(newReviews);
         notifyDataSetChanged();
     }
 
@@ -104,6 +126,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Vi
         ImageView imageViewUser;
         TextView ReviewLikes;
         ImageView postImageView;
+        ImageView Likeicon;
 
 
 
@@ -117,6 +140,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Vi
             ReviewLikes = view.findViewById(R.id.likeCountTextView);
             imageViewUser = view.findViewById(R.id.imageViewUser);
             postImageView = view.findViewById(R.id.postImageView);
+            Likeicon = view.findViewById(R.id.likeButton);
 
 
         }

@@ -5,44 +5,70 @@ import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
 import org.bson.types.ObjectId;
-
 public class Review extends RealmObject {
     @PrimaryKey
     @Required
     private ObjectId _id;
 
+    private String Address;
+
+    private String Ambience;
+
+    private String ClosestLandmark;
+
+    private String Cuisine;
+
+    private String DietaryOptions;
+
     private Integer Likes;
 
-    private double Rating;
-
-    private String img_post_link;
+    private String PriceRange;
 
     private String Restaurant_id;
-    private String Address;
-    private String Cuisine;
-    private String Type;
-    private String ClosestLandmark;
-    private String DietaryOptions;
-    private String PriceRange;
-    private String Ambience;
 
     private String Review;
 
+    private String Type;
+
     private String User_id;
+
+    private String img_post_link;
+
+    private Double rating;
+
+    private String source;
+
     private String user_img_link;
 
     private String username;
-    private String source;
 
     // Standard getters & setters
+    public Review(){
+        this.Likes = 0;
+    }
     public ObjectId getId() { return _id; }
     public void setId(ObjectId _id) { this._id = _id; }
+
+    public String getAddress() { return Address; }
+    public void setAddress(String Address) { this.Address = Address; }
+
+    public String getAmbience() { return Ambience; }
+    public void setAmbience(String Ambience) { this.Ambience = Ambience; }
+
+    public String getClosestLandmark() { return ClosestLandmark; }
+    public void setClosestLandmark(String ClosestLandmark) { this.ClosestLandmark = ClosestLandmark; }
+
+    public String getCuisine() { return Cuisine; }
+    public void setCuisine(String Cuisine) { this.Cuisine = Cuisine; }
+
+    public String getDietaryOptions() { return DietaryOptions; }
+    public void setDietaryOptions(String DietaryOptions) { this.DietaryOptions = DietaryOptions; }
 
     public Integer getLikes() { return Likes; }
     public void setLikes(Integer Likes) { this.Likes = Likes; }
 
-    public double getRating() { return this.Rating; }
-    public void setRating(double Rating) { this.Rating = Rating; }
+    public String getPriceRange() { return PriceRange; }
+    public void setPriceRange(String PriceRange) { this.PriceRange = PriceRange; }
 
     public String getRestaurantId() { return Restaurant_id; }
     public void setRestaurantId(String Restaurant_id) { this.Restaurant_id = Restaurant_id; }
@@ -50,55 +76,25 @@ public class Review extends RealmObject {
     public String getReview() { return Review; }
     public void setReview(String Review) { this.Review = Review; }
 
+    public String getType() { return Type; }
+    public void setType(String Type) { this.Type = Type; }
+
     public String getUserId() { return User_id; }
     public void setUserId(String User_id) { this.User_id = User_id; }
-    public String getAddress() { return this.Address; }
-    public void setAddress(String Address) { this.Address = Address; }
-    public String getCuisine() { return this.Cuisine; }
-    public void setCuisine(String Cuisine) { this.Cuisine = Cuisine; }
-    public String getType() { return this.Type; }
-    public void setType(String Type) { this.Type = Type; }
-    public String getClosestLandmark(){return this.ClosestLandmark;}
-    public void setClosestLandmark(String ClosestLandmark){this.ClosestLandmark = ClosestLandmark;}
-    public String getDietaryOptions() {
-        return DietaryOptions;
-    }
 
-    public void setDietaryOptions(String dietaryOptions) {
-        DietaryOptions = dietaryOptions;
-    }
+    public String getImgPostLink() { return img_post_link; }
+    public void setImgPostLink(String img_post_link) { this.img_post_link = img_post_link; }
 
-    public String getPriceRange() {
-        return PriceRange;
-    }
+    public Double getRating() { return rating; }
+    public void setRating(Double rating) { this.rating = rating; }
 
-    public void setPriceRange(String priceRange) {
-        PriceRange = priceRange;
-    }
-    public String getAmbience() {
-        return Ambience;
-    }
+    public String getSource() { return source; }
+    public void setSource(String source) { this.source = source; }
 
-    public void setAmbience(String ambience) {
-        Ambience = ambience;
-    }
+    public String getUserImgLink() { return user_img_link; }
+    public void setUserImgLink(String user_img_link) { this.user_img_link = user_img_link; }
 
-        public String getUsername() {
-            return username;
-        }
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
+}
 
-        public void setUsername(String username) {
-            this.username = username;
-        }
-        public void setImg_post_link(String newLink){this.img_post_link = newLink;}
-        public String getImg_post_link(){return this.img_post_link;}
-
-    public String getUser_img_link(){return this.user_img_link;}
-    public void setUser_img_link(String userimglink){this.user_img_link=userimglink;}
-
-
-    public String getSource(){return this.source;}
-        public void setSource(String newSource){this.source = newSource;}
-
-
-    }

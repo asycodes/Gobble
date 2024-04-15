@@ -33,6 +33,8 @@ public class ReviewLocationResponse {
 
         public String gettext(){return this.text;}
 
+        public int getRating(){return this.rating;}
+
     }
 
 

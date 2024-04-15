@@ -46,27 +46,7 @@ public class HomeFragmentViewModel extends ViewModel {
 
     @Inject
     public HomeFragmentViewModel(App realmApp, TripAdvisorService tripadvisorService, YelpService yelpservice) {
-        this.tripAdvisorService = tripadvisorService;
-        String tripkey = BuildConfig.TRIP_API;
-        tripAdvisorService.searchLocation("Al-Azhar", "restaurant", "Singapore","1.343433928826536, 103.77529447421927" ,"en" ,tripkey)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                    this.searchresults = result.getData();
-                    Log.d("SEARCH RESULTS", "" + this.searchresults);
-                }, throwable -> {
-                    // Handle error
-                });
-        String yelpkey = BuildConfig.YELP_API;
-        this.yelpService = yelpservice;
-        yelpService.searchBusinesses(yelpkey, "Singapore", 1.3431765075310407,103.77512281284234 ,"Al-Azhar")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                    Log.d("SEARCH RESULTS", "" + result);
-                }, throwable -> {
-                    // Handle error
-                });
+
         this.realmApp = realmApp;
         initializeRealm();
 
@@ -105,7 +85,9 @@ public class HomeFragmentViewModel extends ViewModel {
                     // This is automatically called on the main thread when data changes
                     Log.d("SyncCheck", "Data synced or updated: " + results.size());
                     // Detach the results from Realm and update LiveData
-                    restaurantsLiveData.postValue(realm.copyFromRealm(results));
+                    if (realm != null && !realm.isClosed()) {
+                        restaurantsLiveData.postValue(realm.copyFromRealm(results));
+                    }
                 }
             });
         }}

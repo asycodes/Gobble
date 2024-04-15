@@ -5,58 +5,73 @@
     android:layout_height="wrap_content"
     android:padding="16dp"
     android:clipToPadding="false">
-
-    <!-- User Image -->
-    <ImageView
-        android:id="@+id/imageViewUser"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/defaultuser"
-        android:scaleType="centerCrop"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/viewSeparator"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginBottom="20dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+    <!-- User Image -->
+            <ImageView
+                android:id="@+id/imageViewUser"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/defaultuser"
+                app:layout_constraintBottom_toTopOf="@+id/postImageView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
     <!-- User Name -->
-    <TextView
-        android:id="@+id/Username"
-        android:layout_width="0dp"
-        android:layout_marginStart="10dp"
-        android:layout_height="wrap_content"
-        android:text="Adelaine Sussy"
-        android:textSize="16sp"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/imageViewUser"
-        app:layout_constraintTop_toTopOf="@id/imageViewUser"
-        app:layout_constraintEnd_toStartOf="@id/user_rating" />
+            <TextView
+                android:id="@+id/Username"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Adelaine Sussy"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/postImageView"
+                app:layout_constraintEnd_toStartOf="@id/user_rating"
+                app:layout_constraintStart_toEndOf="@id/imageViewUser"
+                app:layout_constraintTop_toTopOf="parent" />
 
     <!-- User Rating -->
-    <RatingBar
-        android:id="@+id/user_rating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:numStars="5"
-        android:rating="4.5"
-        android:stepSize="0.5"
-        android:isIndicator="true"
-        android:scaleX="0.8"
-        android:scaleY="0.8"
-        android:progressTint="#FFD700"
-        app:layout_constraintTop_toTopOf="@id/imageViewUser"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <RatingBar
+                android:id="@+id/user_rating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:progressTint="#FFD700"
+                android:rating="4.5"
+                android:stepSize="0.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/postImageView"/>
 
-    <ImageView
-        android:id="@+id/postImageView"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-    android:src="@drawable/food3t4app"
-    android:scaleType="centerCrop"
-    app:layout_constraintTop_toBottomOf="@id/user_rating"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:layout_marginTop="8dp"/>
+            <ImageView
+                android:id="@+id/postImageView"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="8dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/food3t4app"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageViewUser" />
 
 
     <!-- Review Description -->
@@ -97,13 +112,10 @@
         app:layout_constraintTop_toTopOf="@id/likeButton"
         app:layout_constraintStart_toEndOf="@id/likeButton"  />
 
-    <View
-        android:id="@+id/viewSeparator"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#CCCCCC"
-        app:layout_constraintTop_toBottomOf="@id/likeCountTextView"
-        android:layout_marginTop="16dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

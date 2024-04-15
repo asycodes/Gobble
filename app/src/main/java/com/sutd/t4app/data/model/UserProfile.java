@@ -31,6 +31,8 @@ public class UserProfile extends RealmObject {
     private String mealTimePreferences;
     private String ingredientPreferences;
     private String ingredientDislikes;
+    private String user_img_link;
+
 
     // Default constructor
     public UserProfile() {
@@ -187,4 +189,6 @@ public class UserProfile extends RealmObject {
     public void setIngredientDislikes(String ingredientDislikes) {
         this.ingredientDislikes = ingredientDislikes;
     }
+    public String getUser_img_link(){return this.user_img_link;}
+    public void setUser_img_link(String userimglink){this.user_img_link=userimglink;}
 }
