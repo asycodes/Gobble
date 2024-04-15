@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/wave"
+        tools:layout_editor_absoluteX="176dp"
+        tools:layout_editor_absoluteY="60dp"></RelativeLayout>
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/verticalScrollView"
         android:layout_width="match_parent"
@@ -20,6 +27,7 @@
             android:orientation="vertical">
 
             <!-- Search and Filter UI -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -83,6 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/profile_qna" />
+
             </LinearLayout>
 
             <!-- What's Hot Section -->
@@ -99,9 +108,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:text="What's Hot"
+                    android:text="Trending on TikTok"
+                    android:textStyle="bold"
                     android:textColor="@color/black"
                     android:textSize="24sp" />
 
@@ -122,6 +132,7 @@
                     android:layout_marginTop="20dp"
                     android:text="Explore"
                     android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:textSize="24sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
