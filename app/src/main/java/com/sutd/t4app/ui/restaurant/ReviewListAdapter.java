@@ -70,6 +70,8 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Vi
                 if(review.getUserImgLink()!= ""){
                     Picasso.get()
                             .load(review.getUserImgLink()) // Assuming `getImageUrl()` is a method in your `Review` class
+                            .resize(350, 170)  // specify your desired size
+                            .centerInside()
                             .into(holder.imageViewUser);
                     holder.imageViewUser.setVisibility(View.VISIBLE);
                 }
@@ -77,6 +79,8 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Vi
                 if(review.getImgPostLink()!= ""){
                     Picasso.get()
                             .load(review.getImgPostLink()) // Assuming `getImageUrl()` is a method in your `Review` class
+                            .resize(350, 170)  // specify your desired size
+                            .centerInside()
                             .into(holder.postImageView);
                     holder.postImageView.setVisibility(View.VISIBLE);
                 }else{
