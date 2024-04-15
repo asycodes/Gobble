@@ -31,6 +31,7 @@ import io.realm.mongodb.sync.SyncConfiguration;
 public class ReviewViewModel extends ViewModel {
     private final App realmApp;
     Realm realm;
+    private MutableLiveData<String> searchText = new MutableLiveData<>();
 
     private MutableLiveData<Restaurant> restaurantSelected;
     private MutableLiveData<Integer> foodRating = new MutableLiveData<>(3);
@@ -101,18 +102,9 @@ public class ReviewViewModel extends ViewModel {
         }
     }
 
-    private void updateSearchResults(String query) {
-        RealmResults<Restaurant> results = realm.where(Restaurant.class)
-                .contains("name", query, Case.INSENSITIVE) // Assuming 'name' is the field
-                .findAllAsync();
 
-        results.addChangeListener(new RealmChangeListener<RealmResults<Restaurant>>() {
-            @Override
-            public void onChange(RealmResults<Restaurant> restaurants) {
-                // Update your RecyclerView adapter here with the queried data
-                suggestionAdapter.updateData(restaurants);
-            }
-        });
+    public void updateSearchText(String newText) {
+        searchText.setValue(newText);
     }
 
     public LiveData<Integer> getFoodRating() {

@@ -92,7 +92,7 @@ public class ReviewsFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() >= 2) { // Only query if there are at least 2 characters
                     suggestionRecyclerView.setVisibility(View.VISIBLE);
-                    updateSearchResults(s.toString());
+                    viewModel.updateSearchText(s.toString());
                 } else {
                     suggestionRecyclerView.setVisibility(View.GONE);
                 }
