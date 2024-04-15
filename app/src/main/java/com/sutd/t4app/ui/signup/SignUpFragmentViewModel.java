@@ -173,7 +173,6 @@ public class SignUpFragmentViewModel extends ViewModel {
             }, () -> {
                 // Transaction was a success.
                 Log.v("UserProfile", "User profile saved successfully,");
-                realm.close();
                 navigationTrigger.postValue("Profile");
                 // PROCEED TO BE QUESTIONED
             }, error -> {
