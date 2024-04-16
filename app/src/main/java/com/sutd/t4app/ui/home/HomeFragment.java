@@ -109,6 +109,7 @@ public class HomeFragment extends Fragment implements TikTokAdapter.OnTikTokClic
 
 
         // Observe the LiveData from the ViewModel
+
 //        viewModel.getRestaurantsLiveData().observe(getViewLifecycleOwner(), restaurants -> {
 //            Log.d("HomeFragmenthotAdaptor", "Number of unranked restaurants received: " + restaurants.size());
 //            // Use this data for something that doesn't need ranked data, for example, for `hotAdapter`
@@ -124,6 +125,8 @@ public class HomeFragment extends Fragment implements TikTokAdapter.OnTikTokClic
 
                 hotAdapter.updateDataTikTok(tikToks);
             }
+
+     
         });
 
 

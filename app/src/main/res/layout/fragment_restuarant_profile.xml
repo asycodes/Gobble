@@ -108,6 +108,7 @@
                                 android:text="3.0(100 reviews)"
                                 android:textColor="#282828"
                                 android:textSize="10dp" />
+
                         </LinearLayout>
 
                         <androidx.cardview.widget.CardView
@@ -398,6 +399,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:numStars="5"
+                    android:layout_gravity="right"
                     android:rating="2"
                     android:stepSize="0.1"
                     android:isIndicator="true"/>
@@ -411,6 +413,7 @@
 
                 android:gravity="center_vertical">
 
+        
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -458,6 +461,6 @@
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
