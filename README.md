@@ -12,7 +12,7 @@
 
 "Gobble" is a centralized review app that aggregates data from diverse sources like Google Business, SmartLocal reviews, TikTok, and user-generated content. Gobble stands out by offering personalized restaurant recommendations based on user profiles, incorporating generative AI to suggest specific dishes within budget constraints, and enabling comparative insights between eateries.
 
-API documentation utilized: Google Business, Google Cloud Platform, Yelp, TripAdvisor, Tiktok, OpenAI
+API documentation utilized: Google Business, Yelp, Tiktok, OpenAI
 
 - View the Figma Prototype of Gobble [here](https://www.figma.com/proto/kKKdI45mlW6sPdlUEojrtE/50.001?type=design&node-id=48-151&t=EhO0q2kSAlFj3sfv-0&scaling=scale-down&page-id=0%3A1&starting-point-node-id=39%3A49)
 - View Gobble's business and technical proposal(Checkoff 1) [here](https://github.com/ilenhanako/t4app/files/14941705/1D.project.gobble.pdf)

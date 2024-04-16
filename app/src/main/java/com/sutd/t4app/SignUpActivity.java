@@ -26,7 +26,10 @@ import io.realm.mongodb.App;
 import io.realm.mongodb.Credentials;
 import io.realm.mongodb.User;
 import io.realm.mongodb.sync.SyncConfiguration;
-
+/**
+ * The `SignUpActivity` class in the Android app handles user sign-up process, including form
+ * validation, user authentication, and creating user profiles in Realm database.
+ */
 
 @AndroidEntryPoint
 public class SignUpActivity extends AppCompatActivity {

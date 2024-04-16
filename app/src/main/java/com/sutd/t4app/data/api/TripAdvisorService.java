@@ -8,7 +8,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.Call;
-
+// This code snippet defines a Java interface named `TripAdvisorService` that serves as a contract for
+// making API calls to the TripAdvisor API.
 public interface TripAdvisorService {
     @GET("search")
     Observable<LocationSearchResponse> searchLocation(

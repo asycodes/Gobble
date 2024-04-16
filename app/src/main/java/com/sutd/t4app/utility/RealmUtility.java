@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.data.model.Review;
+import com.sutd.t4app.data.model.TikTok;
 import com.sutd.t4app.data.model.UserProfile;
 
 import io.realm.Realm;
@@ -12,7 +13,10 @@ import io.realm.mongodb.User;
 import io.realm.mongodb.sync.MutableSubscriptionSet;
 import io.realm.mongodb.sync.Subscription;
 import io.realm.mongodb.sync.SyncConfiguration;
-
+/**
+ * The `RealmUtility` class in Java provides methods for obtaining a default SyncConfiguration for
+ * Realm database synchronization with subscriptions for Restaurant and UserProfile models.
+ */
 
 public class RealmUtility {
     private static SyncConfiguration defaultSyncConfig = null;
@@ -39,6 +43,7 @@ public class RealmUtility {
                                 boolean ressubscriptionExists = false;
                                 boolean usersubscriptionExists = false;
                                 boolean reviewsubscriptionExists = false;
+                                boolean tiktoksucriptionExists= false;
                                 for (Subscription existingSubscription : subscriptions) {
                                     if ("restaurantsSubscription".equals(existingSubscription.getName())) {
                                         ressubscriptionExists = true;
@@ -48,6 +53,9 @@ public class RealmUtility {
                                     }
                                     if ("reviewsSubscription".equals(existingSubscription.getName())) {
                                         reviewsubscriptionExists = true;
+                                    }
+                                    if ("TikTokSubscription".equals(existingSubscription.getName())) {
+                                        tiktoksucriptionExists = true;
                                     }
                                 }
 
@@ -63,6 +71,10 @@ public class RealmUtility {
                                 if(!reviewsubscriptionExists){
                                     subscriptions.add(Subscription.create("reviewsSubscription",
                                             realm.where(Review.class)));
+                                }
+                                if(!tiktoksucriptionExists){
+                                    subscriptions.add(Subscription.create("TikTokSubscription",
+                                            realm.where(TikTok.class)));
                                 }
 
                             }

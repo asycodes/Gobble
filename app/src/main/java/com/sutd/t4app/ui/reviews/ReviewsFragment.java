@@ -1,11 +1,13 @@
 package com.sutd.t4app.ui.reviews;
 
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +28,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.sutd.t4app.R;
 import com.sutd.t4app.databinding.FragmentDashboardBinding;
+import com.sutd.t4app.data.model.UserProfile;
+import com.sutd.t4app.ui.ProfileQuestions.UserProfileViewModel;
+
 import java.io.IOException;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+/**
+ * The ReviewsFragment class in an Android app allows users to submit reviews with ratings and images.
+ */
+@AndroidEntryPoint
 public class ReviewsFragment extends Fragment {
 
     private ReviewViewModel viewModel;
@@ -42,6 +53,9 @@ public class ReviewsFragment extends Fragment {
     private ImageView selectedImage;
     private EditText reviews;
     private ActivityResultLauncher<String> imagePickerLauncher;
+    private UserProfileViewModel UserViewModel;
+    private UserProfile cachedUserProfile;
+
 
     public ReviewsFragment() {
         // Required empty public constructor
@@ -53,6 +67,7 @@ public class ReviewsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         viewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
+        UserViewModel= new ViewModelProvider(this).get(UserProfileViewModel.class);
 
         uploadImageButton=root.findViewById(R.id.uploadimage);
         uploadImageButton.setOnClickListener(v -> openImageChooser());
@@ -154,14 +169,46 @@ public class ReviewsFragment extends Fragment {
     }
 
     private void submitReview() {
-        // Calculate average rating
-        double averageRating = (currentFoodRating + currentServiceRating + currentAtmosphereRating) / 3.0;
+        if (cachedUserProfile != null) {
+            int newReviewCount = cachedUserProfile.getReviewCount() + 1;
+            cachedUserProfile.setReviewCount(newReviewCount); // Modify the cached copy
+            UserViewModel.updateUserProfile(cachedUserProfile); // Push changes to the ViewModel or repository
 
-        // Get review text
-        String reviewText = reviews.getText().toString().trim();
-
-        // TODO: 23/3/24 store and process averagerating, imageURI and reviews to save to database 
+            // Log the updated review count
+            Log.d("ReviewFragment", "Review count updated to: " + newReviewCount);
+        } else {
+            Log.e("ReviewFragment", "Attempted to submit a review with no cached user profile available.");
+        }
     }
+
+
+//    private void submitReview() {
+//        // Calculate average rating
+//        double averageRating = (currentFoodRating + currentServiceRating + currentAtmosphereRating) / 3.0;
+//
+//        // Get review text
+//        String reviewText = reviews.getText().toString().trim();
+//
+//        // Update the user profile in the ViewModel
+//        UserViewModel.getUserProfilesLiveData().observe(getViewLifecycleOwner(), userProfile -> {
+//            if (userProfile != null) {
+//                int newReviewCount = userProfile.getReviewCount() + 1;
+//                userProfile.setReviewCount(newReviewCount);
+//                UserViewModel.updateUserProfile(userProfile);  // Update the user profile in the ViewModel
+//
+//                // Log the updated review count
+//                Log.d("ReviewFragment", "Review count updated: " + newReviewCount);
+//
+//                // Fetch the updated user profile data again to trigger LiveData observers
+//                UserViewModel.getUserProfilesLiveData();
+//            } else {
+//                // Handle the case where userProfile is null
+//                Log.e("ReviewFragment", "User profile is null");
+//            }
+//        });
+//    }
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -175,6 +222,23 @@ public class ReviewsFragment extends Fragment {
                     }
                 });
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        // Assuming UserProfileViewModel is correctly instantiated
+        UserViewModel.getUserProfilesLiveData().observe(getViewLifecycleOwner(), userProfile -> {
+            if (userProfile != null) {
+                cachedUserProfile = userProfile; // Update the local cache whenever the data changes
+                Log.d("ReviewFragment", "Cached user profile updated.");
+            } else {
+                Log.e("ReviewFragment", "Received null UserProfile.");
+            }
+        });
+    }
+
+
+
 
 
 

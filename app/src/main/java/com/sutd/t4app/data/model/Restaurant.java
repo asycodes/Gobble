@@ -1,3 +1,7 @@
+/**
+ * The `Restaurant` class in Java represents a model for restaurant data with various attributes and
+ * implements the `Parcelable` interface for object serialization.
+ */
 package com.sutd.t4app.data.model;
 
 import android.os.Parcel;
@@ -106,8 +110,7 @@ public class Restaurant extends RealmObject implements Parcelable {
     public String getTripAdvisorId(){return this.TripAdvisorId;}
     public void setTripAdvisorId(String newid){this.TripAdvisorId=newid;}
     public String getRestaurantId(){return this.RestaurantId;}
-    public void setRestaurantId(String resid){ this.RestaurantId = resid;}
-
+    public void setRestaurantId(String RestaurantId){this.RestaurantId=RestaurantId;}
 
     public String getYelpId(){return this.YelpId;}
     public void setYelpId(String newid){this.YelpId=newid;}
@@ -335,5 +338,6 @@ public class Restaurant extends RealmObject implements Parcelable {
         dest.writeDouble(ReviewRating2);
         dest.writeString(Ambience);
         dest.writeString(Area);
+        dest.writeString(RestaurantId);
     }
 }

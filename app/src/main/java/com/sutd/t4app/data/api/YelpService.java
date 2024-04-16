@@ -11,7 +11,9 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-
+// This code snippet defines an interface named `YelpService` that specifies a method
+// `searchBusinesses` using Retrofit annotations for making API calls. Here's what each part of the
+// method signature does:
 public interface YelpService {
     @GET("search")
     Observable<YelpSearchResponse> searchBusinesses(
