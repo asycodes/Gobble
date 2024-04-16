@@ -45,6 +45,7 @@ public class Review extends RealmObject {
     // Standard getters & setters
     public Review(){
         this.Likes = 0;
+
     }
     public ObjectId getId() { return _id; }
     public void setId(ObjectId _id) { this._id = _id; }

@@ -67,25 +67,30 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Vi
                 Picasso.get().setLoggingEnabled(true);
 
 
-                if(review.getUserImgLink()!= ""){
+                if(review.getUserImgLink()== "" ||review.getUserImgLink()== null ){
+                    holder.imageViewUser.setImageResource(R.drawable.defaultuser);
+
+                }else{
                     Picasso.get()
                             .load(review.getUserImgLink()) // Assuming `getImageUrl()` is a method in your `Review` class
                             .resize(350, 170)  // specify your desired size
                             .centerInside()
                             .into(holder.imageViewUser);
                     holder.imageViewUser.setVisibility(View.VISIBLE);
-                }
 
-                if(review.getImgPostLink()!= ""){
+                }
+                Log.d("CHECK HEREE ASDADS", "" + review.getImgPostLink());
+                if(review.getImgPostLink()== "" || review.getImgPostLink()== null){
+                    // make the postImageView invisible
+                    holder.postImageView.setVisibility(View.GONE);
+
+                }else{
                     Picasso.get()
                             .load(review.getImgPostLink()) // Assuming `getImageUrl()` is a method in your `Review` class
                             .resize(350, 170)  // specify your desired size
                             .centerInside()
                             .into(holder.postImageView);
                     holder.postImageView.setVisibility(View.VISIBLE);
-                }else{
-                    // make the postImageView invisible
-                    holder.postImageView.setVisibility(View.GONE);
 
                 }
             }

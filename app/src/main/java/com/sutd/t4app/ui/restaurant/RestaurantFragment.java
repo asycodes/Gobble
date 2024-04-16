@@ -103,6 +103,8 @@ public class RestaurantFragment extends Fragment {
             restaurantDescription.setText(restaurant.getDescription());
             Picasso.get()
                     .load(restaurant.getImgMainURL()) // Assuming `getImageUrl()` is a method in your `Restaurant` class
+                    .resize(350, 170)  // specify your desired size
+                    .centerInside()
                     .into(restaurantProfileImage);
             viewModel.setcurrRes(restaurant);
 
