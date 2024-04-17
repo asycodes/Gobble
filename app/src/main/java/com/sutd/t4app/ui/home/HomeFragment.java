@@ -233,7 +233,7 @@ public class HomeFragment extends Fragment implements TikTokAdapter.OnTikTokClic
             }
             //todo: cannot figure out why the totalRestaurantCount does not give 9
 
-            if (filteredRestaurants != null && !filteredRestaurants.isEmpty() && filteredRestaurants.size() != 9) {
+            if (filteredRestaurants != null && !filteredRestaurants.isEmpty() && filteredRestaurants.size() != 19) {
                 isFilterActive = true;  // Filters are actively filtering.
                 Log.d("HomeFragmentFilterWidget", "Filtered restaurants received: " + filteredRestaurants.size());
                 adapter.updateData(filteredRestaurants);
