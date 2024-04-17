@@ -26,7 +26,7 @@
                 android:id="@+id/Settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Edit Profile"
+                android:text="Settings"
                 android:textColor="@color/primary"
                 android:layout_gravity="center"
                 android:textSize="32sp"
@@ -36,59 +36,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
-            <!-- Theme Selection -->
-            <RadioGroup
-                android:id="@+id/themeRadioGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <RadioButton
-                    android:id="@+id/radioLight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Light Theme" />
-
-                <RadioButton
-                    android:id="@+id/radioDark"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Dark Theme" />
-
-                <RadioButton
-                    android:id="@+id/radioDefault"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="System Default" />
-            </RadioGroup>
-
-            <TextView
-                android:id="@+id/aboutTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Select App Language"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="16dp" />
-
-
-            <!-- Language Preference -->
-            <Spinner
-                android:id="@+id/languageSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:entries="@array/language_options"/>
-
-            <!-- Notification Settings -->
-            <Switch
-                android:id="@+id/notificationsSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Enable Notifications"
-                android:checked="true"
-                android:layout_marginTop="16dp" />
 
             <!-- App Version and Update Information -->
             <TextView
@@ -102,27 +49,12 @@
 
             <!-- Account Deletion/Deactivation -->
             <Button
-                android:id="@+id/accountActionButton"
+                android:id="@+id/DeleteAccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Delete Account"
                 android:layout_marginTop="16dp" />
 
-            <!-- Reset App Settings to Default -->
-            <Button
-                android:id="@+id/resetSettingsButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Reset App Settings"
-                android:layout_marginTop="16dp" />
-
-            <!-- Send Feedback or Report Issues -->
-            <Button
-                android:id="@+id/feedbackButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Send Feedback"
-                android:layout_marginTop="16dp" />
 
         </LinearLayout>
     </ScrollView>

@@ -49,6 +49,7 @@ public class RestaurantFragmentViewModel extends ViewModel {
     private List<ReviewLocationResponse.TripReviews> TripreviewSearch;
     private YelpSearchResponse.Business Yelpsearchresults;
     private List<YelpReviewResponse.YelpReviews> YelpreviewSearch;
+    private MutableLiveData<Restaurant> restaurantLiveData = new MutableLiveData<>();
 
     @Inject
     public RestaurantFragmentViewModel(App realmApp, TripAdvisorService tripadvisorService, YelpService yelpservice) {
@@ -58,11 +59,12 @@ public class RestaurantFragmentViewModel extends ViewModel {
 
     }
 
-    public void setcurrRes(Restaurant res){
+    public void setcurrRes(Restaurant res) {
         this.currRes = res;
         initializeRealm();
 
     }
+
     private void fetchAndUpdateLiveData() {
         if (realm != null && !realm.isClosed()) {
             RealmResults<Review> reviews = realm.where(Review.class)
@@ -117,6 +119,7 @@ public class RestaurantFragmentViewModel extends ViewModel {
                     }
                 });
             }
+
             @Override
             public void onError(Exception e) {
                 // Handle any errors, such as login failure
@@ -125,13 +128,13 @@ public class RestaurantFragmentViewModel extends ViewModel {
         });
     }
 
-    public void gatherreviews(){
+    public void gatherreviews() {
         // after initialisation check if there are any existing reviews from realm of the particular res
-        if (realm != null ) {
+        if (realm != null) {
             RealmResults<Review> reviews = realm.where(Review.class).equalTo("Restaurant_id", this.currRes.getRestaurantId()).findAllAsync();
             this.currUser = realm.where(UserProfile.class).equalTo("userId", realmApp.currentUser().getId()).findFirst();
             if (realm != null && !realm.isClosed()) {
-                 this.reviewsLiveData.postValue(realm.copyFromRealm(reviews));
+                this.reviewsLiveData.postValue(realm.copyFromRealm(reviews));
 
             }
             RealmResults<Review> resultsyelp = realm.where(Review.class)
@@ -144,35 +147,35 @@ public class RestaurantFragmentViewModel extends ViewModel {
                     .equalTo("source", "TripAdvisor")
                     .findAll();
 
-            Log.d("Result length",""+results);
+            Log.d("Result length", "" + results);
 
             // after showing OR if null, gather new reviews from Yelp or Tripadvisor,
 
             // but first need to know if the res has the id from both yelp and tripadvisor
             String tripID = this.currRes.getTripAdvisorId();
             String yelpID = this.currRes.getYelpId();
-            if(tripID.length() == 0){
+            if (tripID.length() == 0) {
                 String tripkey = BuildConfig.TRIP_API;
-                String latlong = this.currRes.getLat() + "," +  this.currRes.getLng();
-                tripAdvisorService.searchLocation(this.currRes.getName(), "restaurant", "Singapore",latlong ,"en" ,BuildConfig.TRIP_API)
+                String latlong = this.currRes.getLat() + "," + this.currRes.getLng();
+                tripAdvisorService.searchLocation(this.currRes.getName(), "restaurant", "Singapore", latlong, "en", BuildConfig.TRIP_API)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(result -> {
                             this.Tripsearchresults = result.getData().get(0);
                             String tripid = this.Tripsearchresults.getLocation_id();
-                            Log.d("CHECK", "" +tripid);
+                            Log.d("CHECK", "" + tripid);
                             this.currRes.setTripAdvisorId(tripid);
                             // now we do a realm transaction to update the id
                             realm.executeTransactionAsync(r -> {
-                            Restaurant restaurant = r.where(Restaurant.class).equalTo("RestaurantId", this.currRes.getRestaurantId()).findFirst();
-                            if (restaurant != null) {
-                                restaurant.setTripAdvisorId(tripid);
-                            }
-                        }, () -> {
-                            Log.d("Realm", "Trip ID updated successfully!");
-                        }, error -> {
-                            Log.e("Realm Error", "Failed to update Trip ID: " + error.getMessage());
-                        });
+                                Restaurant restaurant = r.where(Restaurant.class).equalTo("RestaurantId", this.currRes.getRestaurantId()).findFirst();
+                                if (restaurant != null) {
+                                    restaurant.setTripAdvisorId(tripid);
+                                }
+                            }, () -> {
+                                Log.d("Realm", "Trip ID updated successfully!");
+                            }, error -> {
+                                Log.e("Realm Error", "Failed to update Trip ID: " + error.getMessage());
+                            });
 
                             Log.d("FIRST TRIP SEARCH RESULTS", "" + this.Tripsearchresults);
                         }, throwable -> {
@@ -180,11 +183,11 @@ public class RestaurantFragmentViewModel extends ViewModel {
                             Log.d("TripAdvisor Error", "Error occurred: " + throwable.getMessage());
                         });
             }
-            if(yelpID.length() == 0){
+            if (yelpID.length() == 0) {
                 String yelpkey = BuildConfig.YELP_API;
                 double latitude = Double.parseDouble(this.currRes.getLat());
                 double longti = Double.parseDouble(this.currRes.getLng());
-                yelpService.searchBusinesses(yelpkey, "Singapore", latitude,longti ,this.currRes.getName())
+                yelpService.searchBusinesses(yelpkey, "Singapore", latitude, longti, this.currRes.getName())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(result -> {
@@ -210,7 +213,7 @@ public class RestaurantFragmentViewModel extends ViewModel {
             // once they have their own IDs, we find the reviews from each service
 
 
-            if(results.isEmpty()){
+            if (results.isEmpty()) {
                 try {
                     int tripAdvisorId = Integer.parseInt(this.currRes.getTripAdvisorId());
                     final String address = this.currRes.getAddress();
@@ -224,15 +227,15 @@ public class RestaurantFragmentViewModel extends ViewModel {
                     final String restaurantId = this.currRes.getRestaurantId();
                     final String type = this.currRes.getType();
                     final String userid = this.currUser.getUserId();
-                    tripAdvisorService.getReviews(tripAdvisorId,BuildConfig.TRIP_API,"en").subscribeOn(Schedulers.io())
+                    tripAdvisorService.getReviews(tripAdvisorId, BuildConfig.TRIP_API, "en").subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(result -> {
                                 this.TripreviewSearch = result.getData();
-                                for(ReviewLocationResponse.TripReviews rev: this.TripreviewSearch){
+                                for (ReviewLocationResponse.TripReviews rev : this.TripreviewSearch) {
                                     realm.executeTransactionAsync(new Realm.Transaction() {
                                         @Override
                                         public void execute(Realm realm) {
-                                            Review review = realm.createObject(Review.class,new ObjectId());
+                                            Review review = realm.createObject(Review.class, new ObjectId());
 
                                             if (review != null) {
                                                 review.setReview(rev.gettext());
@@ -278,10 +281,9 @@ public class RestaurantFragmentViewModel extends ViewModel {
             }
 
 
+            Log.d("Result length", "" + resultsyelp);
 
-            Log.d("Result length",""+resultsyelp);
-
-            if(resultsyelp.isEmpty()){
+            if (resultsyelp.isEmpty()) {
                 final String address = this.currRes.getAddress();
                 final String ambience = this.currRes.getAmbience();
                 final String cuisine = this.currRes.getCuisine();
@@ -293,15 +295,15 @@ public class RestaurantFragmentViewModel extends ViewModel {
                 final String restaurantId = this.currRes.getRestaurantId();
                 final String type = this.currRes.getType();
                 final String userid = this.currUser.getUserId();
-                yelpService.getReviews(this.currRes.getYelpId(),BuildConfig.YELP_API).subscribeOn(Schedulers.io())
+                yelpService.getReviews(this.currRes.getYelpId(), BuildConfig.YELP_API).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(result -> {
                             this.YelpreviewSearch = result.getReviews();
-                            for(YelpReviewResponse.YelpReviews rev: this.YelpreviewSearch){
+                            for (YelpReviewResponse.YelpReviews rev : this.YelpreviewSearch) {
                                 realm.executeTransactionAsync(new Realm.Transaction() {
                                     @Override
                                     public void execute(Realm realm) {
-                                        Review review = realm.createObject(Review.class,new ObjectId());
+                                        Review review = realm.createObject(Review.class, new ObjectId());
 
                                         if (review != null) {
                                             review.setReview(rev.getText());
@@ -340,11 +342,13 @@ public class RestaurantFragmentViewModel extends ViewModel {
                             Log.d("Yelp Error Getting Reviews", "Error occurred: " + throwable.getMessage());
                         });
             }
-            }
-
-
-
-
         }
 
+
     }
+
+    public LiveData<Restaurant> getRestaurantLiveData() {
+        return restaurantLiveData;
+
+    }
+}

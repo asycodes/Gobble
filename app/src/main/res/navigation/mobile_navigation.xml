@@ -15,7 +15,7 @@
         android:id="@+id/navigation_reviews"
         android:name="com.sutd.t4app.ui.reviews.ReviewsFragment"
         android:label="@string/title_reviews"
-        tools:layout="@layout/fragment_reviews" />
+        tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_profile"
@@ -47,10 +47,22 @@
         tools:layout="@layout/fragment_compare"/>
 
     <fragment
+        android:id="@+id/navigate_to_editprofile"
+        android:name="com.sutd.t4app.ui.profile.EditProfileFragment"
+        android:label="Edit Profile"
+        tools:layout="@layout/edit_profile"/>
+
+    <fragment
         android:id="@+id/navigation_questions"
         android:name="com.sutd.t4app.ui.ProfileQuestions.QuestionFragment"
         android:label="Questions"
         tools:layout="@layout/questions"/>
+
+    <fragment
+        android:id="@+id/nav_to_settings"
+        android:name="com.sutd.t4app.ui.profile.SettingFragment"
+        android:label="Settings"
+        tools:layout="@layout/profile_settings"/>
 
     <action
         android:id="@+id/torestaurantfragment"
@@ -70,6 +82,17 @@
     <action
         android:id="@+id/toQuestionspage"
         app:destination="@id/navigation_questions"/>
+    <action
+        android:id="@+id/toeditProfile"
+        app:destination="@id/navigate_to_editprofile" />
+
+    <action
+        android:id="@+id/tosettings"
+        app:destination="@id/nav_to_settings"/>
+
+    <action
+        android:id="@+id/backtoprofile"
+        app:destination="@id/navigation_profile"/>
 
 
 </navigation>

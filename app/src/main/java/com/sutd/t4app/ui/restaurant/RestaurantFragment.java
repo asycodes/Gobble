@@ -19,6 +19,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 import com.sutd.t4app.R;
 import com.sutd.t4app.data.model.Restaurant;
@@ -34,7 +40,7 @@ import java.util.List;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class RestaurantFragment extends Fragment {
+public class RestaurantFragment extends Fragment implements OnMapReadyCallback{
     private FragmentRestuarantProfileBinding binding;
     private TextView textViewRestaurantLocation;
     private ImageView restImageHolder;
@@ -57,6 +63,8 @@ public class RestaurantFragment extends Fragment {
     private RestaurantFragmentViewModel viewModel;
     private ReviewListAdapter adapter;
     private TextView restaurantDescription;
+    private MapView mapView;
+    private GoogleMap googleMap;
 
 
 
@@ -71,6 +79,11 @@ public class RestaurantFragment extends Fragment {
         binding.reviewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.reviewRecyclerView.setAdapter(adapter);
         viewModel = new ViewModelProvider(this).get(RestaurantFragmentViewModel.class);
+
+
+        mapView = root.findViewById(R.id.mapView);
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(this);
 
         String value = null;
         if (arguments != null) {
@@ -107,6 +120,10 @@ public class RestaurantFragment extends Fragment {
                     .centerInside()
                     .into(restaurantProfileImage);
             viewModel.setcurrRes(restaurant);
+            if (googleMap != null) {
+                updateMapLocation(restaurant); // Update the map to show new location
+            }
+        } else {
 
 
         }
@@ -134,6 +151,94 @@ public class RestaurantFragment extends Fragment {
             bundle.putParcelable("restaurant", restaurant);
             Navigation.findNavController(v).navigate(R.id.compare_fragment, bundle);
         });
+    }
+
+    private void updateMapLocation(Restaurant restaurant) {
+        if (restaurant != null) {
+            LatLng location = new LatLng(Double.parseDouble(restaurant.getLat()), Double.parseDouble(restaurant.getLng()));
+            googleMap.clear(); // Clear old markers
+            googleMap.addMarker(new MarkerOptions().position(location).title(restaurant.getName()));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15)); // Adjust the zoom level as needed
+            Log.d("MapDebug", "Map marker updated to: " + location.toString());
+        } else {
+            Log.e("MapError", "Restaurant data is null, cannot update map.");
+        }
+    }
+
+
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        // This method is automatically called when the map is ready
+        this.googleMap = googleMap; // Save a reference to the GoogleMap object
+        setUpMap(); // Setup your map UI and functionality here
+
+    }
+
+    private void setUpMap() {
+        if (restaurant != null) {
+            double lat = Double.parseDouble(restaurant.getLat());
+            double lng = Double.parseDouble(restaurant.getLng());
+            LatLng location = new LatLng(lat, lng);
+
+            Log.d("MapDebug", "Adding marker at location: " + location.toString());
+
+            if (googleMap != null) {
+                googleMap.addMarker(new MarkerOptions().position(location).title(restaurant.getName()));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15)); // Adjust the zoom level as needed
+            } else {
+                Log.e("MapError", "GoogleMap object is null");
+            }
+        } else {
+            Log.e("MapError", "Restaurant object is null");
+        }
+
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mapView.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mapView.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mapView != null) {
+            mapView.onDestroy();
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mapView.onSaveInstanceState(outState);
     }
 
     @Override

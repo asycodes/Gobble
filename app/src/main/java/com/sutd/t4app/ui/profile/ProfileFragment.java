@@ -1,5 +1,8 @@
 package com.sutd.t4app.ui.profile;
-
+/**
+ * The ProfileFragment class in an Android app handles user profile information and includes
+ * functionality for logging out using Google Sign-In.
+ */
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +28,9 @@ import com.sutd.t4app.MainActivity;
 import com.sutd.t4app.R;
 import com.sutd.t4app.SignUpActivity;
 import com.sutd.t4app.databinding.FragmentNotificationsBinding;
+import com.sutd.t4app.ui.ProfileQuestions.UserProfileViewModel;
+
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -40,6 +46,13 @@ public class ProfileFragment extends Fragment {
     private GoogleSignInClient mGoogleSignInClient;
 
     private FragmentNotificationsBinding binding;
+    private Button questions;
+    private Button EditProfile;
+    private Button Settings;
+    private TextView reviewCountTextView;
+    private UserProfileViewModel viewModel;
+    private TextView NameTextView;
+    private TextView EmailTextView;
 
 
 
@@ -56,12 +69,54 @@ public class ProfileFragment extends Fragment {
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(getContext(), gso);
 
+        Log.d("work?","Profile page");
+
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("work?","yes working cliking");
                 signOut();
+            }
+        });
+        reviewCountTextView = root.findViewById(R.id.reviewCountTextView);
+        NameTextView=root.findViewById(R.id.SettingsName);
+        EmailTextView=root.findViewById(R.id.SettingsEmail);
+        viewModel= new ViewModelProvider(this).get(UserProfileViewModel.class);
+
+//        String currentUserId = "bshfbefnwoef2121100101";
+        viewModel.getUserProfilesLiveData().observe(getViewLifecycleOwner(), userProfile -> {
+            if (userProfile != null) {
+                reviewCountTextView.setText(String.valueOf(userProfile.getReviewCount()));
+                NameTextView.setText(userProfile.getUsername());
+                EmailTextView.setText(userProfile.getEmail());
+
+            }
+        });
+
+
+
+
+        questions=root.findViewById(R.id.ProfileQuestions);
+        questions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.toQuestionspage);
+            }
+        });
+        EditProfile=root.findViewById(R.id.editProfilebutton);
+        EditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.toeditProfile);
+            }
+        });
+
+        Settings=root.findViewById(R.id.Settings);
+        Settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.tosettings);
             }
         });
 
@@ -108,4 +163,11 @@ public class ProfileFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Force refresh user profile
+        viewModel.getUserProfilesLiveData();  // Assuming you make this method public in ViewModel
+    }
+
 }

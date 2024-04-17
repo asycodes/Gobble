@@ -1,4 +1,6 @@
 package com.sutd.t4app.di;
+// This code snippet is defining a Dagger component interface in Java. Dagger is a popular dependency
+// injection framework in Java.
 
 import com.sutd.t4app.LoginActivity;
 import com.sutd.t4app.MainActivity;
