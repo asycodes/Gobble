@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:text="Sample TikTok Name"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="10sp"
                 android:paddingStart="4dp"
                 android:paddingEnd="4dp"
                 android:maxLines="2"
