@@ -46,6 +46,7 @@ public class HomeFragment extends Fragment implements TikTokAdapter.OnTikTokClic
     private boolean isExplorePage = true; // initial is explore page
     private HomeFragmentViewModel viewModel;
     private RestaurantExploreAdapter adapter;
+    private ReviewAdapter feedadapter;
 //    private RestaurantExploreAdapter hotAdapter;
     // TODO: 14/4/24 hotAdapter TikTokAdapter
     private TikTokAdapter hotAdapter;
@@ -106,6 +107,7 @@ public class HomeFragment extends Fragment implements TikTokAdapter.OnTikTokClic
         viewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
         filterViewModel= new ViewModelProvider(requireActivity()).get(FilterViewModel.class);
 
+        feedadapter = new ReviewAdapter(new ArrayList<>(), R.layout.review_item );
 
 
         // Observe the LiveData from the ViewModel
