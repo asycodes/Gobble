@@ -109,8 +109,8 @@ public class RestaurantRanking {
             return 0;
         }
         // Remove the dollar sign and parse the price and budget into integers
-        int restaurantMaxPrice = Integer.parseInt(restaurantPrice.replace("$", ""));
-        int userBudgetInt = Integer.parseInt(userBudget.replace("$", ""));
+        double restaurantMaxPrice = Double.parseDouble(restaurantPrice.replace("$", ""));
+        double userBudgetInt = Double.parseDouble(userBudget.replace("$", ""));
 
         if (userBudgetInt >= restaurantMaxPrice) {
             // Exact match adds more points

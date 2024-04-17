@@ -67,7 +67,6 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
     private ImageView restaurantProfileImage;
     private RestaurantFragmentViewModel RestviewModel;
     private ReviewListAdapter adapter;
-
     private TextView restaurantNameTextView;
     private HomeFragmentViewModel viewModel;
     private MapView mapView;
@@ -156,7 +155,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
         restaurantProfileImage = root.findViewById(R.id.restaurantProfileImage);
         restaurantProfileImage = root.findViewById(R.id.restaurantProfileImage);
         restaurantDescription = root.findViewById(R.id.restDescription);
-    
+        restaurantDescription.setText(restaurant.getDescription());
     }
     public void displayRestaurantDetails(Restaurant restaurant) {
         if (restaurantNameTextView != null && Ratings != null && Menu1 != null) {
@@ -169,7 +168,13 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
             foodRating.setRating((float) restaurant.getFoodRating().doubleValue());
             serviceRating.setRating((float) restaurant.getServiceRating().doubleValue());
             atmosphereRating.setRating((float) restaurant.getAmbienceRating().doubleValue());
-          restaurantDescription.setText(restaurant.getDescription());
+            restaurantDescription.setText(restaurant.getDescription());
+//            User1.setText(restaurant.getUserId1());
+//            User1Review.setText(restaurant.getReview1());
+//            User1Ratings.setRating((float) restaurant.getReviewRating1().doubleValue());
+//            User2.setText(restaurant.getUserId2());
+//            User2Review.setText(restaurant.getReview2());
+//            User2Ratings.setRating((float) restaurant.getReviewRating2().doubleValue());
 
             Picasso.get()
                     .load(restaurant.getImgMainURL())
