@@ -155,7 +155,6 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
         restaurantProfileImage = root.findViewById(R.id.restaurantProfileImage);
         restaurantProfileImage = root.findViewById(R.id.restaurantProfileImage);
         restaurantDescription = root.findViewById(R.id.restDescription);
-        restaurantDescription.setText(restaurant.getDescription());
     }
     public void displayRestaurantDetails(Restaurant restaurant) {
         if (restaurantNameTextView != null && Ratings != null && Menu1 != null) {
