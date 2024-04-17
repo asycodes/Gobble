@@ -102,6 +102,7 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
             if (restaurant != null) {
 
                 displayRestaurantDetails(restaurant);
+                RestviewModel.setcurrRes(restaurant);
 
             }
 
@@ -219,6 +220,8 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                 if (updatedRestaurant != null) {
                     restaurant = updatedRestaurant; // Update the global restaurant variable
                     displayRestaurantDetails(updatedRestaurant); // Update UI details
+                    RestviewModel.setcurrRes(updatedRestaurant);
+
                     if (googleMap != null) {
                         updateMapLocation(updatedRestaurant); // Update the map to show new location
                     }
