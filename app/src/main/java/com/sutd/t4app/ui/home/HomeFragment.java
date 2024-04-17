@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.sutd.t4app.R;
 import com.sutd.t4app.data.model.Restaurant;
+import com.sutd.t4app.data.model.TikTok;
 import com.sutd.t4app.databinding.FragmentHomeBinding;
 import com.sutd.t4app.data.model.UserProfile;
 import com.sutd.t4app.ui.ProfileQuestions.UserProfileViewModel;
@@ -58,10 +59,10 @@ public class HomeFragment extends Fragment implements TikTokAdapter.OnTikTokClic
     private int totalRestaurantCount;
 
     @Override
-    public void onRestaurantSelected(String restaurantId) {
-        Log.d("RestaurantFragment", "Navigating to details for Restaurant ID: " + restaurantId);
+    public void onRestaurantSelected(TikTok tiktok) {
+        Log.d("RestaurantFragment", "Navigating to details for Restaurant ID: " + tiktok);
         Bundle bundle = new Bundle();
-        bundle.putString("restaurantId", restaurantId);
+        bundle.putParcelable("restaurant", tiktok);
         Navigation.findNavController(getView()).navigate(R.id.torestaurantfragment, bundle);
     }
     @Override

@@ -98,20 +98,25 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
         Bundle arguments = getArguments();
         String value = null;
         if (arguments != null) {
-            restaurant = arguments.getParcelable("restaurant");
-            if (restaurant != null) {
+            Log.d("CHECK CLASS", arguments.getParcelable("restaurant").getClass().getName());
+            boolean check = arguments.getParcelable("restaurant").getClass().getName().equals( "com.sutd.t4app.data.model.Restaurant");
+            if(check){
 
-                displayRestaurantDetails(restaurant);
-                RestviewModel.setcurrRes(restaurant);
 
-            }
+                restaurant = arguments.getParcelable("restaurant");
+                if (restaurant != null) {
 
-            else {
+                    displayRestaurantDetails(restaurant);
+                    RestviewModel.setcurrRes(restaurant);
+
+                }
+            }else {
                 String restaurantId = arguments.getString("restaurantId");
                 if (restaurantId != null) {
                     // Fetch the restaurant details using the provided ID
                     observeSpecificRestaurant(restaurantId);
                 }
+
 
             }
 
