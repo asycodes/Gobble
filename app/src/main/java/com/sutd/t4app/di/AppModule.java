@@ -21,12 +21,12 @@ import javax.inject.Singleton;
 @Module
 @InstallIn(SingletonComponent.class)
 public class AppModule {
-    String apiKey = BuildConfig.PLACES_API_KEY;
+    private String apiKey = BuildConfig.PLACES_API_KEY;
 
     @Provides
     @Singleton
     App provideRealmApp() {
-        String appId = apiKey; // Replace with your actual App ID
+        String appId = apiKey;
         AppConfiguration appConfiguration = new AppConfiguration.Builder(appId).build();
         return new App(appConfiguration);
     }

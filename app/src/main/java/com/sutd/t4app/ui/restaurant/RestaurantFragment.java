@@ -30,6 +30,7 @@ import com.squareup.picasso.Picasso;
 import com.sutd.t4app.R;
 import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.data.model.Review;
+import com.sutd.t4app.data.model.TikTok;
 import com.sutd.t4app.databinding.FragmentDashboardBinding;
 import com.sutd.t4app.databinding.FragmentRestuarantProfileBinding;
 import com.sutd.t4app.ui.home.HomeFragmentViewModel;
@@ -98,19 +99,25 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
         Bundle arguments = getArguments();
         String value = null;
         if (arguments != null) {
-            restaurant = arguments.getParcelable("restaurant");
-            if (restaurant != null) {
+            Log.d("CHECK CLASS", arguments.getParcelable("restaurant").getClass().getName());
+            boolean check = arguments.getParcelable("restaurant").getClass().getName().equals( "com.sutd.t4app.data.model.Restaurant");
+            if(check){
 
-                displayRestaurantDetails(restaurant);
 
-            }
+                restaurant = arguments.getParcelable("restaurant");
+                if (restaurant != null) {
 
-            else {
-                String restaurantId = arguments.getString("restaurantId");
-                if (restaurantId != null) {
-                    // Fetch the restaurant details using the provided ID
-                    observeSpecificRestaurant(restaurantId);
+                    displayRestaurantDetails(restaurant);
+                    RestviewModel.setcurrRes(restaurant);
+
                 }
+            }else {
+                TikTok restaurantId = arguments.getParcelable("restaurant");
+                if (restaurantId.getRestaurantId() != null) {
+                    // Fetch the restaurant details using the provided ID
+                    observeSpecificRestaurant(restaurantId.getRestaurantId());
+                }
+
 
             }
 
@@ -219,6 +226,8 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
                 if (updatedRestaurant != null) {
                     restaurant = updatedRestaurant; // Update the global restaurant variable
                     displayRestaurantDetails(updatedRestaurant); // Update UI details
+                    RestviewModel.setcurrRes(updatedRestaurant);
+
                     if (googleMap != null) {
                         updateMapLocation(updatedRestaurant); // Update the map to show new location
                     }
