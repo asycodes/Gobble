@@ -1,12 +1,14 @@
 package com.sutd.t4app.ui.reviews;
 
-
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +16,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -24,191 +28,239 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.BlobInfo;
 import com.sutd.t4app.R;
+import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.databinding.FragmentDashboardBinding;
-import com.sutd.t4app.data.model.UserProfile;
-import com.sutd.t4app.ui.ProfileQuestions.UserProfileViewModel;
+import com.sutd.t4app.databinding.FragmentRestuarantProfileBinding;
+import com.sutd.t4app.ui.restaurant.ReviewListAdapter;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.realm.RealmResults;
+import io.realm.mongodb.App;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 
-/**
- * The ReviewsFragment class in an Android app allows users to submit reviews with ratings and images.
- */
 @AndroidEntryPoint
 public class ReviewsFragment extends Fragment {
-
+    private FragmentDashboardBinding binding;
     private ReviewViewModel viewModel;
-    private ImageView foodStar1, foodStar2, foodStar3, foodStar4, foodStar5;
-    private ImageView serviceStar1, serviceStar2, serviceStar3, serviceStar4, serviceStar5;
-    private ImageView atmosphereStar1, atmosphereStar2, atmosphereStar3, atmosphereStar4, atmosphereStar5;
-    private int currentFoodRating = 0;
-    private int currentServiceRating = 0;
-    private int currentAtmosphereRating = 0;
+    private SuggestionAdapter adapter;
+    RatingBar foodrating;
+    RatingBar serviceRating;
+    RatingBar atmosRating;
+
     private Button uploadImageButton;
     private Uri imageUri;
     private ImageView selectedImage;
     private EditText reviews;
     private ActivityResultLauncher<String> imagePickerLauncher;
-    private UserProfileViewModel UserViewModel;
-    private UserProfile cachedUserProfile;
+    @Inject
+    App realmApp;
 
-
-    public ReviewsFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-
+        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
         viewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
-        UserViewModel= new ViewModelProvider(this).get(UserProfileViewModel.class);
+        adapter = new SuggestionAdapter(new ArrayList<>(), R.layout.suggestion_item, restaurant -> {
+            viewModel.selectRestaurant(restaurant); // Update ViewModel with the selected restaurant
+            binding.searchEditText.setText(restaurant.getName());
+            binding.suggestionRecyclerView.setVisibility(View.GONE);
+        });
+        binding.suggestionRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.suggestionRecyclerView.setAdapter(adapter);
 
-        uploadImageButton=root.findViewById(R.id.uploadimage);
+
+
+        EditText searchEditText = root.findViewById(R.id.searchEditText);
+        RecyclerView suggestionRecyclerView = root.findViewById(R.id.suggestionRecyclerView);
+        uploadImageButton=root.findViewById(R.id.uploadImageButton);
         uploadImageButton.setOnClickListener(v -> openImageChooser());
         selectedImage=root.findViewById(R.id.selectedImage);
-        reviews=root.findViewById(R.id.user_review);
+
         Button postreviewbutton= root.findViewById(R.id.post_review);
+
+        viewModel.getSearchResults().observe(getViewLifecycleOwner(), new Observer<List<Restaurant>>() {
+            @Override
+            public void onChanged(List<Restaurant> restaurants) {
+                adapter.updateData(restaurants); // Update adapter
+            }
+        });
+
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() >= 2) { // Only query if there are at least 2 characters
+                    suggestionRecyclerView.setVisibility(View.VISIBLE);
+                    viewModel.updateSearchText(s.toString());
+                } else {
+                    suggestionRecyclerView.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        TextView foodRatingLabel = root.findViewById(R.id.foodRating).findViewById(R.id.categoryLabel);
+        foodRatingLabel.setText("Food");
+
+        foodrating = root.findViewById(R.id.foodRating).findViewById(R.id.categoryRatingBar);
+
+        TextView serviceRatingLabel = root.findViewById(R.id.serviceRating).findViewById(R.id.categoryLabel);
+        serviceRatingLabel.setText("Service");
+        serviceRating = root.findViewById(R.id.serviceRating).findViewById(R.id.categoryRatingBar);
+
+        TextView atmosphereRatingLabel = root.findViewById(R.id.atmosphereRating).findViewById(R.id.categoryLabel);
+        atmosphereRatingLabel.setText("Atmosphere");
+        atmosRating = root.findViewById(R.id.atmosphereRating).findViewById(R.id.categoryRatingBar);
+
+        reviews = root.findViewById(R.id.reviewTextInput);
+
         postreviewbutton.setOnClickListener(v -> submitReview());
 
 
 
-        // Initialize food rating stars
-        foodStar1 = root.findViewById(R.id.foodStar1);
-        foodStar2 = root.findViewById(R.id.foodStar2);
-        foodStar3 = root.findViewById(R.id.foodStar3);
-        foodStar4 = root.findViewById(R.id.foodStar4);
-        foodStar5 = root.findViewById(R.id.foodStar5);
-
-        // Set onClickListener for food stars
-        foodStar1.setOnClickListener(v -> setRating(foodStar1, 1, "food"));
-        foodStar2.setOnClickListener(v -> setRating(foodStar2, 2, "food"));
-        foodStar3.setOnClickListener(v -> setRating(foodStar3, 3, "food"));
-        foodStar4.setOnClickListener(v -> setRating(foodStar4, 4, "food"));
-        foodStar5.setOnClickListener(v -> setRating(foodStar5, 5, "food"));
-
-        // Initialize service rating stars
-        serviceStar1 = root.findViewById(R.id.serviceStar1);
-        serviceStar2 = root.findViewById(R.id.serviceStar2);
-        serviceStar3 = root.findViewById(R.id.serviceStar3);
-        serviceStar4 = root.findViewById(R.id.serviceStar4);
-        serviceStar5 = root.findViewById(R.id.serviceStar5);
-
-        // Set onClickListener for service stars
-        serviceStar1.setOnClickListener(v -> setRating(serviceStar1, 1, "service"));
-        serviceStar2.setOnClickListener(v -> setRating(serviceStar2, 2, "service"));
-        serviceStar3.setOnClickListener(v -> setRating(serviceStar3, 3, "service"));
-        serviceStar4.setOnClickListener(v -> setRating(serviceStar4, 4, "service"));
-        serviceStar5.setOnClickListener(v -> setRating(serviceStar5, 5, "service"));
-
-        // Initialize atmosphere rating stars
-        atmosphereStar1 = root.findViewById(R.id.atmosphereStar1);
-        atmosphereStar2 = root.findViewById(R.id.atmosphereStar2);
-        atmosphereStar3 = root.findViewById(R.id.atmosphereStar3);
-        atmosphereStar4 = root.findViewById(R.id.atmosphereStar4);
-        atmosphereStar5 = root.findViewById(R.id.atmosphereStar5);
-
-        // Set onClickListener for atmosphere stars
-        atmosphereStar1.setOnClickListener(v -> setRating(atmosphereStar1, 1, "atmosphere"));
-        atmosphereStar2.setOnClickListener(v -> setRating(atmosphereStar2, 2, "atmosphere"));
-        atmosphereStar3.setOnClickListener(v -> setRating(atmosphereStar3, 3, "atmosphere"));
-        atmosphereStar4.setOnClickListener(v -> setRating(atmosphereStar4, 4, "atmosphere"));
-        atmosphereStar5.setOnClickListener(v -> setRating(atmosphereStar5, 5, "atmosphere"));
-
         return root;
     }
+
 
     private void openImageChooser() {
         // Launch the image picker using the Activity Result API
         imagePickerLauncher.launch("image/*");
     }
 
-    private void setRating(ImageView star, int rating, String category) {
-        switch (category) {
-            case "food":
-                currentFoodRating = updateRating(currentFoodRating, rating, star, foodStar1, foodStar2, foodStar3, foodStar4, foodStar5);
-                viewModel.setFoodRating(currentFoodRating);
-                break;
-            case "service":
-                currentServiceRating = updateRating(currentServiceRating, rating, star, serviceStar1, serviceStar2, serviceStar3, serviceStar4, serviceStar5);
-                viewModel.setServiceRating(currentServiceRating);
-                break;
-            case "atmosphere":
-                currentAtmosphereRating = updateRating(currentAtmosphereRating, rating, star, atmosphereStar1, atmosphereStar2, atmosphereStar3, atmosphereStar4, atmosphereStar5);
-                viewModel.setAtmosphereRating(currentAtmosphereRating);
-                break;
-        }
-    }
 
-    private int updateRating(int currentRating, int rating, ImageView clickedStar, ImageView... stars) {
-        // Toggle the clicked star and update UI
-        if (currentRating == rating) {
-            currentRating = 0;
-        } else {
-            currentRating = rating;
-        }
+    private void submitReview() {
 
-        // Reset all stars to empty
-        for (ImageView star : stars) {
-            star.setImageResource(R.drawable.star_empty);
-        }
+        if (reviews.getText().toString().trim().isEmpty()) {
+            reviews.setError("Please enter a restaurant name");
+        }else{
+            reviews.setError(null);
+            double averageRating = (foodrating.getRating() + serviceRating.getRating() + atmosRating.getRating()) / 3.0;
+            String review = String.valueOf(reviews.getText());
 
-        // Fill stars up to the selected rating
-        for (ImageView star : stars) {
-            if (Integer.parseInt(star.getTag().toString()) <= currentRating) {
-                star.setImageResource(R.drawable.star_fill);
+            if (imageUri != null) {
+                // Upload image to Google Cloud Storage
+                uploadImageToGCS(imageUri, averageRating, review);
+            } else {
+                // If no image is selected, directly store review in MongoDB Realm
+                storeReviewInRealm(averageRating, review, null);
             }
         }
 
-        return currentRating;
+
+
+
+
+
+        // TODO: 23/3/24 store and process averagerating, imageURI and reviews to save to database 
     }
 
-    private void submitReview() {
-        if (cachedUserProfile != null) {
-            int newReviewCount = cachedUserProfile.getReviewCount() + 1;
-            cachedUserProfile.setReviewCount(newReviewCount); // Modify the cached copy
-            UserViewModel.updateUserProfile(cachedUserProfile); // Push changes to the ViewModel or repository
 
-            // Log the updated review count
-            Log.d("ReviewFragment", "Review count updated to: " + newReviewCount);
-        } else {
-            Log.e("ReviewFragment", "Attempted to submit a review with no cached user profile available.");
+    private void uploadImageToGCS(Uri imageUri, double averageRating, String review) {
+        InputStream imageInputStream = null;
+        InputStream inputStream = null;
+        try {
+            // Load the service account credentials from the JSON file
+            inputStream = getContext().getAssets().open("gobble-418717-fd2747d68173.json");
+            GoogleCredentials credentials = GoogleCredentials.fromStream(inputStream);
+
+            // Build StorageOptions with the credentials
+            StorageOptions storageOptions = StorageOptions.newBuilder().setCredentials(credentials).build();
+
+            // Initialize Storage service using the options
+            Storage storage = storageOptions.getService();
+
+            // Specify the bucket name
+            String bucketName = "gobblecdn";
+
+            // Define a blob name (object name) for the uploaded image
+            String blobName = "images/image_" + System.currentTimeMillis(); // Example blob name
+
+            // Create BlobInfo object with the specified bucket name and blob name
+            BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, blobName).build();
+
+            // Get the ContentResolver
+            ContentResolver contentResolver = getContext().getContentResolver();
+
+            // Open an InputStream from the ContentResolver
+            imageInputStream = contentResolver.openInputStream(imageUri);
+
+            // Read the content of the image into a byte array
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = imageInputStream.read(buffer)) != -1) {
+                byteArrayOutputStream.write(buffer, 0, bytesRead);
+            }
+            byte[] imageBytes = byteArrayOutputStream.toByteArray();
+
+            // Upload the image bytes to Google Cloud Storage
+            Blob blob = storage.create(blobInfo, imageBytes);
+
+            // Get the URL of the uploaded image
+            String imageUrl = blob.getMediaLink();
+            Log.d("image link","" +imageUrl);
+
+            // Image uploaded successfully, store review in MongoDB Realm with image URL
+            storeReviewInRealm(averageRating, review, imageUrl);
+
+            // Close the InputStreams
+            imageInputStream.close();
+            inputStream.close();
+    } catch (IOException e) {
+            e.printStackTrace();
+            // Handle exception
+        } finally {
+            try {
+                if (imageInputStream != null) {
+                    imageInputStream.close();
+                }
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
-
-//    private void submitReview() {
-//        // Calculate average rating
-//        double averageRating = (currentFoodRating + currentServiceRating + currentAtmosphereRating) / 3.0;
-//
-//        // Get review text
-//        String reviewText = reviews.getText().toString().trim();
-//
-//        // Update the user profile in the ViewModel
-//        UserViewModel.getUserProfilesLiveData().observe(getViewLifecycleOwner(), userProfile -> {
-//            if (userProfile != null) {
-//                int newReviewCount = userProfile.getReviewCount() + 1;
-//                userProfile.setReviewCount(newReviewCount);
-//                UserViewModel.updateUserProfile(userProfile);  // Update the user profile in the ViewModel
-//
-//                // Log the updated review count
-//                Log.d("ReviewFragment", "Review count updated: " + newReviewCount);
-//
-//                // Fetch the updated user profile data again to trigger LiveData observers
-//                UserViewModel.getUserProfilesLiveData();
-//            } else {
-//                // Handle the case where userProfile is null
-//                Log.e("ReviewFragment", "User profile is null");
-//            }
-//        });
-//    }
-
-
+    // Method to store review in MongoDB Realm
+    private void storeReviewInRealm(double averageRating, String review, String imageUrl) {
+        // Store review information in MongoDB Realm
+        viewModel.setRating(averageRating);
+        viewModel.setReviewText(review);
+        viewModel.setImageUrl(imageUrl);
+        viewModel.addReview();
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -222,23 +274,6 @@ public class ReviewsFragment extends Fragment {
                     }
                 });
     }
-
-    @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        // Assuming UserProfileViewModel is correctly instantiated
-        UserViewModel.getUserProfilesLiveData().observe(getViewLifecycleOwner(), userProfile -> {
-            if (userProfile != null) {
-                cachedUserProfile = userProfile; // Update the local cache whenever the data changes
-                Log.d("ReviewFragment", "Cached user profile updated.");
-            } else {
-                Log.e("ReviewFragment", "Received null UserProfile.");
-            }
-        });
-    }
-
-
-
 
 
 

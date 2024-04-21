@@ -33,6 +33,7 @@ android {
         resources {
             excludes += "META-INF/LICENSE.md"
             excludes += "META-INF/LICENSE-notice.md"
+            excludes += "META-INF/INDEX.LIST"
         }
     }
 
@@ -59,6 +60,13 @@ android {
         viewBinding = true
         dataBinding = true
         buildConfig = true
+    }
+    sourceSets {
+        getByName("main") {
+            assets {
+                srcDirs("src\\main\\assets", "src\\main\\assets")
+            }
+        }
     }
 
 }
@@ -112,7 +120,8 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
 
     // Captcha
-    implementation("com.google.android.recaptcha:recaptcha:18.5.0-beta02")
+
+    implementation("com.google.cloud:google-cloud-storage:2.0.0")
     implementation("androidx.browser:browser:1.8.0")
 
 //    implementation("androidx.activity:activity-ktx:1.8.2")

@@ -1,6 +1,5 @@
-package com.sutd.t4app.ui.restaurant;
+package com.sutd.t4app.ui.home;
 
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,21 +9,18 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.sutd.t4app.R;
 import com.sutd.t4app.data.model.Review;
-import com.sutd.t4app.data.model.Review;
-import com.sutd.t4app.ui.home.RestaurantExploreAdapter;
 
 import java.util.List;
 
-public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.ViewHolder>{
+public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder>{
     private List<Review> reviewList;
     private int layoutID;
-    public ReviewListAdapter(List<Review> reviewList, int layoutID) {
+    public ReviewAdapter(List<Review> reviewList, int layoutID) {
         this.reviewList = reviewList;
         this.layoutID = layoutID;
     }
@@ -32,14 +28,14 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Vi
 
     @NonNull
     @Override
-    public ReviewListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ReviewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(this.layoutID, parent, false);
         Log.d("INflated or what","yes");
-        return new ReviewListAdapter.ViewHolder(view, reviewList);
+        return new ReviewAdapter.ViewHolder(view, reviewList);
     }
     @Override
-    public void onBindViewHolder(@NonNull ReviewListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ReviewAdapter.ViewHolder holder, int position) {
         Log.d("We are reading position","index " + position);
         Log.d("Review state","RES: " + reviewList);
         if(reviewList.size() > 0){

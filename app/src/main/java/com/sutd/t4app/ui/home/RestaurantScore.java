@@ -22,4 +22,3 @@ public class RestaurantScore {
         return this.score;
     }
 }
-
