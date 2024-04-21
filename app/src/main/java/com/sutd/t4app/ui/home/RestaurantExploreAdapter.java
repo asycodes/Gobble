@@ -28,7 +28,6 @@ import com.squareup.picasso.Picasso;
 import com.sutd.t4app.data.model.TikTok;
 
 public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExploreAdapter.ViewHolder>{
-
     private List<Restaurant> restaurantList;
     private int layoutID;
     public RestaurantExploreAdapter(List<Restaurant> restaurantList, int layoutID) {
@@ -36,27 +35,18 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
         this.layoutID = layoutID;
 
     }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(this.layoutID, parent, false);
-        Log.d("INflated or what","yes");
         return new ViewHolder(view, restaurantList);
     }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.d("We are reading position","index " + position);
-        Log.d("Restaurant state","RES: " + restaurantList);
         if(restaurantList.size() > 0){
-
             Restaurant restaurant = restaurantList.get(position);
-            Log.d("AdapterDebug", "Binding restaurant at position " + position + ": " + restaurant.getName());
-
             holder.textViewName.setText(restaurant.getName());
-            Log.d("DEBUGGING"," resName " + holder.textViewName.getText() );
-
             if(holder.textViewClosetLandmark != null) {
                 holder.textViewClosetLandmark.setText(restaurant.getClosestLandmark());
                 Log.d("DEBUGGING"," resLandmark " + holder.textViewClosetLandmark.getText() );
@@ -71,16 +61,11 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
                 Log.d("DEBUGGING"," resLocation " + holder.textViewRestaurantLocation.getText() );
             }
             Picasso.get().setLoggingEnabled(true);
-
-
-
-
-            //add restImage update imageView
             Picasso.get()
-                .load(restaurant.getImgMainURL()) // Assuming `getImageUrl()` is a method in your `Restaurant` class
+                    .load(restaurant.getImgMainURL())
                     .resize(350, 170)  // specify your desired size
                     .centerInside()
-                .into(holder.restImageHolder);
+                    .into(holder.restImageHolder);
 
 
             Log.d("DEBUGGING"," resImage " +restaurant.getImgMainURL());
@@ -94,11 +79,11 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
         return restaurantList != null ? restaurantList.size() : 0;
     }
 
-public void updateData(List<Restaurant> newRestaurants) {
-    restaurantList.clear();  // Clear existing data
-    restaurantList.addAll(newRestaurants);  // Add new data
-    notifyDataSetChanged();  // Notify the RecyclerView of data change
-}
+    public void updateData(List<Restaurant> newRestaurants) {
+        restaurantList.clear();  // Clear existing data
+        restaurantList.addAll(newRestaurants);  // Add new data
+        notifyDataSetChanged();  // Notify the RecyclerView of data change
+    }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView textViewName;

@@ -34,7 +34,7 @@ public class TikTokAdapter extends RecyclerView.Adapter<TikTokAdapter.ViewHolder
     private OnTikTokClickListener listener;
 
     public interface OnTikTokClickListener {
-        void onRestaurantSelected(String restaurantId);
+        void onRestaurantSelected(TikTok tiktok);
         void onTikTokLinkSelected(String url);
     }
 
@@ -115,8 +115,8 @@ public class TikTokAdapter extends RecyclerView.Adapter<TikTokAdapter.ViewHolder
                     listener.onTikTokLinkSelected(tikTok.getLink());
                     return true;
                 } else if (id == R.id.action_go_to_restaurant) {
-                    Log.d("TikTokAdapter", "Restaurant ID selected: " + tikTok.getRestaurantId());
-                    listener.onRestaurantSelected(tikTok.getRestaurantId());
+                    Log.d("TikTokAdapter", "Restaurant ID selected: " + tikTok);
+                    listener.onRestaurantSelected(tikTok);
                     return true;
                 } else {
                     return false;

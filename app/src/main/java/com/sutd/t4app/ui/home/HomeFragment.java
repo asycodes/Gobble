@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.sutd.t4app.R;
 import com.sutd.t4app.data.model.Restaurant;
+import com.sutd.t4app.data.model.TikTok;
 import com.sutd.t4app.databinding.FragmentHomeBinding;
 import com.sutd.t4app.data.model.UserProfile;
 import com.sutd.t4app.ui.ProfileQuestions.UserProfileViewModel;
@@ -46,8 +47,7 @@ public class HomeFragment extends Fragment implements TikTokAdapter.OnTikTokClic
     private boolean isExplorePage = true; // initial is explore page
     private HomeFragmentViewModel viewModel;
     private RestaurantExploreAdapter adapter;
-    private ReviewAdapter feedadapter;
-//    private RestaurantExploreAdapter hotAdapter;
+    //    private RestaurantExploreAdapter hotAdapter;
     // TODO: 14/4/24 hotAdapter TikTokAdapter
     private TikTokAdapter hotAdapter;
 
@@ -59,10 +59,10 @@ public class HomeFragment extends Fragment implements TikTokAdapter.OnTikTokClic
     private int totalRestaurantCount;
 
     @Override
-    public void onRestaurantSelected(String restaurantId) {
-        Log.d("RestaurantFragment", "Navigating to details for Restaurant ID: " + restaurantId);
+    public void onRestaurantSelected(TikTok tiktok) {
+        Log.d("RestaurantFragment", "Navigating to details for Restaurant ID: " + tiktok);
         Bundle bundle = new Bundle();
-        bundle.putString("restaurantId", restaurantId);
+        bundle.putParcelable("restaurant", tiktok);
         Navigation.findNavController(getView()).navigate(R.id.torestaurantfragment, bundle);
     }
     @Override
@@ -107,39 +107,19 @@ public class HomeFragment extends Fragment implements TikTokAdapter.OnTikTokClic
         viewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
         filterViewModel= new ViewModelProvider(requireActivity()).get(FilterViewModel.class);
 
-        feedadapter = new ReviewAdapter(new ArrayList<>(), R.layout.review_item );
-
-
-        // Observe the LiveData from the ViewModel
-
-//        viewModel.getRestaurantsLiveData().observe(getViewLifecycleOwner(), restaurants -> {
-//            Log.d("HomeFragmenthotAdaptor", "Number of unranked restaurants received: " + restaurants.size());
-//            // Use this data for something that doesn't need ranked data, for example, for `hotAdapter`
-//            if (restaurants.size() >= 1) {
-//
-//                hotAdapter.updateData(restaurants);
-//            }
-//        });
-        // TODO: 14/4/24 viewModel.getTikTokLiveData() & hotAdapter
         viewModel.getTikTokLiveData().observe(getViewLifecycleOwner(), tikToks -> {
             if (tikToks.size() >= 1) {
-                Log.d("TikTokFetch", "TikToks received: " + tikToks.size());
-
                 hotAdapter.updateDataTikTok(tikToks);
             }
 
-     
+
         });
 
-
-        // Observe the LiveData for ranked restaurants
         viewModel.getRankedRestaurantsLiveData().observe(getViewLifecycleOwner(), rankedRestaurants -> {
 
             if (rankedRestaurants.size() >= 1) {
                 List<Restaurant> hotRestaurants = rankedRestaurants.subList(0, Math.min(2, rankedRestaurants.size()));
-            // Update the adapter with the ranked list of restaurants
-                 Log.d("HomeFragment", "Number of ranked restaurants received: " + rankedRestaurants.size());
-                 adapter.updateData(rankedRestaurants);}
+                adapter.updateData(rankedRestaurants);}
         });
 
         searchbar=root.findViewById(R.id.mySearchView);
@@ -351,11 +331,11 @@ public class HomeFragment extends Fragment implements TikTokAdapter.OnTikTokClic
         }
         return filteredList;
     }
-        private void triggerRanking() {
-            if (!isFilterActive && viewModel.getUserProfilesLiveData().getValue() != null) {
-                viewModel.rankAndUpdateRestaurants(viewModel.getUserProfilesLiveData().getValue());
-            }
+    private void triggerRanking() {
+        if (!isFilterActive && viewModel.getUserProfilesLiveData().getValue() != null) {
+            viewModel.rankAndUpdateRestaurants(viewModel.getUserProfilesLiveData().getValue());
         }
+    }
 
     private void showRankedRestaurants() {
         isFilterActive = false;  // Ensure filter flag is reset
@@ -368,4 +348,3 @@ public class HomeFragment extends Fragment implements TikTokAdapter.OnTikTokClic
     }
 
 }
-
