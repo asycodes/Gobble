@@ -47,7 +47,7 @@ public class HomeFragment extends Fragment implements TikTokAdapter.OnTikTokClic
     private boolean isExplorePage = true; // initial is explore page
     private HomeFragmentViewModel viewModel;
     private RestaurantExploreAdapter adapter;
-    //    private RestaurantExploreAdapter hotAdapter;
+//    private RestaurantExploreAdapter hotAdapter;
     // TODO: 14/4/24 hotAdapter TikTokAdapter
     private TikTokAdapter hotAdapter;
 
@@ -112,14 +112,14 @@ public class HomeFragment extends Fragment implements TikTokAdapter.OnTikTokClic
                 hotAdapter.updateDataTikTok(tikToks);
             }
 
-
+     
         });
 
         viewModel.getRankedRestaurantsLiveData().observe(getViewLifecycleOwner(), rankedRestaurants -> {
 
             if (rankedRestaurants.size() >= 1) {
                 List<Restaurant> hotRestaurants = rankedRestaurants.subList(0, Math.min(2, rankedRestaurants.size()));
-                adapter.updateData(rankedRestaurants);}
+                 adapter.updateData(rankedRestaurants);}
         });
 
         searchbar=root.findViewById(R.id.mySearchView);
@@ -331,11 +331,11 @@ public class HomeFragment extends Fragment implements TikTokAdapter.OnTikTokClic
         }
         return filteredList;
     }
-    private void triggerRanking() {
-        if (!isFilterActive && viewModel.getUserProfilesLiveData().getValue() != null) {
-            viewModel.rankAndUpdateRestaurants(viewModel.getUserProfilesLiveData().getValue());
+        private void triggerRanking() {
+            if (!isFilterActive && viewModel.getUserProfilesLiveData().getValue() != null) {
+                viewModel.rankAndUpdateRestaurants(viewModel.getUserProfilesLiveData().getValue());
+            }
         }
-    }
 
     private void showRankedRestaurants() {
         isFilterActive = false;  // Ensure filter flag is reset
@@ -348,3 +348,4 @@ public class HomeFragment extends Fragment implements TikTokAdapter.OnTikTokClic
     }
 
 }
+

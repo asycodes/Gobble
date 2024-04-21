@@ -62,10 +62,10 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
             }
             Picasso.get().setLoggingEnabled(true);
             Picasso.get()
-                    .load(restaurant.getImgMainURL())
+                .load(restaurant.getImgMainURL())
                     .resize(350, 170)  // specify your desired size
                     .centerInside()
-                    .into(holder.restImageHolder);
+                .into(holder.restImageHolder);
 
 
             Log.d("DEBUGGING"," resImage " +restaurant.getImgMainURL());
@@ -79,11 +79,11 @@ public class RestaurantExploreAdapter extends RecyclerView.Adapter<RestaurantExp
         return restaurantList != null ? restaurantList.size() : 0;
     }
 
-    public void updateData(List<Restaurant> newRestaurants) {
-        restaurantList.clear();  // Clear existing data
-        restaurantList.addAll(newRestaurants);  // Add new data
-        notifyDataSetChanged();  // Notify the RecyclerView of data change
-    }
+public void updateData(List<Restaurant> newRestaurants) {
+    restaurantList.clear();  // Clear existing data
+    restaurantList.addAll(newRestaurants);  // Add new data
+    notifyDataSetChanged();  // Notify the RecyclerView of data change
+}
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView textViewName;
