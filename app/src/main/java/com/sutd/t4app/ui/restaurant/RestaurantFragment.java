@@ -30,6 +30,7 @@ import com.squareup.picasso.Picasso;
 import com.sutd.t4app.R;
 import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.data.model.Review;
+import com.sutd.t4app.data.model.TikTok;
 import com.sutd.t4app.databinding.FragmentDashboardBinding;
 import com.sutd.t4app.databinding.FragmentRestuarantProfileBinding;
 import com.sutd.t4app.ui.home.HomeFragmentViewModel;
@@ -111,10 +112,10 @@ public class RestaurantFragment extends Fragment implements OnMapReadyCallback {
 
                 }
             }else {
-                String restaurantId = arguments.getString("restaurantId");
-                if (restaurantId != null) {
+                TikTok restaurantId = arguments.getParcelable("restaurant");
+                if (restaurantId.getRestaurantId() != null) {
                     // Fetch the restaurant details using the provided ID
-                    observeSpecificRestaurant(restaurantId);
+                    observeSpecificRestaurant(restaurantId.getRestaurantId());
                 }
 
 

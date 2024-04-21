@@ -107,37 +107,18 @@ public class HomeFragment extends Fragment implements TikTokAdapter.OnTikTokClic
         viewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
         filterViewModel= new ViewModelProvider(requireActivity()).get(FilterViewModel.class);
 
-
-
-        // Observe the LiveData from the ViewModel
-
-//        viewModel.getRestaurantsLiveData().observe(getViewLifecycleOwner(), restaurants -> {
-//            Log.d("HomeFragmenthotAdaptor", "Number of unranked restaurants received: " + restaurants.size());
-//            // Use this data for something that doesn't need ranked data, for example, for `hotAdapter`
-//            if (restaurants.size() >= 1) {
-//
-//                hotAdapter.updateData(restaurants);
-//            }
-//        });
-        // TODO: 14/4/24 viewModel.getTikTokLiveData() & hotAdapter
         viewModel.getTikTokLiveData().observe(getViewLifecycleOwner(), tikToks -> {
             if (tikToks.size() >= 1) {
-                Log.d("TikTokFetch", "TikToks received: " + tikToks.size());
-
                 hotAdapter.updateDataTikTok(tikToks);
             }
 
      
         });
 
-
-        // Observe the LiveData for ranked restaurants
         viewModel.getRankedRestaurantsLiveData().observe(getViewLifecycleOwner(), rankedRestaurants -> {
 
             if (rankedRestaurants.size() >= 1) {
                 List<Restaurant> hotRestaurants = rankedRestaurants.subList(0, Math.min(2, rankedRestaurants.size()));
-            // Update the adapter with the ranked list of restaurants
-                 Log.d("HomeFragment", "Number of ranked restaurants received: " + rankedRestaurants.size());
                  adapter.updateData(rankedRestaurants);}
         });
 
