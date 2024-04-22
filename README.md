@@ -1,4 +1,4 @@
-# Gobble - Team 53
+# Gobble - Team 53 <img width="249" alt="gobble" src="https://github.com/ilenhanako/t4app/assets/9971306/efb92a0e-7ba4-4527-a99b-07a25b67d4a5">
 
 ## Team members
 - Adelaine Ruth Hanako Suhendro, 1007059
@@ -16,19 +16,10 @@ API documentation utilized: Google Business, Yelp, Tiktok, OpenAI
 
 - View the Figma Prototype of Gobble [here](https://www.figma.com/proto/kKKdI45mlW6sPdlUEojrtE/50.001?type=design&node-id=48-151&t=EhO0q2kSAlFj3sfv-0&scaling=scale-down&page-id=0%3A1&starting-point-node-id=39%3A49)
 - View Gobble's business and technical proposal(Checkoff 1) [here](https://github.com/ilenhanako/t4app/files/14941705/1D.project.gobble.pdf)
+- View Gobble's technical implementation(Checkoff 2) [here](https://github.com/ilenhanako/t4app/files/15059838/1D.project.gobble.1.pdf)
+- View Gobble's report document [here]()
+- View Gobble's summary document [here](https://github.com/ilenhanako/t4app/files/15061145/gobble.summary.1.docx)
+- View Gobble's Launch Video [here]()
 
 ## Gobble Poster
-![Gobble Poster](https://github.com/ilenhanako/t4app/assets/9971306/043d2807-228f-4d66-bce6-848a7eea5ad4)
-
-## OOP Principles Used
-**1. Encapsulation**
-- Classes such as Restaurant and UserProfile encapsulate data and its manipulation, exposing only the necessary information through their public methods.
-  
-**2. Abstraction**
-- Interfaces like TripAdvisorService and YelpService abstract the details of HTTP requests and responses, providing a clear API for data retrieval.
-  
-**3. Inheritance**
-- By extending from base classes such as Fragment and ViewModel, specialized behaviors are enabled (e.g., HomeFragment, HomeFragmentViewModel) while reusing common functionality.
-  
-**4. Polymorphism**
-- Overridden methods within Activities, Fragments, and ViewModels allow for polymorphic behavior that is tailored to specific needs.
+![Gobble Poster](https://github.com/ilenhanako/t4app/assets/9971306/3c243634-6655-4215-bd54-13a0f1be412b)

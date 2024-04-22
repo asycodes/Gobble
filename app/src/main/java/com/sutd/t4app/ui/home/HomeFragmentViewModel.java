@@ -8,19 +8,18 @@ import androidx.lifecycle.ViewModel;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
-import com.sutd.t4app.di.api.TripAdvisorService;
-import com.sutd.t4app.di.api.YelpService;
 import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.data.model.TikTok;
-import com.sutd.t4app.data.model.apiresponses.LocationSearchResponse;
-import com.sutd.t4app.data.model.apiresponses.YelpSearchResponse;
 
 import io.realm.mongodb.App;
-
+import io.realm.mongodb.AppConfiguration;
+import com.sutd.t4app.BuildConfig;
 import com.sutd.t4app.data.model.UserProfile;
 import com.sutd.t4app.utility.RealmUtility;
 import java.util.ArrayList;
@@ -28,19 +27,18 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.realm.mongodb.Credentials;
+import io.realm.mongodb.User;
+import io.realm.mongodb.sync.MutableSubscriptionSet;
+import io.realm.mongodb.sync.Subscription;
 import io.realm.mongodb.sync.SyncConfiguration;
 @HiltViewModel
 /*
- * The `HomeFragmentViewModel` class in the Android app handles data retrieval from APIs, Realm
+ * The `HomeFragmentViewModel` class in the Android app handles Realm
  * database initialization, and restaurant ranking based on user profiles.
  */
 public class HomeFragmentViewModel extends ViewModel {
     private MutableLiveData<UserProfile> userProfilesLiveData = new MutableLiveData<>();
-    private TripAdvisorService tripAdvisorService;
-    private YelpService yelpService;
-    private List<YelpSearchResponse.Business> yelpresponse;
-    private List<LocationSearchResponse.Location> searchresults;
-    private MutableLiveData<List<LocationSearchResponse.Location>> results = new MutableLiveData<>();
     private final App realmApp;
     private final MutableLiveData<List<Restaurant>> restaurantsLiveData = new MutableLiveData<>();
     private Realm realm;
@@ -53,7 +51,7 @@ public class HomeFragmentViewModel extends ViewModel {
 
 
     @Inject
-    public HomeFragmentViewModel(App realmApp, TripAdvisorService tripadvisorService, YelpService yelpservice) {
+    public HomeFragmentViewModel(App realmApp) {
 
         this.realmApp = realmApp;
         initializeRealm();
