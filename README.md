@@ -23,16 +23,3 @@ API documentation utilized: Google Business, Yelp, Tiktok, OpenAI
 
 ## Gobble Poster
 ![Gobble Poster](https://github.com/ilenhanako/t4app/assets/9971306/3c243634-6655-4215-bd54-13a0f1be412b)
-
-## OOP Principles Used
-**1. Encapsulation**
-- Classes such as Restaurant and UserProfile encapsulate data and its manipulation, exposing only the necessary information through their public methods.
-  
-**2. Abstraction**
-- Interfaces like TripAdvisorService and YelpService abstract the details of HTTP requests and responses, providing a clear API for data retrieval.
-  
-**3. Inheritance**
-- By extending from base classes such as Fragment and ViewModel, specialized behaviors are enabled (e.g., HomeFragment, HomeFragmentViewModel) while reusing common functionality.
-  
-**4. Polymorphism**
-- Overridden methods within Activities, Fragments, and ViewModels allow for polymorphic behavior that is tailored to specific needs.
