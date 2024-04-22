@@ -1,5 +1,4 @@
-# Gobble - Team 53
-![Gobble logo]<img width="249" alt="gobble" src="https://github.com/ilenhanako/t4app/assets/9971306/efb92a0e-7ba4-4527-a99b-07a25b67d4a5">
+# Gobble - Team 53 <img width="249" alt="gobble" src="https://github.com/ilenhanako/t4app/assets/9971306/efb92a0e-7ba4-4527-a99b-07a25b67d4a5">
 
 ## Team members
 - Adelaine Ruth Hanako Suhendro, 1007059
