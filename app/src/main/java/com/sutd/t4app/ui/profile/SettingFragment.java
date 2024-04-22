@@ -9,11 +9,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 
-import com.sutd.t4app.LoginActivity;
-import com.sutd.t4app.R;
-import com.sutd.t4app.databinding.EditProfileBinding;
+import com.sutd.t4app.LoginSignUpActivity;
 import com.sutd.t4app.databinding.ProfileSettingsBinding;
 import com.sutd.t4app.ui.ProfileQuestions.UserProfileViewModel;
 
@@ -39,7 +36,7 @@ public class SettingFragment extends Fragment {
         return root;
     }
     private void onDeleteSuccess() {
-        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        Intent intent = new Intent(getActivity(), LoginSignUpActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         getActivity().finish(); // Ensure that the MainActivity stack is cleared

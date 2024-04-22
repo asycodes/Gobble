@@ -8,36 +8,26 @@ import androidx.lifecycle.ViewModel;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
-import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
-import com.sutd.t4app.data.api.TripAdvisorService;
-import com.sutd.t4app.data.api.YelpService;
+import com.sutd.t4app.di.api.TripAdvisorService;
+import com.sutd.t4app.di.api.YelpService;
 import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.data.model.TikTok;
 import com.sutd.t4app.data.model.apiresponses.LocationSearchResponse;
 import com.sutd.t4app.data.model.apiresponses.YelpSearchResponse;
-import com.sutd.t4app.myApp;
 
 import io.realm.mongodb.App;
-import io.realm.mongodb.AppConfiguration;
-import com.sutd.t4app.BuildConfig;
+
 import com.sutd.t4app.data.model.UserProfile;
 import com.sutd.t4app.utility.RealmUtility;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import io.realm.mongodb.Credentials;
-import io.realm.mongodb.User;
-import io.realm.mongodb.sync.MutableSubscriptionSet;
-import io.realm.mongodb.sync.Subscription;
 import io.realm.mongodb.sync.SyncConfiguration;
 @HiltViewModel
 /*

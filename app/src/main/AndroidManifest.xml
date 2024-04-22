@@ -38,10 +38,6 @@
             <!-- No intent-filter for MAIN and LAUNCHER here -->
         </activity>
 
-        <activity android:name=".LoginActivity">
-
-        </activity>
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${GOOGLE_MAP}"/>

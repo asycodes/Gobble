@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.sutd.t4app.BuildConfig;
-import com.sutd.t4app.data.api.TripAdvisorService;
-import com.sutd.t4app.data.api.YelpService;
+import com.sutd.t4app.di.api.TripAdvisorService;
+import com.sutd.t4app.di.api.YelpService;
 import com.sutd.t4app.data.model.Restaurant;
 import com.sutd.t4app.data.model.Review;
 import com.sutd.t4app.data.model.UserProfile;
@@ -29,12 +29,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
-import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.mongodb.App;
-import io.realm.mongodb.User;
 import io.realm.mongodb.sync.SyncConfiguration;
-import retrofit2.http.Query;
 
 @HiltViewModel
 public class RestaurantFragmentViewModel extends ViewModel {

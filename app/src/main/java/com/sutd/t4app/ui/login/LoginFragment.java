@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,10 +19,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.sutd.t4app.MainActivity;
 import com.sutd.t4app.R;
-import com.sutd.t4app.SignUpActivity;
 import com.sutd.t4app.databinding.FragmentLoginBinding;
-import com.sutd.t4app.databinding.FragmentSignUpBinding;
-import com.sutd.t4app.ui.signup.SignUpFragmentViewModel;
 
 import dagger.hilt.android.AndroidEntryPoint;
 

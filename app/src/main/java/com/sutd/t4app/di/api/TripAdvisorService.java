@@ -1,4 +1,4 @@
-package com.sutd.t4app.data.api;
+package com.sutd.t4app.di.api;
 import com.sutd.t4app.data.model.apiresponses.LocationSearchResponse;
 import com.sutd.t4app.data.model.apiresponses.ReviewLocationResponse;
 

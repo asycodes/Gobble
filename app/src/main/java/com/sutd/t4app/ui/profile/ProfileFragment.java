@@ -3,7 +3,6 @@ package com.sutd.t4app.ui.profile;
  * The ProfileFragment class in an Android app handles user profile information and includes
  * functionality for logging out using Google Sign-In.
  */
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,15 +20,10 @@ import androidx.navigation.Navigation;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.sutd.t4app.LoginActivity;
 import com.sutd.t4app.LoginSignUpActivity;
-import com.sutd.t4app.MainActivity;
 import com.sutd.t4app.R;
-import com.sutd.t4app.SignUpActivity;
 import com.sutd.t4app.databinding.FragmentNotificationsBinding;
 import com.sutd.t4app.ui.ProfileQuestions.UserProfileViewModel;
-
-import java.util.Set;
 
 import javax.inject.Inject;
 

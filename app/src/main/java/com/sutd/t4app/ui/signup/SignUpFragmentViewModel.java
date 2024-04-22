@@ -1,19 +1,11 @@
 package com.sutd.t4app.ui.signup;
 
-import android.content.Intent;
 import android.util.Log;
-import android.widget.EditText;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.sutd.t4app.MainActivity;
-import com.sutd.t4app.R;
-import com.sutd.t4app.SignUpActivity;
-import com.sutd.t4app.data.api.TripAdvisorService;
-import com.sutd.t4app.data.api.YelpService;
-import com.sutd.t4app.ui.home.HomeFragmentViewModel;
 import com.sutd.t4app.utility.FormValidation;
 import com.sutd.t4app.utility.RealmUtility;
 
@@ -81,7 +73,7 @@ public class SignUpFragmentViewModel extends ViewModel {
         emailError.setValue(emailValidationResult);
         passwordError.setValue(passwordValidationResult);
 
-        if (firstNameError.getValue() != null || lastnameError.getValue() != null || emailError.getValue() != null || lastnameError.getValue()!= null) {
+        if (firstNameError.getValue() != null || lastnameError.getValue() != null || emailError.getValue() != null || passwordError.getValue()!= null) {
             isValid = false;
         }
         Log.d("CheckErros","firstNameError: "+firstNameError.getValue() +

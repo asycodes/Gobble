@@ -1,4 +1,4 @@
-package com.sutd.t4app.data.api;
+package com.sutd.t4app.di.api;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
