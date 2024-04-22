@@ -30,6 +30,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,8 +38,10 @@ import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobInfo;
 import com.sutd.t4app.R;
 import com.sutd.t4app.data.model.Restaurant;
+import com.sutd.t4app.data.model.UserProfile;
 import com.sutd.t4app.databinding.FragmentDashboardBinding;
 import com.sutd.t4app.databinding.FragmentRestuarantProfileBinding;
+import com.sutd.t4app.ui.ProfileQuestions.UserProfileViewModel;
 import com.sutd.t4app.ui.restaurant.ReviewListAdapter;
 
 import java.io.ByteArrayOutputStream;
@@ -73,6 +76,8 @@ public class ReviewsFragment extends Fragment {
     private ImageView selectedImage;
     private EditText reviews;
     private ActivityResultLauncher<String> imagePickerLauncher;
+    private UserProfileViewModel UserViewModel;
+    private UserProfile cachedUserProfile;
     @Inject
     App realmApp;
 
@@ -83,6 +88,7 @@ public class ReviewsFragment extends Fragment {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         viewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
+        UserViewModel= new ViewModelProvider(this).get(UserProfileViewModel.class);
         adapter = new SuggestionAdapter(new ArrayList<>(), R.layout.suggestion_item, restaurant -> {
             viewModel.selectRestaurant(restaurant); // Update ViewModel with the selected restaurant
             binding.searchEditText.setText(restaurant.getName());
@@ -90,6 +96,7 @@ public class ReviewsFragment extends Fragment {
         });
         binding.suggestionRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.suggestionRecyclerView.setAdapter(adapter);
+
 
 
 
@@ -143,7 +150,11 @@ public class ReviewsFragment extends Fragment {
 
         reviews = root.findViewById(R.id.reviewTextInput);
 
-        postreviewbutton.setOnClickListener(v -> submitReview());
+        postreviewbutton.setOnClickListener(v -> {
+
+            submitReview(v);
+        });
+
 
 
 
@@ -157,30 +168,31 @@ public class ReviewsFragment extends Fragment {
     }
 
 
-    private void submitReview() {
+    private void submitReview(View v) {
+        if (cachedUserProfile != null) {
 
-        if (reviews.getText().toString().trim().isEmpty()) {
-            reviews.setError("Please enter a restaurant name");
-        }else{
-            reviews.setError(null);
-            double averageRating = (foodrating.getRating() + serviceRating.getRating() + atmosRating.getRating()) / 3.0;
-            String review = String.valueOf(reviews.getText());
+            if (reviews.getText().toString().trim().isEmpty()) {
+                reviews.setError("Please enter a restaurant name");
+            }else {
+                reviews.setError(null);
+                double averageRating = (foodrating.getRating() + serviceRating.getRating() + atmosRating.getRating()) / 3.0;
+                String review = String.valueOf(reviews.getText());
+                int newReviewCount = cachedUserProfile.getReviewCount() + 1;
 
-            if (imageUri != null) {
-                // Upload image to Google Cloud Storage
-                uploadImageToGCS(imageUri, averageRating, review);
-            } else {
-                // If no image is selected, directly store review in MongoDB Realm
-                storeReviewInRealm(averageRating, review, null);
+                cachedUserProfile.setReviewCount(newReviewCount); // Modify the cached copy
+                UserViewModel.updateUserProfile(cachedUserProfile);
+
+
+                if (imageUri != null) {
+                    // Upload image to Google Cloud Storage
+                    uploadImageToGCS(imageUri, averageRating, review);
+                } else {
+                    // If no image is selected, directly store review in MongoDB Realm
+                    storeReviewInRealm(averageRating, review, null);
+                }
+                Navigation.findNavController(v).navigate(R.id.rest_back_to_home);
             }
         }
-
-
-
-
-
-
-        // TODO: 23/3/24 store and process averagerating, imageURI and reviews to save to database 
     }
 
 
@@ -274,6 +286,23 @@ public class ReviewsFragment extends Fragment {
                     }
                 });
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        // Assuming UserProfileViewModel is correctly instantiated
+        UserViewModel.getUserProfilesLiveData().observe(getViewLifecycleOwner(), userProfile -> {
+            if (userProfile != null) {
+                cachedUserProfile = userProfile; // Update the local cache whenever the data changes
+                Log.d("ReviewFragment", "Cached user profile updated.");
+            } else {
+                Log.e("ReviewFragment", "Received null UserProfile.");
+            }
+        });
+    }
+
+
+
 
 
 
