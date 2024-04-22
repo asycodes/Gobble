@@ -19,7 +19,6 @@ API documentation utilized: Google Business, Yelp, Tiktok, OpenAI
 - View Gobble's technical implementation(Checkoff 2) [here](https://github.com/ilenhanako/t4app/files/15059838/1D.project.gobble.1.pdf)
 - View Gobble's report document [here]()
 - View Gobble's summary document [here](https://github.com/ilenhanako/t4app/files/15061145/gobble.summary.1.docx)
-- View Gobble's Launch Video [here]()
 
 ## Gobble Poster
 ![Gobble Poster](https://github.com/ilenhanako/t4app/assets/9971306/3c243634-6655-4215-bd54-13a0f1be412b)
